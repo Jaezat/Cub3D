@@ -1,9 +1,10 @@
 #include <stdio.h>
-#include "test.h"
+#include "main.h"
 
-int main()
+int main(int argc, char **argv)
 {
-    f1();
     printf("hello world\n");
+    parsing(argc, argv);
+    printf("bye world\n");
     return 0;
 }
