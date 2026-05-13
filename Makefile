@@ -13,7 +13,7 @@ OBJ_DIR = build
 SRCS    = $(SRC_DIR)/main.c $(SRC_DIR)/test.c
 OBJS    = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-all: $(MLX_DIR) $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(MLXFLGS) -o $(NAME)
@@ -43,4 +43,4 @@ mlx_clean:
 
 re: fclean all
 
-.PHONY: all clean fclean re mlx_clean
+.PHONY: all clean fclean re
