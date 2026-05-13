@@ -13,7 +13,7 @@ OBJ_DIR = build
 SRCS    = $(SRC_DIR)/main.c $(SRC_DIR)/test.c
 OBJS    = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-all: $(NAME)
+all: $(MLX_DIR) $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(MLXFLGS) -o $(NAME)
