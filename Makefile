@@ -7,10 +7,10 @@ RM          = rm -rf
 # MAKE_NP	= make --no-print-directory
 MLXFLGS	= -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 
-SRC_DIR = srcs
-OBJ_DIR = build
+SRC_DIR = srcs/
+OBJ_DIR = build/
 
-SRCS    = $(SRC_DIR)/main.c $(SRC_DIR)/test.c
+SRCS    = $(addprefix srcs/, main.c parsing0.c parsing1.c)
 OBJS    = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(MLX_DIR) $(NAME)
@@ -18,7 +18,7 @@ all: $(MLX_DIR) $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(MLXFLGS) -o $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
