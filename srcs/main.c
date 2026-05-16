@@ -1,9 +1,11 @@
-#include <stdio.h>
-#include "test.h"
+#include "main.h"
 
-int main()
+int main(int argc, char **argv)
 {
-    f1();
-    printf("hello world\n");
+    t_parser parser;
+
+    // printf("parsing debugging start\n");
+    parsing(argc, argv, &parser);
+    // printf("parsing debugging end\n");
     return 0;
 }
