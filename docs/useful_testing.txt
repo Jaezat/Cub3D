@@ -1,0 +1,8 @@
+norminette | grep -vE HEADER
+this will ignore the HEADER warning at this stage of development
+the header eats away the history from vscode because of autosave
+so its a good idea not to put the headers until we're readier to deliver
+
+norminette | grep -vE "HEADER|COMM"
+complimentary in case you like to leave comments inside functions
+

@@ -10,7 +10,7 @@ MLXFLGS	= -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 SRC_DIR = srcs/
 OBJ_DIR = build/
 
-SRCS    = $(addprefix srcs/, main.c parsing0.c parsing1.c)
+SRCS    = $(addprefix srcs/, main.c $(addprefix parser/, init.c asset_check.c gnl.c utils.c))
 OBJS    = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(MLX_DIR) $(NAME)
@@ -23,6 +23,14 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+
+# Does this rule impact the way we are compiling in Makefile?
+#############################################################
+
+# You must use the miniLibX. Either the version that is available on the operating
+# system, or from its sources. If you choose to work with the sources, you will
+# need to apply the same rules for your libft as those written above in Common
+# Instructions part.
 
 $(MLX_DIR):
 	@echo "Cloning minilibx-linux from GitHub..."

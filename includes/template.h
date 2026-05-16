@@ -1,3 +1,3 @@
 #include "main.h"
 
-void template_func(void);
+void	template_func(void);
