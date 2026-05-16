@@ -7,24 +7,9 @@ int	main(int argc, char **argv)
 	t_parser	parser;
 
 	parsing(argc, argv, &parser);
+	// execution below
+	
+	// cleaning routines its returning error as the program exits
+	exit_routine(&parser);
 	return (0);
 }
-
-// @jaz you're free to remove this if it clutters
-// used to test gnl function in srcs/parser/gnl.c
-// void	test(void)
-// {
-// 	int		fd;
-// 	char	*line;
-
-// 	fd = open("srcs/parser/gnl.c", O_RDONLY);
-// 	while (1)
-// 	{
-// 		line = gnl(fd);
-// 		if (!line)
-// 			break ;
-// 		printf("%s", line);
-// 		free(line);
-// 	}
-// 	exit(0);
-// }

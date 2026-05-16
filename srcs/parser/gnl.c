@@ -66,9 +66,10 @@ char	*str_joiner(char *line, char *buf)
 	return (newline);
 }
 
+// added + 1 in buf size and didnt test yet
 char	*gnl(int fd)
 {
-	static char	buf[BUF_SIZE];
+	static char	buf[BUF_SIZE + 1];
 	int			r_size;
 	char		*line;
 
@@ -90,7 +91,3 @@ char	*gnl(int fd)
 			return (line);
 	}
 }
-
-// testing gnl
-
-// a
