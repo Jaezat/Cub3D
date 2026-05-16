@@ -1,4 +1,4 @@
 *.o
 cub3d
-#mlx_linux
-#other_mlxpath
+# mlx_linux
+# other_mlxpaths_dirs
