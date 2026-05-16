@@ -4,8 +4,8 @@ int main(int argc, char **argv)
 {
     t_parser parser;
 
-    printf("hello world\n");
+    // printf("parsing debugging start\n");
     parsing(argc, argv, &parser);
-    printf("bye world\n");
+    // printf("parsing debugging end\n");
     return 0;
 }

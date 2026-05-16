@@ -25,12 +25,9 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 $(MLX_DIR):
-	echo "Downloading minilibx-linux..."
-	curl -s https://cdn.intra.42.fr/document/document/46338/minilibx-linux.tgz -o /tmp/mlx.tgz && \
-		tar -xf /tmp/mlx.tgz -C /tmp && \
-		cp -r /tmp/minilibx-linux $(MLX_DIR) && \
-		rm -rf /tmp/mlx.tgz /tmp/minilibx-linux
-	$(MAKE) -C $(MLX_DIR)
+	@echo "Cloning minilibx-linux from GitHub..."
+	@git clone https://github.com/42paris/minilibx-linux.git $(MLX_DIR)
+	@$(MAKE) -C $(MLX_DIR)
 
 clean:
 	rm -rf $(OBJ_DIR)
