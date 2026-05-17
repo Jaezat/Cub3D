@@ -25,6 +25,7 @@ typedef struct s_parser
 {
 	int		map_fd;
 	char	*arg_map_name;
+	char	**map;
 }			t_parser;
 
 typedef struct s_cubed
@@ -46,7 +47,10 @@ int			ft_strlen(char *str);
 void		exit_routine(t_parser *p);
 void		safe_init(t_parser *p);
 void		ft_puterr(char *str);
-void		ft_bzero(char *mem, size_t size);
+void		ft_bzero(void *mem, size_t size);
+
+// utils2 //////////////////////////////////////////////////////////////////////
+void		free_map(void *ref);
 
 // gnl ////////////////////////////////////////////////////////////////////////
 size_t		line_len(char *str);

@@ -14,7 +14,7 @@ SRC_DIR = srcs/
 OBJ_DIR = build/
 
 SRCS    = $(addprefix $(SRC_DIR), main.c)
-SRCS	+= $(addprefix $(SRC_DIR)parser/, init.c assets.c gnl.c utils.c test_rem.c)
+SRCS	+= $(addprefix $(SRC_DIR)parser/, init.c assets.c gnl.c utils.c utils2.c test_rem.c)
 # SRCS	+= $(addprefix $(SRC_DIR)execdirname/, ex1.c ex2.c ex3.c)
 OBJS    = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
