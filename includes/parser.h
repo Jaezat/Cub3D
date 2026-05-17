@@ -12,11 +12,14 @@
 // this is reasonably big for maps in the context of gnl
 #define BUF_SIZE 32
 
+// enum ///////////////////////////////////////////////////////////////////////
+
+
 // structures /////////////////////////////////////////////////////////////////
 typedef struct s_parser
 {
 	int		map_fd;
-	char	*arg_map_name;
+	char	*map_file;
 	char	**map;
 	int		map_h;
 }			t_parser;
@@ -27,13 +30,13 @@ int			parsing(int argc, char **argv, t_parser *parser);
 // init ///////////////////////////////////////////////////////////////////////
 void		err_exit_msg(char *msg, char *arg, t_parser *p);
 bool		is_cubed_ext(char *filename, char *extension);
-bool		is_cubed_extension(char *file, t_parser *parser);
-int			parse_args(int argc, char **argv, t_parser *parser);
+void		extension_check(char *file, t_parser *parser);
+void		parse_args(int argc, char **argv, t_parser *parser);
 int			parsing(int argc, char **argv, t_parser *parser);
 
 // utils //////////////////////////////////////////////////////////////////////
 int			ft_strlen(char *str);
-void		exit_routine(t_parser *p);
+void		exit_routine(t_parser *p, int exit_co);
 void		safe_init(t_parser *p);
 void		ft_puterr(char *str);
 void		ft_bzero(void *mem, size_t size);
@@ -50,7 +53,7 @@ char		*str_joiner(char *line, char *buf);
 char		*gnl(int fd);
 
 // assets /////////////////////////////////////////////////////////////////////
-int			check_map(t_parser *p);
+void		check_map(t_parser *p);
 void		load_map(t_parser *p);
 size_t		file_ln_count(t_parser *p);
 

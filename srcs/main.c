@@ -9,6 +9,6 @@ int	main(int argc, char **argv)
 	parsing(argc, argv, &parser);
 	// execution below
 	// cleaning routines its returning error as the program exits
-	exit_routine(&parser);
+	exit_routine(&parser, RT_SUCCESS);
 	return (0);
 }
