@@ -1,28 +1,4 @@
-// internal library headers ///////////////////////////////////////////////////
-// can be broken down into smaller headers
-
-// macros and defines /////////////////////////////////////////////////////////
-// good for color codes, hexes, tables, weird return codes (-1, 0, 1)
-// RT for return
-#define RT_ERROR 1
-#define RT_SUCCESS 0
-// bool return for str diff
-#define STR_DIFF 1
-#define STR_SAME 0
-// this is reasonably big for maps in the context of gnl
-#define BUF_SIZE 32
-
-// enum ///////////////////////////////////////////////////////////////////////
-
-
-// structures /////////////////////////////////////////////////////////////////
-typedef struct s_parser
-{
-	int		map_fd;
-	char	*map_file;
-	char	**map;
-	int		map_h;
-}			t_parser;
+#include "parser_structs.h"
 
 // prototypes /////////////////////////////////////////////////////////////////
 int			parsing(int argc, char **argv, t_parser *parser);
@@ -60,5 +36,6 @@ size_t		file_ln_count(t_parser *p);
 // tester, remove later ///////////////////////////////////////////////////////
 void		test_rem(void);
 void		display_map(t_parser *p);
+void		window_test(t_parser *p);
 
 ///////////////////////////////////////////////////////////////////////////////

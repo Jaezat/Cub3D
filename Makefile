@@ -14,7 +14,9 @@ SRC_DIR = srcs/
 OBJ_DIR = build/
 
 SRCS    = $(addprefix $(SRC_DIR), main.c)
-SRCS	+= $(addprefix $(SRC_DIR)parser/, init.c assets.c gnl.c utils.c utils2.c test_rem.c)
+SRCS	+= $(addprefix $(SRC_DIR)parser/, init.c assets.c gnl.c utils.c utils2.c)
+# REMOVE TESTER REMOVE TESTER REMOVE TESTER REMOVE TESTER REMOVE TESTER /////////
+SRCS	+= $(addprefix srcs/parser/, tester.c)
 # SRCS	+= $(addprefix $(SRC_DIR)execdirname/, ex1.c ex2.c ex3.c)
 OBJS    = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -60,9 +62,12 @@ parse: re
 	clear
 	./cub3d assets/maps/valid.cub
 
+VFLAGS += --track-fds=all
+VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all -s
+
 parsev: re
 	sleep 0.3
 	clear
-	valgrind --track-fds=all ./cub3d assets/maps/valid.cub
+	valgrind $(VFLAGS) ./cub3d assets/maps/valid.cub
 
 .PHONY: all clean fclean re

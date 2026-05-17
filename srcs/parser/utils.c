@@ -13,6 +13,8 @@ int	ft_strlen(char *str)
 // TODO: doesnt free yet, just exits
 void	exit_routine(t_parser *p, int exit_co)
 {
+	if (!p)
+		exit(exit_co);
 	// add more variables as they are add in structure
 	if (p->map_fd > -1)
 		ft_safe_close(&p->map_fd);
