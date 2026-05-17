@@ -1,11 +1,14 @@
 #include "main.h"
 
-int main(int argc, char **argv)
+// the idea here is to have minimal invocations in the main
+// parsing exits within itself freeing the memory when necessary
+int	main(int argc, char **argv)
 {
-    t_parser parser;
+	t_parser	parser;
 
-    // printf("parsing debugging start\n");
-    parsing(argc, argv, &parser);
-    // printf("parsing debugging end\n");
-    return 0;
+	parsing(argc, argv, &parser);
+	// execution below
+	// cleaning routines its returning error as the program exits
+	exit_routine(&parser);
+	return (0);
 }
