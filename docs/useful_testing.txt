@@ -6,3 +6,5 @@ so its a good idea not to put the headers until we're readier to deliver
 norminette | grep -vE "HEADER|COMM"
 complimentary in case you like to leave comments inside functions
 
+make parse
+make parsev for valgrind, checks simple mem and file descriptor leaks

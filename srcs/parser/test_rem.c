@@ -17,3 +17,16 @@ void	test_rem(void)
 	}
 	exit(0);
 }
+
+// used to test whether the map was loaded successfully from file to mem
+void	display_map(t_parser *p)
+{
+	int	i;
+
+	i = 0;
+	while (i < p->map_h)
+	{
+		printf("%s", p->map[i]);
+		i++;
+	}
+}

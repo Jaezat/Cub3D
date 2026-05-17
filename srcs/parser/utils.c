@@ -15,7 +15,7 @@ void	exit_routine(t_parser *p)
 {
 	// add more variables as they are add in structure
 	if (p->map_fd > -1)
-		close(p->map_fd);
+		ft_safe_close(&p->map_fd);
 	// p->arg_map_name is on stack
 	if (p->map)
 		free_map(&p->map);

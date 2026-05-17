@@ -60,4 +60,9 @@ parse: re
 	clear
 	./cub3d assets/maps/valid.cub
 
+parsev: re
+	sleep 0.3
+	clear
+	valgrind --track-fds=all ./cub3d assets/maps/valid.cub
+
 .PHONY: all clean fclean re

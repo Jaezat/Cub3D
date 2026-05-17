@@ -1,7 +1,7 @@
 #include "main.h"
 
 // this needs unit testing
-size_t	file_lines(t_parser *p)
+size_t	file_ln_count(t_parser *p)
 {
 	char	buf[BUF_SIZE + 1];
 	int		r_size;
@@ -27,21 +27,36 @@ size_t	file_lines(t_parser *p)
 	return (0);
 }
 
+void	load_map(t_parser *p)
+{
+	int	i;
+
+	ft_safe_close(&p->map_fd);
+	p->map_fd = open(p->arg_map_name, O_RDONLY);
+	if (p->map_fd == -1)
+		err_exit_msg("Couldn't open file -> ", p->arg_map_name, p);
+	i = 0;
+	while (i < p->map_h)
+	{
+		p->map[i] = gnl(p->map_fd);
+		i++;
+	}
+	ft_safe_close(&p->map_fd);
+}
+
 int	check_map(t_parser *p)
 {
-	int	n_lines;
-
 	p->map_fd = open(p->arg_map_name, O_RDONLY);
 	if (p->map_fd == -1)
 		err_exit_msg("Couldn't open file ", p->arg_map_name, p);
-	n_lines = file_lines(p);
-	if (n_lines < 3)
+	p->map_h = file_ln_count(p);
+	if (p->map_h < 3)
 		err_exit_msg("Map doesn't meet minimum size", 0, p);
-	p->map = malloc(sizeof(char *) * (n_lines + 1));
-	ft_bzero(p->map, sizeof(char *) * (n_lines + 1));
+	p->map = malloc(sizeof(char *) * (p->map_h + 1));
+	ft_bzero(p->map, sizeof(char *) * (p->map_h + 1));
 	if (!p->map)
 		err_exit_msg("Failed to allocate memory for map", 0, p);
-	// load_map(p);
-	// printf("here\n");
+	load_map(p);
+	display_map(p);
 	return (RT_SUCCESS);
 }
