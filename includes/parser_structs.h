@@ -13,6 +13,22 @@
 #define BUF_SIZE 32
 
 // enums //////////////////////////////////////////////////////////////////////
+enum		map_flag
+{
+	NO = 1 << 1,
+	SO = 1 << 2,
+	WE = 1 << 3,
+	EA = 1 << 4,
+	MP = 1 << 5
+};
+
+// enum		text_hex
+// {
+// 	NO = 1 << 0,
+// 	SO = 1 << 1,
+// 	WE = 1 << 2,
+// 	EA = 1 << 3,
+// };
 
 // structures /////////////////////////////////////////////////////////////////
 
@@ -29,6 +45,8 @@ typedef struct s_parser
 	int		map_fd;
 	char	*map_file;
 	char	**map;
+	char	**exec_map;
+	int		exec_map_h;
 	int		map_h;
 	t_umlx	*u;
 

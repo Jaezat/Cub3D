@@ -22,11 +22,14 @@ void	test_rem(void)
 void	display_map(t_parser *p)
 {
 	int	i;
+	// char elem[4];
 
+	// ft_bzero(elem, 4);
 	i = 0;
-	while (i < p->map_h)
+	while (i < p->exec_map_h)
 	{
-		printf("%s", p->map[i]);
+		printf("%s", p->exec_map[i]);
+		// direction_n(p->map[i]);
 		i++;
 	}
 }
