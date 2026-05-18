@@ -11,16 +11,17 @@ int	ft_strlen(char *str)
 }
 
 // TODO: doesnt free yet, just exits
-void	exit_routine(t_parser *p)
+void	exit_routine(t_parser *p, int exit_co)
 {
+	if (!p)
+		exit(exit_co);
 	// add more variables as they are add in structure
 	if (p->map_fd > -1)
 		ft_safe_close(&p->map_fd);
-	// p->arg_map_name is on stack
+	p->map_file = NULL; // because its on the stack
 	if (p->map)
 		free_map(&p->map);
-	// free(p);
-	exit(EXIT_FAILURE);
+	exit(exit_co);
 }
 
 void	ft_puterr(char *str)
@@ -31,7 +32,7 @@ void	ft_puterr(char *str)
 void	safe_init(t_parser *p)
 {
 	// add more variables as they are add in structure
-	p->arg_map_name = NULL;
+	p->map_file = NULL;
 	p->map = NULL;
 	p->map_fd = -1;
 }

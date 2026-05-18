@@ -32,23 +32,25 @@ void	load_map(t_parser *p)
 	int	i;
 
 	ft_safe_close(&p->map_fd);
-	p->map_fd = open(p->arg_map_name, O_RDONLY);
+	p->map_fd = open(p->map_file, O_RDONLY);
 	if (p->map_fd == -1)
-		err_exit_msg("Couldn't open file -> ", p->arg_map_name, p);
+		err_exit_msg("Couldn't open file -> ", p->map_file, p);
 	i = 0;
 	while (i < p->map_h)
 	{
 		p->map[i] = gnl(p->map_fd);
 		i++;
 	}
+	if (i < p->map_h)
+		err_exit_msg("Map was not loaded completely", 0, p);
 	ft_safe_close(&p->map_fd);
 }
 
-int	check_map(t_parser *p)
+void	check_map(t_parser *p)
 {
-	p->map_fd = open(p->arg_map_name, O_RDONLY);
+	p->map_fd = open(p->map_file, O_RDONLY);
 	if (p->map_fd == -1)
-		err_exit_msg("Couldn't open file ", p->arg_map_name, p);
+		err_exit_msg("Couldn't open file ", p->map_file, p);
 	p->map_h = file_ln_count(p);
 	if (p->map_h < 3)
 		err_exit_msg("Map doesn't meet minimum size", 0, p);
@@ -58,5 +60,4 @@ int	check_map(t_parser *p)
 		err_exit_msg("Failed to allocate memory for map", 0, p);
 	load_map(p);
 	display_map(p);
-	return (RT_SUCCESS);
 }

@@ -67,6 +67,9 @@ char	*str_joiner(char *line, char *buf)
 }
 
 // added + 1 in buf size and didnt test yet
+// what is gnl fails from bad read, how can i tell outside
+// does it matter? will have partial map and will be invalidated
+// or lucky and gets validated
 char	*gnl(int fd)
 {
 	static char	buf[BUF_SIZE + 1];
