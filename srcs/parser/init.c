@@ -50,10 +50,11 @@ void	parse_args(int argc, char **argv, t_parser *p)
 	extension_check(argv[1], p);
 }
 
+// review if the return of every function is in the parsing is really used
+// check_xpm_integrity();
 int	parsing(int argc, char **argv, t_parser *p)
 {
 	safe_init(p);
-	// maybe i dont need the exit routines and can just be void functions
 	parse_args(argc, argv, p);
 	check_map(p);
 	return (RT_SUCCESS);

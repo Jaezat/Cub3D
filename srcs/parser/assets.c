@@ -61,6 +61,9 @@ bool	direction_n(char *str, int *elem)
 	return (true);
 }
 
+// this is clunky, does it always work??
+// second part checks if there is one element of each
+// and the proceed to open them
 void	check_map_elements(t_parser *p)
 {
 	int	i;
@@ -74,20 +77,20 @@ void	check_map_elements(t_parser *p)
 			break ;
 		i++;
 	}
-	// this is clunky, does it always work??
 	p->exec_map = p->map + i;
 	p->exec_map_h = p->map_h - i;
-	// this can be removed
-	// display_map(p);
-	// check if there is one element of each and the proceed to open them
 	i = 0;
 	while (i < 4)
 	{
-		printf("\n[%d]", elem[i]);
+		if (elem[i] != 1)
+			err_exit_msg("Map requires one file per direction", 0, p);
 		i++;
 	}
 }
 
+// possible bug here or more memory being allocated than necessary
+// char ** last element is null malloc + 1
+// display_map(p);
 void	check_map(t_parser *p)
 {
 	p->map_fd = open(p->map_file, O_RDONLY);
@@ -96,12 +99,10 @@ void	check_map(t_parser *p)
 	p->map_h = file_ln_count(p);
 	if (p->map_h < 3)
 		err_exit_msg("Map doesn't meet minimum size", 0, p);
-	// possible bug here or more memory being allocated than necessary
 	p->map = malloc(sizeof(char *) * (p->map_h + 1));
 	ft_bzero(p->map, sizeof(char *) * (p->map_h + 1));
 	if (!p->map)
 		err_exit_msg("Failed to allocate memory for map", 0, p);
 	load_map(p);
 	check_map_elements(p);
-	// display_map(p);
 }

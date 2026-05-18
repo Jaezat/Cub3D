@@ -9,25 +9,18 @@
 // bool return for str diff
 #define STR_DIFF 1
 #define STR_SAME 0
-// this is reasonably big for maps in the context of gnl
-#define BUF_SIZE 32
+// gnl is short lived, using big buffersize makes it faster
+// 1 page size 4kb * 64 to get to texture size 512 x 512
+#define BUF_SIZE 4096 * 64 - 1
 
 // enums //////////////////////////////////////////////////////////////////////
-enum		map_flag
-{
-	NO = 1 << 1,
-	SO = 1 << 2,
-	WE = 1 << 3,
-	EA = 1 << 4,
-	MP = 1 << 5
-};
-
-// enum		text_hex
+// enum		map_flag
 // {
-// 	NO = 1 << 0,
-// 	SO = 1 << 1,
-// 	WE = 1 << 2,
-// 	EA = 1 << 3,
+// 	NO = 1 << 1,
+// 	SO = 1 << 2,
+// 	WE = 1 << 3,
+// 	EA = 1 << 4,
+// 	MP = 1 << 5
 // };
 
 // structures /////////////////////////////////////////////////////////////////

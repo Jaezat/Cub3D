@@ -22,14 +22,11 @@ void	test_rem(void)
 void	display_map(t_parser *p)
 {
 	int	i;
-	// char elem[4];
 
-	// ft_bzero(elem, 4);
 	i = 0;
 	while (i < p->exec_map_h)
 	{
 		printf("%s", p->exec_map[i]);
-		// direction_n(p->map[i]);
 		i++;
 	}
 }
@@ -54,6 +51,9 @@ void	pick_action(int keycode)
 		printf("keycode: K_S\n");
 }
 
+// mlx_clear_window(p->u->mlx, p->u->win);
+// the cleaning routine can be rearranged to clean everything
+// the mlx objects can be in one place
 int	my_hook(int keycode, void *param)
 {
 	t_parser	*p;
@@ -62,7 +62,6 @@ int	my_hook(int keycode, void *param)
 	pick_action(keycode);
 	if (keycode == K_ESC)
 	{
-		// mlx_clear_window(p->u->mlx, p->u->win);
 		mlx_destroy_image(p->u->mlx, p->u->img);
 		mlx_destroy_window(p->u->mlx, p->u->win);
 		mlx_destroy_display(p->u->mlx);
@@ -75,8 +74,11 @@ int	my_hook(int keycode, void *param)
 void	window_test(t_parser *p)
 {
 	t_umlx	u;
+	int		h;
+	int		w;
 
-	int h, w = 0;
+	h = 0;
+	w = 0;
 	p->u = &u;
 	u.mlx = mlx_init();
 	u.win = mlx_new_window(u.mlx, WIN_W, WIN_H, "test");
