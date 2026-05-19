@@ -6,9 +6,9 @@ WE                   ./assets/textures/we.xpm
 
 EA ./assets/textures/ea.xpm                   
 
-F                                             200,100,0
+F                                             16, 127, 31
 
-C 225,30,0
+C 16, 127, 31
 1111111
 1000001
 1011101

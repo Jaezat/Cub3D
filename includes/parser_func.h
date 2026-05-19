@@ -42,6 +42,7 @@ void	trim_spaces_all(t_parser *p);
 void	trim_spaces(char *str);
 void	check_color_amount(char *str, char **rgb, t_parser *p);
 void	convert_colors(int floor, char **rgb, t_parser *p);
+void	color_array_to_int(int floor, t_parser *p);
 
 // tester, remove later ///////////////////////////////////////////////////////
 void	test_rem(void);

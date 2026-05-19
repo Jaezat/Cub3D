@@ -89,6 +89,8 @@ void	pick_action(int keycode)
 // 	mlx_loop(u.mlx);
 // }
 
+// printf("%x\n", (p->ceiling_hex & (0xff << (8 * 1))) >> (8 * 1));
+// << 1 missing because of the way that endians work
 void	print_ideal(t_parser *p)
 {
 	int	i;
@@ -97,8 +99,14 @@ void	print_ideal(t_parser *p)
 	printf("%s\n", p->so);
 	printf("%s\n", p->we);
 	printf("%s\n", p->ea);
-	printf("%d\t%d\t%d\n", p->hex_f[0], p->hex_f[1], p->hex_f[2]);
-	printf("%d\t%d\t%d\n", p->hex_c[0], p->hex_c[1], p->hex_c[2]);
+	printf("%x\n", p->ceiling_hex);
+	printf("%x\n", (p->ceiling_hex & (0xff << (8 * 0))) >> (8 * 0));
+	printf("%x\n", (p->ceiling_hex & (0xff << (8 * 2))) >> (8 * 2));
+	printf("%x\n", (p->ceiling_hex & (0xff << (8 * 3))) >> (8 * 3));
+	printf("%x\n", p->floor_hex);
+	printf("%x\n", (p->floor_hex & (0xff << (8 * 0))) >> (8 * 0));
+	printf("%x\n", (p->floor_hex & (0xff << (8 * 2))) >> (8 * 2));
+	printf("%x\n", (p->floor_hex & (0xff << (8 * 3))) >> (8 * 3));
 	i = 0;
 	while (p->exec_map[i])
 	{

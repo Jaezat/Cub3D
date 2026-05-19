@@ -66,13 +66,11 @@ void	convert_colors(int floor, char **rgb, t_parser *p)
 	hex = p->hex_c;
 	if (floor)
 		hex = p->hex_f;
-	while (color < 2)
+	while (color < 3)
 	{
-		// printf(">%s\n", rgb[color]);
 		i = 0;
 		while (ft_isdigit(rgb[color][i]) && i < 3)
 		{
-			// printf(">>>%c\n", rgb[color][i]);
 			hex[color] *= 10;
 			hex[color] += rgb[color][i] - '0';
 			i++;
@@ -83,12 +81,36 @@ void	convert_colors(int floor, char **rgb, t_parser *p)
 	}
 }
 
+void	color_array_to_int(int floor, t_parser *p)
+{
+	int				color_i;
+	int				*hex;
+	unsigned int	tmp;
+
+	tmp = 0;
+	color_i = 0;
+	hex = p->hex_c;
+	if (floor)
+		hex = p->hex_f;
+	while (color_i < 3)
+	{
+		tmp <<= (color_i * 8);
+		tmp += (hex[color_i]);
+		color_i++;
+	}
+	if (floor)
+		p->floor_hex = tmp;
+	else
+		p->ceiling_hex = tmp;
+}
+
 void	trim_spaces_all(t_parser *p)
 {
 	char	**arr;
 	int		i;
-	char	**rgb_arr[2] = {p->rgb_f, p->rgb_c};
+	char	***rgb_arr;
 
+	rgb_arr = (char **[]){p->rgb_f, p->rgb_c};
 	arr = (char *[]){p->ea, p->no, p->so, p->we};
 	i = 0;
 	while (i < 4)
@@ -104,6 +126,7 @@ void	trim_spaces_all(t_parser *p)
 		trim_spaces(arr[i]);
 		check_color_amount(arr[i], rgb_arr[i], p);
 		convert_colors(i, rgb_arr[i], p);
+		color_array_to_int(i, p);
 		i++;
 	}
 }

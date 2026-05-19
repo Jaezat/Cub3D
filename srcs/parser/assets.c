@@ -68,6 +68,10 @@ bool	is_element_count(t_parser *p, char *str)
 // this is clunky, does it always work??
 // second part checks if there is one element of each
 // and the proceed to open them
+// check .xpm ending similar to .cub
+// count colors with commas and conver to int arr or single hexa 0xffffff
+// err_exit_msg("Map requires one file per direction", 0, p);
+
 void	check_map_elements(t_parser *p)
 {
 	int	i;
@@ -86,11 +90,6 @@ void	check_map_elements(t_parser *p)
 	if (!p->floor || !p->ceiling)
 		err_exit_msg("Missing floor or ceiling identifier", 0, p);
 	trim_spaces_all(p);
-	
-	// check .xpm ending similar to .cub
-	// count colors with commas and conver to int arr or single hexa 0xffffff
-	
-	// err_exit_msg("Map requires one file per direction", 0, p);
 }
 
 // possible bug here or more memory being allocated than necessary
@@ -110,5 +109,4 @@ void	check_map(t_parser *p)
 	load_map_file(p);
 	check_map_elements(p);
 	print_ideal(p);
-	// parse_xpm_filenames(p);
 }

@@ -28,29 +28,31 @@
 // test type to carry mlx objects
 typedef struct s_umlx
 {
-	void	*img;
-	void	*mlx;
-	void	*win;
-}			t_umlx;
+	void			*img;
+	void			*mlx;
+	void			*win;
+}					t_umlx;
 
 // u can be removed later depending on context
 // t_umlx	*u;
 typedef struct s_parser
 {
-	int		map_fd;
-	char	*map_file;
-	char	**map;
-	char	**exec_map;
-	int		exec_map_h;
-	int		map_h;
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	char	*floor;
-	char	*ceiling;
-	char	*rgb_f[3];
-	char	*rgb_c[3];
-	int		hex_f[3];
-	int		hex_c[3];
-}			t_parser;
+	int				map_fd;
+	char			*map_file;
+	char			**map;
+	char			**exec_map;
+	int				exec_map_h;
+	int				map_h;
+	char			*no;
+	char			*so;
+	char			*we;
+	char			*ea;
+	char			*floor;
+	char			*ceiling;
+	char			*rgb_f[3];
+	char			*rgb_c[3];
+	int				hex_f[3];
+	int				hex_c[3];
+	unsigned int	floor_hex;
+	unsigned int	ceiling_hex;
+}					t_parser;
