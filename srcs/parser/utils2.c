@@ -43,3 +43,10 @@ int	ft_strncmp(char *s1, char *s2, size_t len)
 	}
 	return (0);
 }
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (c);
+	return (false);
+}

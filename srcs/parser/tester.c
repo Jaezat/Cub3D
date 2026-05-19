@@ -97,8 +97,8 @@ void	print_ideal(t_parser *p)
 	printf("%s\n", p->so);
 	printf("%s\n", p->we);
 	printf("%s\n", p->ea);
-	printf("%s\n", p->floor);
-	printf("%s\n", p->ceiling);
+	printf("%d\t%d\t%d\n", p->hex_f[0], p->hex_f[1], p->hex_f[2]);
+	printf("%d\t%d\t%d\n", p->hex_c[0], p->hex_c[1], p->hex_c[2]);
 	i = 0;
 	while (p->exec_map[i])
 	{

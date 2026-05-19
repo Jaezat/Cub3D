@@ -86,6 +86,7 @@ void	check_map_elements(t_parser *p)
 	if (!p->floor || !p->ceiling)
 		err_exit_msg("Missing floor or ceiling identifier", 0, p);
 	trim_spaces_all(p);
+	
 	// check .xpm ending similar to .cub
 	// count colors with commas and conver to int arr or single hexa 0xffffff
 	

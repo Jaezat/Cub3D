@@ -49,4 +49,8 @@ typedef struct s_parser
 	char	*ea;
 	char	*floor;
 	char	*ceiling;
+	char	*rgb_f[3];
+	char	*rgb_c[3];
+	int		hex_f[3];
+	int		hex_c[3];
 }			t_parser;

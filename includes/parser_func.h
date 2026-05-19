@@ -21,6 +21,7 @@ void	ft_bzero(void *mem, size_t size);
 void	free_map(void *ref);
 void	ft_safe_close(int *fd);
 int		ft_strncmp(char *s1, char *s2, size_t len);
+int		ft_isdigit(int c);
 
 // gnl ////////////////////////////////////////////////////////////////////////
 size_t	line_len(char *str);
@@ -39,7 +40,8 @@ bool	is_element_count(t_parser *p, char *str);
 // assets2 ////////////////////////////////////////////////////////////////////
 void	trim_spaces_all(t_parser *p);
 void	trim_spaces(char *str);
-void	check_colors(char *str, t_parser *p);
+void	check_color_amount(char *str, char **rgb, t_parser *p);
+void	convert_colors(int floor, char **rgb, t_parser *p);
 
 // tester, remove later ///////////////////////////////////////////////////////
 void	test_rem(void);
