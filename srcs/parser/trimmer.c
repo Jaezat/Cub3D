@@ -104,7 +104,8 @@ void	color_array_to_int(int floor, t_parser *p)
 		p->ceiling_hex = tmp;
 }
 
-void	trim_spaces_all(t_parser *p)
+// this is trimming and checking colors one function does two things = bad
+void	trim_convert(t_parser *p)
 {
 	char	**arr;
 	int		i;

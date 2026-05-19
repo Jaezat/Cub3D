@@ -38,7 +38,7 @@ void	load_map_file(t_parser *p)
 	i = 0;
 	while (i < p->map_h)
 	{
-		p->map[i] = gnl(p->map_fd);
+		p->map_tofree[i] = gnl(p->map_fd);
 		i++;
 	}
 	if (i < p->map_h)
@@ -79,21 +79,22 @@ void	check_map_elements(t_parser *p)
 	i = 0;
 	while (i < p->map_h)
 	{
-		if (is_element_count(p, p->map[i]) == false)
+		if (is_element_count(p, p->map_tofree[i]) == false)
 			break ;
 		i++;
 	}
-	p->exec_map = p->map + i;
+	p->exec_map = p->map_tofree + i;
 	p->exec_map_h = p->map_h - i;
 	if (!p->ea || !p->no || !p->so || !p->we)
 		err_exit_msg("Missing XPM identifier", 0, p);
 	if (!p->floor || !p->ceiling)
 		err_exit_msg("Missing floor or ceiling identifier", 0, p);
-	trim_spaces_all(p);
+	trim_convert(p);
 }
 
 // possible bug here or more memory being allocated than necessary
 // char ** last element is null malloc + 1
+// 	if (p->map_h < 3) i think this is useless now
 void	check_map(t_parser *p)
 {
 	p->map_fd = open(p->map_file, O_RDONLY);
@@ -102,11 +103,12 @@ void	check_map(t_parser *p)
 	p->map_h = file_ln_count(p);
 	if (p->map_h < 3)
 		err_exit_msg("Map doesn't meet minimum size", 0, p);
-	p->map = malloc(sizeof(char *) * (p->map_h + 1));
-	ft_bzero(p->map, sizeof(char *) * (p->map_h + 1));
-	if (!p->map)
+	p->map_tofree = malloc(sizeof(char *) * (p->map_h + 1));
+	ft_bzero(p->map_tofree, sizeof(char *) * (p->map_h + 1));
+	if (!p->map_tofree)
 		err_exit_msg("Failed to allocate memory for map", 0, p);
 	load_map_file(p);
 	check_map_elements(p);
-	print_ideal(p);
+	flood_init(p);
+	// print_ideal(p);
 }

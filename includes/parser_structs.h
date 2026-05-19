@@ -39,9 +39,10 @@ typedef struct s_parser
 {
 	int				map_fd;
 	char			*map_file;
-	char			**map;
+	char			**map_tofree;
 	char			**exec_map;
 	int				exec_map_h;
+	int				exec_map_w;
 	int				map_h;
 	char			*no;
 	char			*so;

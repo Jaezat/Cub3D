@@ -19,8 +19,8 @@ void	exit_routine(t_parser *p, int exit_co)
 	if (!p)
 		exit(exit_co);
 	ft_safe_close(&p->map_fd);
-	if (p->map)
-		free_map(&p->map);
+	if (p->map_tofree)
+		free_map(&p->map_tofree);
 	exit(exit_co);
 }
 

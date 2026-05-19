@@ -50,3 +50,18 @@ int	ft_isdigit(int c)
 		return (c);
 	return (false);
 }
+
+void	space_to_wall(void *ref, size_t size)
+{
+	size_t	i;
+	char	*mem;
+
+	i = 0;
+	mem = ref;
+	while (i < size)
+	{
+		if (mem[i] == ' ')
+			mem[i] = '1';
+		i++;
+	}
+}
