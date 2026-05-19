@@ -7,8 +7,8 @@
 #define RT_ERROR 1
 #define RT_SUCCESS 0
 // bool return for str diff
-#define STR_DIFF 1
-#define STR_SAME 0
+#define DIFF 1
+#define SAME 0
 // gnl is short lived, using big buffersize makes it faster
 // 1 page size 4kb * 64 to get to texture size 512 x 512
 #define BUF_SIZE 4096 * 64 - 1
@@ -33,6 +33,8 @@ typedef struct s_umlx
 	void	*win;
 }			t_umlx;
 
+// u can be removed later depending on context
+// t_umlx	*u;
 typedef struct s_parser
 {
 	int		map_fd;
@@ -41,6 +43,10 @@ typedef struct s_parser
 	char	**exec_map;
 	int		exec_map_h;
 	int		map_h;
-	t_umlx	*u;
-
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*floor;
+	char	*ceiling;
 }			t_parser;

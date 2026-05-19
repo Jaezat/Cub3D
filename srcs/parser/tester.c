@@ -54,37 +54,56 @@ void	pick_action(int keycode)
 // mlx_clear_window(p->u->mlx, p->u->win);
 // the cleaning routine can be rearranged to clean everything
 // the mlx objects can be in one place
-int	my_hook(int keycode, void *param)
-{
-	t_parser	*p;
+// int	my_hook(int keycode, void *param)
+// {
+// 	t_parser	*p;
 
-	p = param;
-	pick_action(keycode);
-	if (keycode == K_ESC)
+// 	p = param;
+// 	pick_action(keycode);
+// 	if (keycode == K_ESC)
+// 	{
+// 		mlx_destroy_image(p->u->mlx, p->u->img);
+// 		mlx_destroy_window(p->u->mlx, p->u->win);
+// 		mlx_destroy_display(p->u->mlx);
+// 		free(p->u->mlx);
+// 		exit_routine(p, 0);
+// 	}
+// 	return (1);
+// }
+
+// void	window_test(t_parser *p)
+// {
+// 	t_umlx	u;
+// 	int		h;
+// 	int		w;
+
+// 	h = 0;
+// 	w = 0;
+// 	p->u = &u;
+// 	u.mlx = mlx_init();
+// 	u.win = mlx_new_window(u.mlx, WIN_W, WIN_H, "test");
+// 	p->u->img = mlx_xpm_file_to_image(p->u->mlx, "assets/textures/lavender.xpm",
+// 			&w, &h);
+// 	mlx_put_image_to_window(p->u->mlx, p->u->win, p->u->img, 0, 0);
+// 	mlx_key_hook(u.win, my_hook, p);
+// 	mlx_loop(u.mlx);
+// }
+
+void	print_ideal(t_parser *p)
+{
+	int	i;
+
+	printf("%s\n", p->no);
+	printf("%s\n", p->so);
+	printf("%s\n", p->we);
+	printf("%s\n", p->ea);
+	printf("%s\n", p->floor);
+	printf("%s\n", p->ceiling);
+	i = 0;
+	while (p->exec_map[i])
 	{
-		mlx_destroy_image(p->u->mlx, p->u->img);
-		mlx_destroy_window(p->u->mlx, p->u->win);
-		mlx_destroy_display(p->u->mlx);
-		free(p->u->mlx);
-		exit_routine(p, 0);
+		printf("%s", p->exec_map[i]);
+		i++;
 	}
-	return (1);
-}
-
-void	window_test(t_parser *p)
-{
-	t_umlx	u;
-	int		h;
-	int		w;
-
-	h = 0;
-	w = 0;
-	p->u = &u;
-	u.mlx = mlx_init();
-	u.win = mlx_new_window(u.mlx, WIN_W, WIN_H, "test");
-	p->u->img = mlx_xpm_file_to_image(p->u->mlx, "assets/textures/lavender.xpm",
-			&w, &h);
-	mlx_put_image_to_window(p->u->mlx, p->u->win, p->u->img, 0, 0);
-	mlx_key_hook(u.win, my_hook, p);
-	mlx_loop(u.mlx);
+	printf("\n");
 }

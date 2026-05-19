@@ -1,13 +1,14 @@
-NO ./assets/textures/slate_wide.xpm
-SO ./assets/textures/slate_wide.xpm
+NO               ./assets/textures/no.xpm
+SO ./assets/textures/so.xpm
 
-WE ./assets/textures/slate_wide.xpm
-
-
-EA ./assets/textures/slate_wide.xpm
+WE                   ./assets/textures/we.xpm
 
 
+EA ./assets/textures/ea.xpm                   
 
+F                                             200,100,0       spaces
+
+C 225,30,0
 1111111
 1000001
 1011101

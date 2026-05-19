@@ -30,10 +30,10 @@ void	ft_puterr(char *str)
 }
 
 // add more variables as they are add in structure
+// changed to bzero
 void	safe_init(t_parser *p)
 {
-	p->map_file = NULL;
-	p->map = NULL;
+	ft_bzero(p, sizeof(t_parser));
 	p->map_fd = -1;
 }
 

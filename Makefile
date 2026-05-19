@@ -14,7 +14,7 @@ SRC_DIR = srcs/
 OBJ_DIR = build/
 
 SRCS    = $(addprefix $(SRC_DIR), main.c)
-SRCS	+= $(addprefix $(SRC_DIR)parser/, init.c assets.c gnl.c utils.c utils2.c)
+SRCS	+= $(addprefix $(SRC_DIR)parser/, init.c assets.c assets2.c gnl.c utils.c utils2.c)
 # REMOVE TESTER REMOVE TESTER REMOVE TESTER REMOVE TESTER REMOVE TESTER /////////
 SRCS	+= $(addprefix srcs/parser/, tester.c)
 # SRCS	+= $(addprefix $(SRC_DIR)execdirname/, ex1.c ex2.c ex3.c)
