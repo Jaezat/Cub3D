@@ -24,12 +24,12 @@ bool	is_cubed_ext(char *filename, char *extension)
 	return (true);
 }
 
-// fd needs to get stored
+// are the pointer arithmetics safe in all cases?
 void	extension_check(char *file, char *ext, t_parser *p)
 {
 	int	ext_len;
 
-	if (!file || !*file)
+	if (!*file)
 		err_exit_msg("Empty filepath", 0, p);
 	ext_len = ft_strlen(file);
 	if (ext_len < 5)
@@ -50,12 +50,18 @@ void	parse_args(int argc, char **argv, t_parser *p)
 	extension_check(argv[1], ".cub", p);
 }
 
-// review if the return of every function is in the parsing is really used
-// check_xpm_integrity();
-int	parsing(int argc, char **argv, t_parser *p)
+t_data	*parsing(int argc, char **argv)
 {
-	safe_init(p);
-	parse_args(argc, argv, p);
-	check_map(p);
-	return (RT_SUCCESS);
+	t_parser	parser;
+	t_data		*data;
+
+	safe_init(&parser);
+	parse_args(argc, argv, &parser);
+	check_map(&parser);
+	data = NULL;
+	data = pass_it_on(&parser);
+	if (!data)
+		exit_routine(&parser, RT_ERROR);
+	exit_routine(&parser, RT_SUCCESS);
+	return (data);
 }

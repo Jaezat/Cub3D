@@ -107,8 +107,8 @@ void	flood_init(t_parser *p)
 	start_flooding(p);
 }
 
+// debug //////////////////////////////////////////////////////////////////
+// free_matrix(&map, p->exec_map_h);
 // printf("[%d]\n", p->exec_map_w);
 // printf("%d\n", p->exec_map_h);
 // free(map);
-// debug //////////////////////////////////////////////////////////////////
-// free_matrix(&map, p->exec_map_h);

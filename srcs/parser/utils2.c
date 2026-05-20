@@ -1,6 +1,5 @@
 #include "main.h"
 
-// needs unit testing
 void	free_map(void *ref)
 {
 	char	**map;
@@ -23,7 +22,6 @@ void	ft_safe_close(int *fd)
 	*fd = -1;
 }
 
-// unit testing
 int	ft_strncmp(char *s1, char *s2, size_t len)
 {
 	size_t	i;

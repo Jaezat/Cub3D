@@ -91,7 +91,7 @@ void	pick_action(int keycode)
 
 // printf("%x\n", (p->ceiling_hex & (0xff << (8 * 1))) >> (8 * 1));
 // << 1 missing because of the way that endians work
-void	print_ideal(t_parser *p)
+void	print_t_parser(t_parser *p)
 {
 	int	i;
 
@@ -111,6 +111,53 @@ void	print_ideal(t_parser *p)
 	while (p->exec_map[i])
 	{
 		printf("%s", p->exec_map[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+void	print_t_data(t_data *d)
+{
+	int	i;
+	int	j;
+
+	printf("%s\n", d->no);
+	printf("%s\n", d->so);
+	printf("%s\n", d->we);
+	printf("%s\n", d->ea);
+	printf("%x\n", d->sky);
+	printf("%x\n", d->ground);
+	i = 0;
+	i = 0;
+	while (i < d->map_h)
+	{
+		j = 0;
+		while (j < d->map_w)
+		{
+			printf("%c ", d->map[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	printf("\n");
+}
+
+void	disp_map_arr(t_parser *p)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < p->exec_map_h)
+	{
+		j = 0;
+		while (j < p->exec_map_w)
+		{
+			printf("[%c]", p->map[i][j]);
+			j++;
+		}
+		printf("\n");
 		i++;
 	}
 	printf("\n");
