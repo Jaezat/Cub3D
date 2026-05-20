@@ -49,56 +49,66 @@ void	check_valid_chars(t_parser *p)
 void	free_matrix(void *ref, int h)
 {
 	int		i;
-	char	**mat;
+	char	**map;
 
 	i = 0;
-	mat = *(char ***)ref;
-	while (i < h)
-		free(mat[i++]);
-	free(mat);
+	map = (char **)ref;
+	if (map)
+	{
+		while (i < h)
+		{
+			if (map[i])
+			{
+				free(map[i]);
+				map[i] = NULL;
+			}
+			i++;
+		}
+		free(map);
+	}
 }
 
-void	flood_init(t_parser *p)
+void	alloc_fill_matrix(t_parser *p, char **map)
 {
-	char	**map;
-	int		i;
-	int		j;
-	int		last_char;
+	int	i;
+	int	last_char;
 
-	check_valid_chars(p);
-	get_check_width(p);
-	map = malloc(p->exec_map_h * sizeof(char *));
+	last_char = 0;
 	i = 0;
 	while (i < p->exec_map_h)
 	{
 		map[i] = malloc(p->exec_map_w);
+		if (!map[i])
+			err_exit_msg("Failed to allocate memory for line", 0, p);
 		ft_bzero(map[i], p->exec_map_w);
 		copier(map[i], p->exec_map[i], ft_strlen(p->exec_map[i]) - 1);
 		space_to_wall(map[i], p->exec_map_w);
 		i++;
 	}
-	// this is so overly confusing
 	--i;
 	if (p->exec_map[i] && *p->exec_map[i])
 	{
 		last_char = ft_strlen(p->exec_map[i]) - 1;
 		map[i][last_char] = p->exec_map[i][last_char];
 	}
-	// printf("[%d]\n", p->exec_map_w);
-	// printf("%d\n", p->exec_map_h);
-	// free(map);
-	// debug //////////////////////////////////////////////////////////////////
-	i = 0;
-	while (i < p->exec_map_h)
-	{
-		j = 0;
-		while (j < p->exec_map_w)
-		{
-			printf("[%c]", map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-	free_matrix(&map, p->exec_map_h);
 }
+
+void	flood_init(t_parser *p)
+{
+	char	**map;
+
+	check_valid_chars(p);
+	get_check_width(p);
+	map = malloc(p->exec_map_h * sizeof(char *));
+	if (!map)
+		err_exit_msg("Failed to allocate memory for map array", 0, p);
+	p->map = map;
+	alloc_fill_matrix(p, map);
+	start_flooding(p);
+}
+
+// printf("[%d]\n", p->exec_map_w);
+// printf("%d\n", p->exec_map_h);
+// free(map);
+// debug //////////////////////////////////////////////////////////////////
+// free_matrix(&map, p->exec_map_h);

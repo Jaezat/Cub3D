@@ -33,8 +33,13 @@ void	color_array_to_int(int floor, t_parser *p);
 
 // flood //////////////////////////////////////////////////////////////////////
 void	flood_init(t_parser *p);
+void	alloc_fill_matrix(t_parser *p, char **map);
 void	check_valid_chars(t_parser *p);
 void	get_check_width(t_parser *p);
+void	free_matrix(void *ref, int h);
+
+// fill ///////////////////////////////////////////////////////////////////////
+void	start_flooding(t_parser *p);
 
 // utils //////////////////////////////////////////////////////////////////////
 int		ft_strlen(char *str);

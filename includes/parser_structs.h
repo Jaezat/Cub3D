@@ -56,4 +56,18 @@ typedef struct s_parser
 	int				hex_c[3];
 	unsigned int	floor_hex;
 	unsigned int	ceiling_hex;
+	char			**map;
 }					t_parser;
+
+// typedef struct s_context
+// {
+// 	char			**map;
+// 	int				sky;
+// 	int				ground;
+// 	int				map_h;
+// 	int				map_w;
+// 	char			*no;
+// 	char			*so;
+// 	char			*we;
+// 	char			*ea;
+// }					t_context;

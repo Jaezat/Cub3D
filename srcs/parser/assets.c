@@ -95,6 +95,7 @@ void	check_map_elements(t_parser *p)
 // possible bug here or more memory being allocated than necessary
 // char ** last element is null malloc + 1
 // 	if (p->map_h < 3) i think this is useless now
+// print_ideal(p);
 void	check_map(t_parser *p)
 {
 	p->map_fd = open(p->map_file, O_RDONLY);
@@ -110,5 +111,4 @@ void	check_map(t_parser *p)
 	load_map_file(p);
 	check_map_elements(p);
 	flood_init(p);
-	// print_ideal(p);
 }

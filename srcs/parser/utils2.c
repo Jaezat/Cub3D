@@ -61,7 +61,7 @@ void	space_to_wall(void *ref, size_t size)
 	while (i < size)
 	{
 		if (mem[i] == ' ')
-			mem[i] = '1';
+			mem[i] = 'X';
 		i++;
 	}
 }

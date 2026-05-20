@@ -21,6 +21,11 @@ void	exit_routine(t_parser *p, int exit_co)
 	ft_safe_close(&p->map_fd);
 	if (p->map_tofree)
 		free_map(&p->map_tofree);
+	if (p->map)
+	{
+		free_matrix(p->map, p->exec_map_h);
+		p->map = NULL;
+	}
 	exit(exit_co);
 }
 
