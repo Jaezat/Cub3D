@@ -1,15 +1,15 @@
 #include "main.h"
 
-// the idea here is to have minimal clutter in the main
-// parsing exits within itself freeing the memory when necessary
 // window_test(&parser);
 // execution between parsing and exit_routine
-// maybe needs to be integrated with exec exit routine
+// check xpm integrity
 int	main(int argc, char **argv)
 {
-	t_parser	parser;
+	t_data	*data;
 
-	parsing(argc, argv, &parser);
-	exit_routine(&parser, RT_SUCCESS);
+	data = parsing(argc, argv);
+	print_t_data(data);
+	if (data)
+		free_data(data);
 	return (0);
 }

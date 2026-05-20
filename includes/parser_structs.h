@@ -28,46 +28,46 @@
 // test type to carry mlx objects
 typedef struct s_umlx
 {
-	void			*img;
-	void			*mlx;
-	void			*win;
-}					t_umlx;
+	void	*img;
+	void	*mlx;
+	void	*win;
+}			t_umlx;
 
 // u can be removed later depending on context
 // t_umlx	*u;
 typedef struct s_parser
 {
-	int				map_fd;
-	char			*map_file;
-	char			**map_tofree;
-	char			**exec_map;
-	int				exec_map_h;
-	int				exec_map_w;
-	int				map_h;
-	char			*no;
-	char			*so;
-	char			*we;
-	char			*ea;
-	char			*floor;
-	char			*ceiling;
-	char			*rgb_f[3];
-	char			*rgb_c[3];
-	int				hex_f[3];
-	int				hex_c[3];
-	unsigned int	floor_hex;
-	unsigned int	ceiling_hex;
-	char			**map;
-}					t_parser;
+	int		map_fd;
+	char	*map_file;
+	char	**map_tofree;
+	char	**exec_map;
+	int		map_h;
+	char	*floor;
+	char	*ceiling;
+	char	*rgb_f[3];
+	char	*rgb_c[3];
+	int		hex_f[3];
+	int		hex_c[3];
+	char	**map;
+	int		ceiling_hex;
+	int		floor_hex;
+	int		exec_map_h;
+	int		exec_map_w;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+}			t_parser;
 
-// typedef struct s_context
-// {
-// 	char			**map;
-// 	int				sky;
-// 	int				ground;
-// 	int				map_h;
-// 	int				map_w;
-// 	char			*no;
-// 	char			*so;
-// 	char			*we;
-// 	char			*ea;
-// }					t_context;
+typedef struct s_data
+{
+	char	**map;
+	int		sky;
+	int		ground;
+	int		map_h;
+	int		map_w;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+}			t_data;

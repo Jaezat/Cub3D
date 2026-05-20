@@ -1,14 +1,13 @@
 #include "parser_structs.h"
 
 // prototypes /////////////////////////////////////////////////////////////////
-int		parsing(int argc, char **argv, t_parser *parser);
 
 // init ///////////////////////////////////////////////////////////////////////
 void	err_exit_msg(char *msg, char *arg, t_parser *p);
 bool	is_cubed_ext(char *filename, char *extension);
 void	extension_check(char *file, char *ext, t_parser *p);
 void	parse_args(int argc, char **argv, t_parser *parser);
-int		parsing(int argc, char **argv, t_parser *parser);
+t_data	*parsing(int argc, char **argv);
 
 // gnl ////////////////////////////////////////////////////////////////////////
 size_t	line_len(char *str);
@@ -40,6 +39,8 @@ void	free_matrix(void *ref, int h);
 
 // fill ///////////////////////////////////////////////////////////////////////
 void	start_flooding(t_parser *p);
+void	splash(t_parser *p, int r, int c, char tag);
+t_data	*pass_it_on(t_parser *parser);
 
 // utils //////////////////////////////////////////////////////////////////////
 int		ft_strlen(char *str);
@@ -55,10 +56,16 @@ int		ft_strncmp(char *s1, char *s2, size_t len);
 int		ft_isdigit(int c);
 void	space_to_wall(void *ref, size_t size);
 
+// utils3 /////////////////////////////////////////////////////////////////////
+void	tf_memcpy(void *dest, void *src, size_t len);
+void	free_data(t_data *d);
+
 // tester, remove later ///////////////////////////////////////////////////////
 void	test_rem(void);
 void	display_map(t_parser *p);
 // void	window_test(t_parser *p);
-void	print_ideal(t_parser *p);
+void	print_t_parser(t_parser *p);
+void	print_t_data(t_data *d);
+void	disp_map_arr(t_parser *p);
 
 ///////////////////////////////////////////////////////////////////////////////
