@@ -25,7 +25,7 @@ bool	is_cubed_ext(char *filename, char *extension)
 }
 
 // fd needs to get stored
-void	extension_check(char *file, t_parser *p)
+void	extension_check(char *file, char *ext, t_parser *p)
 {
 	int	ext_len;
 
@@ -35,8 +35,8 @@ void	extension_check(char *file, t_parser *p)
 	if (ext_len < 5)
 		err_exit_msg("File path too short", 0, p);
 	if (*(file + ext_len - 5) == '/')
-		err_exit_msg("Map name too short -> ", file + ext_len - 5, p);
-	if (is_cubed_ext(file + ext_len - 4, ".cub") == false)
+		err_exit_msg("Name too short -> ", file + ext_len - 5, p);
+	if (is_cubed_ext(file + ext_len - 4, ext) == false)
 		err_exit_msg("Invalid extension -> ", file + ext_len - 4, p);
 	p->map_file = file;
 }
@@ -47,13 +47,14 @@ void	parse_args(int argc, char **argv, t_parser *p)
 		err_exit_msg("Too many arguments", 0, p);
 	if (argc < 2)
 		err_exit_msg("Missing file path", 0, p);
-	extension_check(argv[1], p);
+	extension_check(argv[1], ".cub", p);
 }
 
+// review if the return of every function is in the parsing is really used
+// check_xpm_integrity();
 int	parsing(int argc, char **argv, t_parser *p)
 {
 	safe_init(p);
-	// maybe i dont need the exit routines and can just be void functions
 	parse_args(argc, argv, p);
 	check_map(p);
 	return (RT_SUCCESS);

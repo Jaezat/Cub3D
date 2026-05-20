@@ -1,4 +1,0 @@
-Resources
-
-https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/
-https://timallanwheeler.com/blog/2023/04/01/wolfenstein-3d-raycasting-in-c/

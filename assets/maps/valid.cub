@@ -1,7 +1,19 @@
+NO               ./assets/textures/no.xpm
+SO ./assets/textures/so.xpm
+
+WE                   ./assets/textures/we.xpm
+
+
+EA ./assets/textures/ea.xpm                   
+
+F                                             16, 127, 31
+
+C 16, 127, 31
 1111111
 1000001
 1011101
-101E001
+1010001
 1011101
-1000001
+10N0001
 1111111
+111 11111
