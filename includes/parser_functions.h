@@ -49,7 +49,7 @@ void	pick_action(int keycode);
 void	exit_exec(t_umlx *u, int exit_code);
 int		hook(int keycode, void *param);
 void	load_textures(t_umlx *u);
-void	render(t_data *d);
+void	game(t_data *d);
 
 // utils //////////////////////////////////////////////////////////////////////
 int		ft_strlen(char *str);

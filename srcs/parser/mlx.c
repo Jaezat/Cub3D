@@ -59,7 +59,7 @@ int	hook(int keycode, void *param)
 	// pick_action(keycode);
 	if (keycode == K_ESC)
 		exit_exec(u, 0);
-	mlx_clear_window(u->mlx, u->win);
+	// mlx_clear_window(u->mlx, u->win);
 	mlx_put_image_to_window(u->mlx, u->win, (u->d->imgs + (i % 4))->ptr, 0, 0);
 	++i;
 	i %= 4;
@@ -91,11 +91,11 @@ void	load_textures(t_umlx *u)
 
 int	loop(void *param)
 {
-	t_umlx	*u;
+	t_umlx		*u;
+	static int	i = 0;
 
 	u = param;
 	(void)u;
-	static int i = 0;
 	printf("%d\t", i);
 	++i;
 	i %= 4;
@@ -103,7 +103,7 @@ int	loop(void *param)
 	return (0);
 }
 
-void	render(t_data *d)
+void	game(t_data *d)
 {
 	t_umlx	u;
 
@@ -114,13 +114,9 @@ void	render(t_data *d)
 		exit_exec(&u, 1);
 	u.win = mlx_new_window(u.mlx, WIN_W, WIN_H, "Cub3d");
 	if (!u.win)
-	{
-		// exit_exec();
-	}
-	// wrapper to load all textures
+		exit_exec(&u, 1);
 	load_textures(&u);
-	// exit(0);
 	mlx_key_hook(u.win, hook, &u);
-	mlx_loop_hook(u.mlx, (int (*)())(void *)loop, &u);
 	mlx_loop(u.mlx);
+	mlx_loop_hook(u.mlx, (int (*)())(void *)loop, &u);
 }
