@@ -1,12 +1,10 @@
 #include "main.h"
 
 // execution between parsing and exit_routine
-// check xpm integrity
 int	main(int argc, char **argv)
 {
 	t_data	*data;
 
-	
 	data = parsing(argc, argv);
 	render(data);
 	if (data)

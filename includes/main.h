@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/time.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 // compiled external headers //////////////////////////////////////////////////
@@ -24,6 +25,7 @@
 # define WIN_W 1280
 // common widescreeen ratio
 # define TO_RATIO / 16 * 9
+// # define TO_RATIO / 1
 # define WIN_H WIN_W TO_RATIO
 
 // mlx keycodes

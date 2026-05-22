@@ -47,7 +47,7 @@ t_data	*pass_it_on(t_parser *parser);
 // mlx ////////////////////////////////////////////////////////////////////////
 void	pick_action(int keycode);
 void	exit_exec(t_umlx *u, int exit_code);
-int		my_hook(int keycode, void *param);
+int		hook(int keycode, void *param);
 void	load_textures(t_umlx *u);
 void	render(t_data *d);
 
