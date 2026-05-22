@@ -1,4 +1,6 @@
 #include "parser_structs.h"
+#ifndef PARSER_FUNCTIONS_H
+# define PARSER_FUNCTIONS_H
 
 // prototypes /////////////////////////////////////////////////////////////////
 
@@ -42,6 +44,13 @@ void	start_flooding(t_parser *p);
 void	splash(t_parser *p, int r, int c, char tag);
 t_data	*pass_it_on(t_parser *parser);
 
+// mlx ////////////////////////////////////////////////////////////////////////
+void	pick_action(int keycode);
+void	exit_exec(t_umlx *u, int exit_code);
+int		my_hook(int keycode, void *param);
+void	load_textures(t_umlx *u);
+void	render(t_data *d);
+
 // utils //////////////////////////////////////////////////////////////////////
 int		ft_strlen(char *str);
 void	exit_routine(t_parser *p, int exit_co);
@@ -63,9 +72,9 @@ void	free_data(t_data *d);
 // tester, remove later ///////////////////////////////////////////////////////
 void	test_rem(void);
 void	display_map(t_parser *p);
-// void	window_test(t_parser *p);
 void	print_t_parser(t_parser *p);
 void	print_t_data(t_data *d);
 void	disp_map_arr(t_parser *p);
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////

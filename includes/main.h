@@ -1,4 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
+
 // external library headers ///////////////////////////////////////////////////
 #include <fcntl.h>
 #include <stdbool.h>
@@ -11,33 +12,37 @@
 #include "../mlx_linux/mlx.h"
 
 // internal library headers ///////////////////////////////////////////////////
-#include "parser_func.h"
+#include "parser_functions.h"
 
+#ifndef MAIN_H
+# define MAIN_H
 // macros and defines /////////////////////////////////////////////////////////
 // good for color codes, hexes, tables, weird return codes (-1, 0, 1)
 
 // this could be proportional to screen resolution
 // makes it slower on the iMacs
-#define WIN_W 1280
+# define WIN_W 1280
 // common widescreeen ratio
-#define TO_RATIO / 16 * 9
-#define WIN_H WIN_W TO_RATIO
+# define TO_RATIO / 16 * 9
+# define WIN_H WIN_W TO_RATIO
 
 // mlx keycodes
-#define K_LEFT	65361
-#define K_UP	65362
-#define K_RIGHT	65363
-#define K_DOWN	65364
-#define K_ESC	65307
+# define K_LEFT 65361
+# define K_UP 65362
+# define K_RIGHT 65363
+# define K_DOWN 65364
+# define K_ESC 65307
 
-#define K_A		97
-#define K_W		119
-#define K_D		100
-#define K_S		115
+# define K_A 97
+# define K_W 119
+# define K_D 100
+# define K_S 115
 
 // FILE1 //////////////////////////////////////////////////////////////////////
 
 // FILE2 //////////////////////////////////////////////////////////////////////
 
 // FILE3 //////////////////////////////////////////////////////////////////////
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////

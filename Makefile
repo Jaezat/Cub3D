@@ -15,7 +15,7 @@ OBJ_DIR = build/
 
 SRCS    = $(addprefix $(SRC_DIR), main.c)
 SRCS	+= $(addprefix $(SRC_DIR)parser/, init.c assets.c trimmer.c flood.c \
-		fill.c gnl.c utils.c utils2.c utils3.c)
+		fill.c gnl.c mlx.c utils.c utils2.c utils3.c)
 
 # REMOVE TESTER REMOVE TESTER REMOVE TESTER REMOVE TESTER REMOVE TESTER /////////
 SRCS	+= $(addprefix srcs/parser/, tester.c)
