@@ -1,4 +1,4 @@
-#include "main.h"
+#include "main.h" // remmeber to remove tester file
 
 // used to test gnl function in srcs/parser/gnl.c
 void	test_rem(void)

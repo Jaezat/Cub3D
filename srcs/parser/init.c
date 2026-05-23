@@ -7,7 +7,7 @@ void	err_exit_msg(char *msg, char *arg, t_parser *p)
 	if (arg)
 		ft_puterr(arg);
 	ft_puterr("\n");
-	exit_routine(p, RT_ERROR);
+	exit_parse(p, RT_ERROR);
 }
 
 bool	is_cubed_ext(char *filename, char *extension)
@@ -61,7 +61,7 @@ t_data	*parsing(int argc, char **argv)
 	data = NULL;
 	data = pass_it_on(&parser);
 	if (!data)
-		exit_routine(&parser, RT_ERROR);
-	exit_routine(&parser, RT_SUCCESS);
+		exit_parse(&parser, RT_ERROR);
+	exit_parse(&parser, RT_SUCCESS);
 	return (data);
 }

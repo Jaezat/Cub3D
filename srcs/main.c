@@ -1,6 +1,6 @@
 #include "main.h"
 
-// execution between parsing and exit_routine
+// execution between parsing and exit_parse
 int	main(int argc, char **argv)
 {
 	t_data	*data;

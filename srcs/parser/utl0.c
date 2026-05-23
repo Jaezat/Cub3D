@@ -10,20 +10,6 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-void	exit_routine(t_parser *p, int exit_co)
-{
-	ft_safe_close(&p->map_fd);
-	if (p->map_tofree)
-		free_map(&p->map_tofree);
-	if (p->map)
-	{
-		free_matrix(p->map, p->exec_map_h);
-		p->map = NULL;
-	}
-	if (exit_co == RT_ERROR)
-		exit(exit_co);
-}
-
 void	ft_puterr(char *str)
 {
 	write(STDERR_FILENO, str, ft_strlen(str));

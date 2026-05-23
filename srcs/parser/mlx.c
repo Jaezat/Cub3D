@@ -21,32 +21,6 @@ void	pick_action(int keycode)
 		printf("keycode: K_S\n");
 }
 
-// i dont know about this one // if (u->img) mlx_destroy_image(u->mlx, u->img);
-void	exit_exec(t_umlx *u, int exit_code)
-{
-	int		i;
-	t_img	*img;
-
-	if (u->win)
-		mlx_destroy_window(u->mlx, u->win);
-	i = 0;
-	while (i < 4)
-	{
-		img = u->d->imgs + i;
-		if (img->ptr)
-			mlx_destroy_image(u->mlx, img->ptr);
-		i++;
-	}
-	if (u->mlx)
-	{
-		mlx_destroy_display(u->mlx);
-		free(u->mlx);
-	}
-	if (u->d)
-		free_data(u->d);
-	exit(exit_code);
-}
-
 // mlx_clear_window(p->u->mlx, p->u->win);
 // the cleaning routine can be rearranged to clean everything
 // the mlx objects can be in one place

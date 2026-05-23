@@ -13,14 +13,14 @@ MLXFLGS	= -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 SRC_DIR = srcs/
 OBJ_DIR = build/
 
-SRCS    = $(addprefix $(SRC_DIR), main.c)
+SRCS    += $(addprefix $(SRC_DIR), main.c)
 
-P_FILES = init asset trim flood fill gnl mlx utl0 utl1 utl2 exit \
- \
-tester # ////////////////////////////////////////////////////// remove tester /
-# ///////////////////////////////////////////////////////////// remove tester /
-SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(P_FILES)))
-
+PARSE_DIR = $(SRCS)parser/
+SRCS	+= $(addprefix $(PARSE_DIR), $(addsuffix .c, init assets trimmer gnl \
+flood fill mlx exit_frees utils utils2 utils3))
+# REMOVE TESTER REMOVE TESTER REMOVE TESTER REMOVE TESTER REMOVE TESTER /////////
+SRCS	+= $(addprefix srcs/parser/, tester.c)
+# SRCS	+= $(addprefix $(SRC_DIR)execdirname/, ex1.c ex2.c ex3.c)
 OBJS    = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(MLX_DIR) $(NAME)
