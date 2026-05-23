@@ -6,9 +6,9 @@ WE                   ./assets/textures/badge.xpm
 
 EA ./assets/textures/slate_wide.xpm                   
 
-F                                             16, 127, 31
+F                                             0, 255, 0
 
-C 16, 127, 31
+C 0, 0, 255
 1111111
 1000001
 1011101

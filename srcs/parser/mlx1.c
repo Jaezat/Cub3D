@@ -26,17 +26,11 @@ void	pick_action(int keycode)
 // the mlx objects can be in one place
 int	hook(int keycode, void *param)
 {
-	t_umlx		*u;
-	static int	i = 0;
+	t_umlx	*u;
 
 	u = param;
-	// pick_action(keycode);
 	if (keycode == K_ESC)
 		exit_exec(u, 0);
-	// mlx_clear_window(u->mlx, u->win);
-	mlx_put_image_to_window(u->mlx, u->win, (u->d->imgs + (i % 4))->ptr, 0, 0);
-	++i;
-	i %= 4;
 	return (1);
 }
 
@@ -65,32 +59,26 @@ void	load_textures(t_umlx *u)
 
 int	loop(void *param)
 {
-	t_umlx		*u;
-	static int	i = 0;
-
-	u = param;
-	(void)u;
-	printf("%d\t", i);
-	++i;
-	i %= 4;
+	// t_umlx		*u;
+	// int			i;
+	// int			j;
+	// static int	color = 0;
+	(void)param;
+	// u = param;
+	paint_put((t_umlx *)param);
+	// i = -1;
+	// while (++i < WIN_H)
+	// {
+	// 	j = -1;
+	// 	while (++j < WIN_W)
+	// 	{
+	// 		// u->img
+	// 	}
+	// 	// usleep(10);
+	// 	color += rand();
+	// }
+	// printf("%d\t", i);
+	// mlx_put_image_to_window(u->mlx, u->win, u->img, 100, 100);
 	// exit_exec(u, 0);
 	return (0);
-}
-
-void	game(t_data *d)
-{
-	t_umlx	u;
-
-	ft_bzero(&u, sizeof(t_umlx));
-	u.d = d;
-	u.mlx = mlx_init();
-	if (!u.mlx)
-		exit_exec(&u, 1);
-	u.win = mlx_new_window(u.mlx, WIN_W, WIN_H, "Cub3d");
-	if (!u.win)
-		exit_exec(&u, 1);
-	load_textures(&u);
-	mlx_key_hook(u.win, hook, &u);
-	mlx_loop(u.mlx);
-	mlx_loop_hook(u.mlx, (int (*)())(void *)loop, &u);
 }

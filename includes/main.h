@@ -6,7 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <math.h>
 #include <sys/time.h>
+#define _USE_MATH_DEFINES
 
 ///////////////////////////////////////////////////////////////////////////////
 // compiled external headers //////////////////////////////////////////////////
@@ -19,14 +21,6 @@
 # define MAIN_H
 // macros and defines /////////////////////////////////////////////////////////
 // good for color codes, hexes, tables, weird return codes (-1, 0, 1)
-
-// this could be proportional to screen resolution
-// makes it slower on the iMacs
-# define WIN_W 1280
-// common widescreeen ratio
-# define TO_RATIO / 16 * 9
-// # define TO_RATIO / 1
-# define WIN_H WIN_W TO_RATIO
 
 // mlx keycodes
 # define K_LEFT 65361

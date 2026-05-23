@@ -42,12 +42,19 @@ void	start_flooding(t_parser *p);
 void	splash(t_parser *p, int r, int c, char tag);
 t_data	*pass_it_on(t_parser *parser);
 
-// mlx ////////////////////////////////////////////////////////////////////////
+// mlx0 ////////////////////////////////////////////////////////////////////////
+// TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING /////
+// TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING /////
+// TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING /////
+void	game(t_data *d);
+void	paint_put(t_umlx *u);
+void	get_addr(t_umlx *u);
+
+// mlx1 ////////////////////////////////////////////////////////////////////////
 void	pick_action(int keycode);
-void	exit_exec(t_umlx *u, int exit_code);
 int		hook(int keycode, void *param);
 void	load_textures(t_umlx *u);
-void	game(t_data *d);
+int		loop(void *param);
 
 // exit ///////////////////////////////////////////////////////////////////////
 void	exit_parse(t_parser *p, int exit_co);
