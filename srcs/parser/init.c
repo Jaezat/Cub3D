@@ -1,15 +1,5 @@
 #include "main.h"
 
-void	err_exit_msg(char *msg, char *arg, t_parser *p)
-{
-	ft_puterr("Error\n");
-	ft_puterr(msg);
-	if (arg)
-		ft_puterr(arg);
-	ft_puterr("\n");
-	exit_parse(p, RT_ERROR);
-}
-
 bool	is_cubed_ext(char *filename, char *extension)
 {
 	int	i;

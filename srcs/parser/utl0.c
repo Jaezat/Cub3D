@@ -21,16 +21,16 @@ void	safe_init(t_parser *p)
 	p->map_fd = -1;
 }
 
-void	ft_bzero(void *ref, size_t size)
+void	ft_safe_close(int *fd)
 {
-	size_t	i;
-	char	*mem;
+	if (*fd != -1)
+		close(*fd);
+	*fd = -1;
+}
 
-	i = 0;
-	mem = ref;
-	while (i < size)
-	{
-		mem[i] = 0;
-		i++;
-	}
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (c);
+	return (false);
 }
