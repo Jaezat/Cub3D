@@ -22,11 +22,23 @@
 
 // this is harcoded atm, this should be a struct 
 #define PLY_X   4
-#define PLY_Y   15
-#define PLY_A   0
+#define PLY_Y   4
+#define RADIUS  2
+
+
+
 
 
 typedef struct s_cubed t_cubed;
+
+typedef struct s_camera
+{
+    int radius;
+    float top;
+    float bot;
+    float left;
+    float right;
+}   t_cam;
 
 
 typedef struct	s_img
@@ -40,12 +52,12 @@ typedef struct	s_img
 
 typedef struct s_draw
 {
-    int map_y;
-    int map_x;
+    float map_y;
+    float map_x;
     int px_y;
     int px_x;
-    int screen_x;
-    int screen_y;
+    float screen_x;
+    float screen_y;
     unsigned int color;
     char c_map;
 }   t_draw;
@@ -61,13 +73,13 @@ typedef struct s_map
 {
     void    *mlx;
     void    *mlx_wind;
-/*     char    **map;
-    int     map_width;
-    int     map_height;  not sure about these three*/ 
+    int     n_y;   //player row
+    int     n_x;   // player vertical
     t_img   *img_str;
     t_parser *prs;
     t_draw *wdw;
     t_key  *key; 
+    t_cam *cam;
 }   t_map;
 
 /* windows struct */
