@@ -16,11 +16,21 @@
 
 // internal library headers ///////////////////////////////////////////////////
 #include "parser_functions.h"
+#include "minimap.h"
 
 #ifndef MAIN_H
 # define MAIN_H
 // macros and defines /////////////////////////////////////////////////////////
 // good for color codes, hexes, tables, weird return codes (-1, 0, 1)
+
+// this could be proportional to screen resolution
+// makes it slower on the iMacs
+# define WIN_W 1600
+// common widescreeen ratio
+# define TO_RATIO / 16 * 9
+// # define TO_RATIO / 1
+# define WIN_H WIN_W TO_RATIO
+// # define WIN_H 200
 
 // mlx keycodes
 # define K_LEFT 65361
@@ -39,6 +49,16 @@
 // FILE2 //////////////////////////////////////////////////////////////////////
 
 // FILE3 //////////////////////////////////////////////////////////////////////
+
+// STRUCTS //////////////////////////////////////////////////////////////////////
+
+typedef struct s_game
+{
+    t_umlx	u;
+	t_minimap mn;
+} t_game;
+
+
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////

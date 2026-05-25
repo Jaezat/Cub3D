@@ -1,10 +1,6 @@
 #ifndef MINIMAP_H
 #define MINIMAP_H
 
-// full game window
-#define WIN_W 1280
-#define WIN_H 720
-
 // minimap height and minimap width -> this is just a tester
 #define MAP_W 19
 #define MAP_H 7 // number of tiles i want in my map
@@ -37,14 +33,6 @@ typedef struct s_camera
     float right;
 }   t_cam;
 
-typedef struct	s_img
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_img;
 
 typedef struct s_draw
 {
@@ -59,24 +47,20 @@ typedef struct s_draw
 }   t_draw;
 
 
-typedef struct s_mnp
+typedef struct s_minimap
 {
-/*     void    *mlx;
-    void    *mlx_wind;
-    t_img   *img_str; */
-	// call t_data instead
-    t_draw *wdw;
-    t_cam *cam;
-	// only variables from t_data that i need and copy values from t_data
-}   t_mnp; 
+    t_draw      *wdw;
+    t_cam       *cam;
+    t_data      *d;
+    int i;
+    t_umlx      *ulx;
+}   t_minimap; 
 
 
-int		create_windows(t_map *map);
-int		render_each_frame(void *param);
-int		struct_init(t_cubed **cub);
+
+
 unsigned int get_tile_color(char c);
-void    reset_window(t_img *data, int color);
-void    draw_minimap(t_map *map);
+void    draw_minimap(t_minimap *map);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 
 #endif

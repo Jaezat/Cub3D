@@ -59,13 +59,11 @@ void	load_textures(t_umlx *u)
 
 int	loop(void *param)
 {
-	// t_umlx		*u;
-	// int			i;
-	// int			j;
-	// static int	color = 0;
-	(void)param;
-	// u = param;
-	paint_put((t_umlx *)param);
+	t_game *env;
+
+	env = (t_game *)param;
+	paint_put(&env->u);
+	draw_minimap(&env->mn);
 	// i = -1;
 	// while (++i < WIN_H)
 	// {
