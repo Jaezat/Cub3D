@@ -33,7 +33,7 @@ bool	has_line(char *str)
 	return (false);
 }
 
-void	str_copier(char *dest, char *src, int len)
+void	copier(char *dest, char *src, int len)
 {
 	int	i;
 
@@ -49,7 +49,7 @@ void	str_copier(char *dest, char *src, int len)
 	}
 }
 
-char	*str_joiner(char *line, char *buf)
+char	*joiner(char *line, char *buf)
 {
 	int		line_size;
 	int		buf_size;
@@ -60,9 +60,9 @@ char	*str_joiner(char *line, char *buf)
 	newline = malloc(line_size + buf_size + 1);
 	if (!newline)
 		return (NULL);
-	str_copier(newline, line, line_size);
+	copier(newline, line, line_size);
 	free(line);
-	str_copier(newline + line_size, buf, buf_size);
+	copier(newline + line_size, buf, buf_size);
 	return (newline);
 }
 
@@ -88,8 +88,8 @@ char	*gnl(int fd)
 				return (free(line), NULL);
 			buf[r_size] = 0;
 		}
-		line = str_joiner(line, buf);
-		str_copier(buf, buf + line_len(buf), ft_strlen(buf));
+		line = joiner(line, buf);
+		copier(buf, buf + line_len(buf), ft_strlen(buf));
 		if (has_line(line))
 			return (line);
 	}

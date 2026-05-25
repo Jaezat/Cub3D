@@ -1,15 +1,14 @@
 #include "main.h"
 
-// the idea here is to have minimal invocations in the main
-// parsing exits within itself freeing the memory when necessary
-
+// execution between parsing and exit_parse
 int	main(int argc, char **argv)
 {
-	t_parser	parser;
+	t_data	*data;
 
-	parsing(argc, argv, &parser);
-	// call create_windows function 
-	// cleaning routines its returning error as the program exits
-	exit_routine(&parser, RT_SUCCESS);
+	data = parsing(argc, argv);
+	
+	game(data);
+	if (data)
+		free_data(data);
 	return (0);
 }

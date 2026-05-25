@@ -1,4 +1,7 @@
 *.o
 cub3d
-mlx_linux
-# other_mlxpaths_dir
+mlx_linux/
+tools/
+
+# dumps that build in my computer when valgrind crashes
+vgcore.*

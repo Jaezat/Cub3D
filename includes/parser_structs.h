@@ -1,35 +1,105 @@
+///////////////////////////////////////////////////////////////////////////////
+#ifndef PARSER_STRUCTS_H
+# define PARSER_STRUCTS_H
+
 // internal library headers ///////////////////////////////////////////////////
 // can be broken down into smaller headers
 
 // macros and defines /////////////////////////////////////////////////////////
 
 // RT for return
-#define RT_ERROR 1
-#define RT_SUCCESS 0
+# define RT_ERROR 1
+# define RT_SUCCESS 0
 // bool return for str diff
-#define STR_DIFF 1
-#define STR_SAME 0
-// this is reasonably big for maps in the context of gnl
-#define BUF_SIZE 32
+# define DIFF 1
+# define SAME 0
+// gnl is short lived, using big buffersize makes it faster
+// 1 page size 4kb * 64 to get to texture size 512 x 512
+# define BUF_SIZE 4096 * 64 - 1
 
 // enums //////////////////////////////////////////////////////////////////////
+// this could be proportional to screen resolution
+// makes it slower on the iMacs
+# define WIN_W 1600
+// common widescreeen ratio
+# define TO_RATIO / 16 * 9
+// # define TO_RATIO / 1
+# define WIN_H WIN_W TO_RATIO
+// # define WIN_H 200
 
 // structures /////////////////////////////////////////////////////////////////
 
-// test type to carry mlx objects
+typedef struct s_img
+{
+	int			w;
+	int			h;
+	void		*ptr;
+}				t_img;
+
+typedef struct s_data
+{
+	char		**map;
+	int			sky;
+	int			ground;
+	int			map_h;
+	int			map_w;
+	char		*no;
+	char		*so;
+	char		*we;
+	char		*ea;
+	t_img		imgs[4];
+	float		dir;
+	float		px;
+	float		py;
+}				t_data;
+
+// typedef struct s_img
+// {
+// }			t_img;
+
+typedef struct s_img_data
+{
+	int			bpp;
+	int			endian;
+	int			line_s;
+	int			*addr;
+}				t_img_data;
+
 typedef struct s_umlx
 {
-	void	*img;
-	void	*mlx;
-	void	*win;
-}			t_umlx;
+	void		*img;
+	void		*mlx;
+	void		*win;
+	t_data		*d;
+	t_img_data	img_data;
+}				t_umlx;
 
+// u can be removed later depending on context
+// t_umlx	*u;
 typedef struct s_parser
 {
-	int		map_fd;
-	char	*map_file;
-	char	**map;
-	int		map_h;
-	t_umlx	*u;
+	int			map_fd;
+	char		*map_file;
+	char		**map_tofree;
+	char		**exec_map;
+	int			map_h;
+	char		*floor;
+	char		*ceiling;
+	char		*rgb_f[3];
+	char		*rgb_c[3];
+	int			hex_f[3];
+	int			hex_c[3];
+	char		**map;
+	int			ceiling_hex;
+	int			floor_hex;
+	int			exec_map_h;
+	int			exec_map_w;
+	char		*no;
+	char		*so;
+	char		*we;
+	char		*ea;
+}				t_parser;
 
-}			t_parser;
+#endif
+
+///////////////////////////////////////////////////////////////////////////////

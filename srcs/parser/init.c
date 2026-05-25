@@ -1,15 +1,5 @@
 #include "main.h"
 
-void	err_exit_msg(char *msg, char *arg, t_parser *p)
-{
-	ft_puterr("Error\n");
-	ft_puterr(msg);
-	if (arg)
-		ft_puterr(arg);
-	ft_puterr("\n");
-	exit_routine(p, RT_ERROR);
-}
-
 bool	is_cubed_ext(char *filename, char *extension)
 {
 	int	i;
@@ -24,19 +14,19 @@ bool	is_cubed_ext(char *filename, char *extension)
 	return (true);
 }
 
-// fd needs to get stored
-void	extension_check(char *file, t_parser *p)
+// are the pointer arithmetics safe in all cases?
+void	extension_check(char *file, char *ext, t_parser *p)
 {
 	int	ext_len;
 
-	if (!file || !*file)
+	if (!*file)
 		err_exit_msg("Empty filepath", 0, p);
 	ext_len = ft_strlen(file);
 	if (ext_len < 5)
 		err_exit_msg("File path too short", 0, p);
 	if (*(file + ext_len - 5) == '/')
-		err_exit_msg("Map name too short -> ", file + ext_len - 5, p);
-	if (is_cubed_ext(file + ext_len - 4, ".cub") == false)
+		err_exit_msg("Name too short -> ", file + ext_len - 5, p);
+	if (is_cubed_ext(file + ext_len - 4, ext) == false)
 		err_exit_msg("Invalid extension -> ", file + ext_len - 4, p);
 	p->map_file = file;
 }
@@ -47,14 +37,62 @@ void	parse_args(int argc, char **argv, t_parser *p)
 		err_exit_msg("Too many arguments", 0, p);
 	if (argc < 2)
 		err_exit_msg("Missing file path", 0, p);
-	extension_check(argv[1], p);
+	extension_check(argv[1], ".cub", p);
 }
 
-int	parsing(int argc, char **argv, t_parser *p)
+void	get_player(t_data *d, int x, int y)
 {
-	safe_init(p);
-	// maybe i dont need the exit routines and can just be void functions
-	parse_args(argc, argv, p);
-	check_map(p);
-	return (RT_SUCCESS);
+	if (d->map[y][x] == 'N')
+		d->dir = 0;
+	if (d->map[y][x] == 'E')
+		d->dir = 90;
+	if (d->map[y][x] == 'S')
+		d->dir = 180;
+	if (d->map[y][x] == 'W')
+		d->dir = 270;
+	d->px = x + 0.5;
+	d->py = y + 0.5;
+}
+
+void	get_floats(t_parser *p, t_data *d)
+{
+	int		y;
+	int		x;
+	char	lt;
+
+	y = 0;
+	while (y < d->map_h)
+	{
+		x = 0;
+		while (x < d->map_w)
+		{
+			lt = d->map[y][x];
+			if (lt == 'N' || lt == 'E' || lt == 'S' || lt == 'W')
+			{
+				get_player(d, x, y);
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+	free_data(d);
+	err_exit_msg("Couldn't find the player", 0, p);
+}
+
+t_data	*parsing(int argc, char **argv)
+{
+	t_parser	parser;
+	t_data		*data;
+
+	safe_init(&parser);
+	parse_args(argc, argv, &parser);
+	check_map(&parser);
+	data = NULL;
+	data = pass_it_on(&parser);
+	get_floats(&parser, data);
+	if (!data)
+		exit_parse(&parser, RT_ERROR);
+	exit_parse(&parser, RT_SUCCESS);
+	return (data);
 }

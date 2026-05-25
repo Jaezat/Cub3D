@@ -14,10 +14,13 @@ SRC_DIR = srcs/
 OBJ_DIR = build/
 
 SRCS    = $(addprefix $(SRC_DIR), main.c)
-SRCS	+= $(addprefix $(SRC_DIR)parser/, init.c assets.c gnl.c utils.c utils2.c)
-# REMOVE TESTER REMOVE TESTER REMOVE TESTER REMOVE TESTER REMOVE TESTER /////////
-SRCS	+= $(addprefix srcs/parser/, tester.c)
-# SRCS	+= $(addprefix $(SRC_DIR)execdirname/, ex1.c ex2.c ex3.c)
+
+P_FILES = init asset trim flood fill gnl mlx0 mlx1 utl0 utl1 utl2 exit \
+ \
+test # ////////////////////////////////////////////////////////// remove test /
+# /////////////////////////////////////////////////////////////// remove test /
+SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(P_FILES)))
+
 OBJS    = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(MLX_DIR) $(NAME)
@@ -57,17 +60,22 @@ mlx_clean:
 
 re: fclean all
 
+TESTMAP = assets/maps/valid.cub
+
 parse: re
 	sleep 0.3
 	clear
-	./cub3d assets/maps/valid.cub
+	./$(NAME) $(TESTMAP)
 
+CFLAGS += -g
+CFLAGS += -O3
+VFLAGS += -s
 VFLAGS += --track-fds=all
-VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all -s
+VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all
 
 parsev: re
 	sleep 0.3
 	clear
-	valgrind $(VFLAGS) ./cub3d assets/maps/valid.cub
+	valgrind $(VFLAGS) ./$(NAME) ./$(TESTMAP)
 
 .PHONY: all clean fclean re
