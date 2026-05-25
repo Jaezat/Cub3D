@@ -68,7 +68,7 @@ parse: re
 	./$(NAME) $(TESTMAP)
 
 CFLAGS += -g
-# CFLAGS += -O3
+CFLAGS += -O3
 VFLAGS += -s
 VFLAGS += --track-fds=all
 VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all

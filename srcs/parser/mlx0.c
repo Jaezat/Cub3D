@@ -12,21 +12,14 @@ void	get_addr(t_umlx *u)
 void	paint_put(t_umlx *u)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	while (i < WIN_H)
+	while (i < WIN_H * WIN_W)
 	{
-		j = 0;
-		while (j < WIN_W)
-		{
-			u->img_data.addr[(i * WIN_W) + j] = 0xffffff;
-			j++;
-		}
+		u->img_data.addr[i] = rand();
 		i++;
 	}
 	mlx_put_image_to_window(u->mlx, u->win, u->img, 0, 0);
-	usleep(1000000 / 60);
 }
 
 void	game(t_data *d)

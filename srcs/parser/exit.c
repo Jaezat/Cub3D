@@ -58,6 +58,7 @@ void	free_map(void *ref)
 	free(map);
 }
 
+// changed this so need to make sure that it doesnt break
 void	free_data(t_data *d)
 {
 	if (d->ea)

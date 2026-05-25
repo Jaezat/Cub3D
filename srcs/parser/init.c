@@ -40,6 +40,46 @@ void	parse_args(int argc, char **argv, t_parser *p)
 	extension_check(argv[1], ".cub", p);
 }
 
+void	get_player(t_data *d, int x, int y)
+{
+	if (d->map[y][x] == 'N')
+		d->dir = 0;
+	if (d->map[y][x] == 'E')
+		d->dir = 90;
+	if (d->map[y][x] == 'S')
+		d->dir = 180;
+	if (d->map[y][x] == 'W')
+		d->dir = 270;
+	d->px = x + 0.5;
+	d->py = y + 0.5;
+}
+
+void	get_floats(t_parser *p, t_data *d)
+{
+	int		y;
+	int		x;
+	char	lt;
+
+	y = 0;
+	while (y < d->map_h)
+	{
+		x = 0;
+		while (x < d->map_w)
+		{
+			lt = d->map[y][x];
+			if (lt == 'N' || lt == 'E' || lt == 'S' || lt == 'W')
+			{
+				get_player(d, x, y);
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+	free_data(d);
+	err_exit_msg("Couldn't find the player", 0, p);
+}
+
 t_data	*parsing(int argc, char **argv)
 {
 	t_parser	parser;
@@ -50,6 +90,7 @@ t_data	*parsing(int argc, char **argv)
 	check_map(&parser);
 	data = NULL;
 	data = pass_it_on(&parser);
+	get_floats(&parser, data);
 	if (!data)
 		exit_parse(&parser, RT_ERROR);
 	exit_parse(&parser, RT_SUCCESS);

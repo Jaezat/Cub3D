@@ -48,6 +48,9 @@ typedef struct s_data
 	char		*we;
 	char		*ea;
 	t_img		imgs[4];
+	float		dir;
+	float		px;
+	float		py;
 }				t_data;
 
 // typedef struct s_img

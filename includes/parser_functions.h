@@ -6,8 +6,8 @@
 bool	is_cubed_ext(char *filename, char *extension);
 void	extension_check(char *file, char *ext, t_parser *p);
 void	parse_args(int argc, char **argv, t_parser *parser);
+void	get_player(t_data *d, int x, int y);
 t_data	*parsing(int argc, char **argv);
-//                                                                           //
 
 // gnl ////////////////////////////////////////////////////////////////////////
 size_t	line_len(char *str);
