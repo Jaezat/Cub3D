@@ -18,6 +18,7 @@
 typedef struct s_cubed
 {
     t_map *map;
+	// parsing
 }	t_cubed;
 
 #endif

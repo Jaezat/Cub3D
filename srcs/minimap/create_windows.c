@@ -72,7 +72,8 @@ int render_each_frame(void *param)
 {
    t_map *map = param;
 
-    reset_window(map->img_str, 0x000000);  
+    reset_window(map->img_str, 0x000000);
+	
     draw_minimap(map);
     // draw_raycast
     mlx_put_image_to_window(map->mlx, map->mlx_wind, map->img_str->img, 0, 0);
@@ -116,6 +117,7 @@ int	key_hook(int keycode, t_map *map)
 
 int create_windows(t_map *map)
 {
+	
     map->mlx = mlx_init();
      if(!map->mlx)
          return (1);
@@ -126,10 +128,10 @@ int create_windows(t_map *map)
          &(map->img_str->bits_per_pixel), 
          &(map->img_str->line_length), 
          &(map->img_str->endian));  
-    mlx_loop_hook(map->mlx, render_each_frame,map);
     // mlx_key_hook(map->mlx_wind, key_hook, &map);
-     // mlx_hook para teclado
-     // mlx_hook_loop para cerrar la ventana 
+    mlx_loop_hook(map->mlx, render_each_frame, map);
+    // mlx_hook para teclado
+    // mlx_hook_loop para cerrar la ventana 
     mlx_loop(map->mlx);
     return (0);
-} 
+}

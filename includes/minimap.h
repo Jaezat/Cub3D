@@ -26,9 +26,6 @@
 #define RADIUS  2
 
 
-
-
-
 typedef struct s_cubed t_cubed;
 
 typedef struct s_camera
@@ -39,7 +36,6 @@ typedef struct s_camera
     float left;
     float right;
 }   t_cam;
-
 
 typedef struct	s_img
 {
@@ -73,42 +69,20 @@ typedef struct s_map
 {
     void    *mlx;
     void    *mlx_wind;
-    float     n_y;   //player row
-    float     n_x;   // player vertical
+    float    n_y;   //player row
+    float    n_x;   // player vertical
     t_img   *img_str;
-    t_parser *prs;
+    // t_parser *prs;
+	// call t_data instead
     t_draw *wdw;
     t_key  *key; 
     t_cam *cam;
 }   t_map;
 
-/* windows struct */
-typedef struct s_win
-{
-    int win_width;
-    int win_height;
-}   t_win;
 
-/* player struct */
-typedef struct s_player_data
-{
-    float x;
-    float y;
-    float a;
-    float vx; // [vector x] -> to know which direction the player is facing as a vector
-    float vy; // idem but vector y instead;
-}   t_player_data;
-
-typedef struct s_minimap
-{
-    int win_width;
-    int win_height;
-}   t_minimap;
-
-
-int create_windows(t_map *map);
-int render_each_frame(void *param);
-int struct_init(t_cubed **cub);
+int		create_windows(t_map *map);
+int		render_each_frame(void *param);
+int		struct_init(t_cubed **cub);
 unsigned int get_tile_color(char c);
 void    reset_window(t_img *data, int color);
 void    draw_minimap(t_map *map);
