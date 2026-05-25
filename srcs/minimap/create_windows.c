@@ -117,7 +117,10 @@ int	key_hook(int keycode, t_map *map)
 
 int create_windows(t_map *map)
 {
-	
+	// define map here (init_mnp)
+		// init_mnp()
+			// -> initialize t_mnp (t_data inside t_mnp)
+			// -> inside of t_mnp ill have 
     map->mlx = mlx_init();
      if(!map->mlx)
          return (1);

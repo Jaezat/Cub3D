@@ -58,26 +58,17 @@ typedef struct s_draw
     char c_map;
 }   t_draw;
 
-typedef struct s_key
-{
-    double new_x;
-    double new_y;
-    double angle;
-}   t_key;
 
-typedef struct s_map
+typedef struct s_mnp
 {
-    void    *mlx;
+/*     void    *mlx;
     void    *mlx_wind;
-    float    n_y;   //player row
-    float    n_x;   // player vertical
-    t_img   *img_str;
-    // t_parser *prs;
+    t_img   *img_str; */
 	// call t_data instead
     t_draw *wdw;
-    t_key  *key; 
     t_cam *cam;
-}   t_map;
+	// only variables from t_data that i need and copy values from t_data
+}   t_mnp; 
 
 
 int		create_windows(t_map *map);
