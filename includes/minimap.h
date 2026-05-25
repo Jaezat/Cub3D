@@ -52,12 +52,12 @@ typedef struct	s_img
 
 typedef struct s_draw
 {
-    float map_y;
-    float map_x;
+    int map_y;
+    int map_x;
     int px_y;
     int px_x;
-    float screen_x;
-    float screen_y;
+    int screen_x;
+    int screen_y;
     unsigned int color;
     char c_map;
 }   t_draw;
@@ -73,8 +73,8 @@ typedef struct s_map
 {
     void    *mlx;
     void    *mlx_wind;
-    int     n_y;   //player row
-    int     n_x;   // player vertical
+    float     n_y;   //player row
+    float     n_x;   // player vertical
     t_img   *img_str;
     t_parser *prs;
     t_draw *wdw;

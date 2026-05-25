@@ -1,13 +1,21 @@
 #include "cub3d.h"
 
-
-static void define_cam(t_map *map)
+static void define_cam(t_map *map) // what i do here is that im assigning values and checking in case any of those points surpasses the map
 {
     map->cam->top = PLY_Y - RADIUS;
+	if (map->cam->top < 0)
+		map->cam->top = 0;
     map->cam->bot = PLY_Y + RADIUS;
+	if (map->cam->top > MAP_H)
+		map->cam->top = MAP_H;
     map->cam->left = PLY_X - RADIUS;
+	if (map->cam->left < 0)
+		map->cam->left = 0;
     map->cam->right = PLY_X + RADIUS;
+	if (map->cam->left > MAP_W)
+		map->cam->left = MAP_W;
 }
+
 
 void draw_minimap(t_map *map) // here we should be passing cub struct
 {    
@@ -38,6 +46,8 @@ void draw_minimap(t_map *map) // here we should be passing cub struct
         map->wdw->map_y++;
     }
 }
+/*  */
+
 
 
 void reset_window(t_img *data, int color)
