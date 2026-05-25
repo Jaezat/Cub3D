@@ -1,12 +1,12 @@
 #include "parser_structs.h"
-
-// prototypes /////////////////////////////////////////////////////////////////
+#ifndef PARSER_FUNCTIONS_H
+# define PARSER_FUNCTIONS_H
 
 // init ///////////////////////////////////////////////////////////////////////
-void	err_exit_msg(char *msg, char *arg, t_parser *p);
 bool	is_cubed_ext(char *filename, char *extension);
 void	extension_check(char *file, char *ext, t_parser *p);
 void	parse_args(int argc, char **argv, t_parser *parser);
+void	get_player(t_data *d, int x, int y);
 t_data	*parsing(int argc, char **argv);
 
 // gnl ////////////////////////////////////////////////////////////////////////
@@ -42,30 +42,48 @@ void	start_flooding(t_parser *p);
 void	splash(t_parser *p, int r, int c, char tag);
 t_data	*pass_it_on(t_parser *parser);
 
-// utils //////////////////////////////////////////////////////////////////////
-int		ft_strlen(char *str);
-void	exit_routine(t_parser *p, int exit_co);
-void	safe_init(t_parser *p);
-void	ft_puterr(char *str);
-void	ft_bzero(void *mem, size_t size);
+// mlx0 ////////////////////////////////////////////////////////////////////////
+// TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING /////
+// TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING /////
+// TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING /////
+void	game(t_data *d);
+void	paint_put(t_umlx *u);
+void	get_addr(t_umlx *u);
 
-// utils2 //////////////////////////////////////////////////////////////////////
+// mlx1 ////////////////////////////////////////////////////////////////////////
+void	pick_action(int keycode);
+int		hook(int keycode, void *param);
+void	load_textures(t_umlx *u);
+int		loop(void *param);
+
+// exit ///////////////////////////////////////////////////////////////////////
+void	exit_parse(t_parser *p, int exit_co);
+void	exit_exec(t_umlx *u, int exit_code);
+void	free_data(t_data *d);
 void	free_map(void *ref);
+void	err_exit_msg(char *msg, char *arg, t_parser *p);
+
+// utl0 ///////////////////////////////////////////////////////////////////////
+int		ft_strlen(char *str);
+void	ft_puterr(char *str);
+void	safe_init(t_parser *p);
 void	ft_safe_close(int *fd);
-int		ft_strncmp(char *s1, char *s2, size_t len);
 int		ft_isdigit(int c);
+
+// utl1 ///////////////////////////////////////////////////////////////////////
+void	ft_bzero(void *mem, size_t size);
+int		ft_strncmp(char *s1, char *s2, size_t len);
+void	tf_memcpy(void *dest, void *src, size_t len);
 void	space_to_wall(void *ref, size_t size);
 
-// utils3 /////////////////////////////////////////////////////////////////////
-void	tf_memcpy(void *dest, void *src, size_t len);
-void	free_data(t_data *d);
+// utl2 ///////////////////////////////////////////////////////////////////////
 
 // tester, remove later ///////////////////////////////////////////////////////
-void	test_rem(void);
-void	display_map(t_parser *p);
-// void	window_test(t_parser *p);
-void	print_t_parser(t_parser *p);
-void	print_t_data(t_data *d);
-void	disp_map_arr(t_parser *p);
+// void	test_rem(void);
+// void	display_map(t_parser *p);
+// void	print_t_parser(t_parser *p);
+// void	print_t_data(t_data *d);
+// void	disp_map_arr(t_parser *p);
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////

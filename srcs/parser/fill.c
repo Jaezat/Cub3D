@@ -38,6 +38,7 @@ void	start_flooding(t_parser *p)
 			c = p->map[i][j];
 			if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 			{
+				// p->dir
 				dir = p->map[i][j];
 				splash(p, i, j, 'F');
 				splash(p, i, j, '0');
