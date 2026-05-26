@@ -1,50 +1,53 @@
 #include "main.h"
 
-static void define_cam(t_minimap *map) // what i do here is that im assigning values and checking in case any of those points surpasses the map
+static void define_cam(t_minimap *map)
 {
-    map->cam->top = PLY_Y - RADIUS;
-	if (map->cam->top < 0)
-		map->cam->top = 0;
-    map->cam->bot = PLY_Y + RADIUS;
-	if (map->cam->top > MAP_H)
-		map->cam->top = MAP_H;
-    map->cam->left = PLY_X - RADIUS;
-	if (map->cam->left < 0)
-		map->cam->left = 0;
-    map->cam->right = PLY_X + RADIUS;
-	if (map->cam->left > MAP_W)
-		map->cam->left = MAP_W;
+    map->cam.top = PLY_Y - RADIUS;
+	if (map->cam.top < 0)
+		map->cam.top = 0;
+    map->cam.bot = PLY_Y + RADIUS;
+	if (map->cam.top > MAP_H)
+		map->cam.top = MAP_H;
+    map->cam.left = PLY_X - RADIUS;
+	if (map->cam.left < 0)
+		map->cam.left = 0;
+    map->cam.right = PLY_X + RADIUS;
+	if (map->cam.left > MAP_W)
+		map->cam.left = MAP_W;
 }
+
 
 
 void draw_minimap(t_minimap *map) // here we should be passing cub struct
 {    
     define_cam(map);
-    map->wdw->map_y = map->cam->top;
-    while(map->wdw->map_y < map->cam->bot)
+    map->wdw.map_y = map->cam.top;
+    while(map->wdw.map_y < map->cam.bot)
     {
-        map->wdw->map_x  = map->cam->left;
-        while(map->wdw->map_x < map->cam->right)
+        map->wdw.map_x  = map->cam.left;
+        while(map->wdw.map_x < map->cam.right)
         {
-            map->wdw->c_map = map->d->map[map->wdw->map_y][map->wdw->map_x];
-            map->wdw->color = get_tile_color(map->d->map[map->wdw->map_y][map->wdw->map_x]);
-            map->wdw->px_y = 0;
-            while(map->wdw->px_y < TILE_SIZE)
+            map->wdw.c_map = map->d->map[map->wdw.map_y][map->wdw.map_x];
+            map->wdw.color = get_tile_color(map->wdw.c_map);
+            map->wdw.px_y = 0;
+            while(map->wdw.px_y < TILE_SIZE)
             {
-                map->wdw->px_x = 0;
-                while(map->wdw->px_x < TILE_SIZE)
+                map->wdw.px_x = 0;
+                while(map->wdw.px_x < TILE_SIZE)
                 {
-                    map->wdw->screen_x = (map->wdw->map_x * TILE_SIZE) + map->wdw->px_x;
-                    map->wdw->screen_y = (map->wdw->map_y * TILE_SIZE) + map->wdw->px_y;
-                    my_mlx_pixel_put(&map->ulx->img_data, map->wdw->screen_x, map->wdw->screen_y, map->wdw->color);
-                    map->wdw->px_x++;
+                    map->wdw.screen_x = (map->wdw.map_x * TILE_SIZE) + map->wdw.px_x;
+                    map->wdw.screen_y = (map->wdw.map_y * TILE_SIZE) + map->wdw.px_y;
+                    printf("addr: %p\n", (void *)map->ulx.img_data.addr);
+                    my_mlx_pixel_put(&map->ulx.img_data, map->wdw.screen_x, map->wdw.screen_y, map->wdw.color);
+                    map->wdw.px_x++;
                 }
-                map->wdw->px_y++;
+                map->wdw.px_y++;
             }
-            map->wdw->map_x++;
+            map->wdw.map_x++;
         }
-        map->wdw->map_y++;
+        map->wdw.map_y++;
     }
+   
 } 
 
 /* int	key_hook(int keycode, t_minimap *map)
@@ -76,8 +79,7 @@ void draw_minimap(t_minimap *map) // here we should be passing cub struct
                 - y siempre tiene que estar perpendicular a dir
                 - si dir rota, plane rota con el, siempre juntos
             - how fast do i turn? a var like rot_speed
-
-    */
+*/
 
 
 

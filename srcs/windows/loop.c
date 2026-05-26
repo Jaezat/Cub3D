@@ -57,6 +57,7 @@ void	load_textures(t_umlx *u)
 	}
 }
 
+
 int	loop(void *param)
 {
 	t_game *env;

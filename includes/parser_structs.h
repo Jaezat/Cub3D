@@ -45,31 +45,6 @@ typedef struct s_data
 	float		py;
 }				t_data;
 
-
-// typedef struct s_img
-// {
-// }			t_img;
-
-typedef struct s_img_data
-{
-	int			bpp;
-	int			endian;
-	int			line_s;
-	int			*addr;
-}				t_img_data;
-
-typedef struct s_umlx
-{
-	void		*img;
-	void		*mlx;
-	void		*win;
-	t_data		*d;
-	t_img_data	img_data;
-}				t_umlx;
-
-// u can be removed later depending on context
-// t_umlx	*u;
-
 typedef struct s_parser
 {
 	int			map_fd;

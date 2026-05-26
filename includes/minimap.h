@@ -17,9 +17,9 @@
 #define EMPTY  0x000000  
 
 // this is harcoded atm, this should be a struct 
-#define PLY_X   4
-#define PLY_Y   4
-#define RADIUS  2
+#define PLY_X   2
+#define PLY_Y   5
+#define RADIUS  1
 
 
 typedef struct s_cubed t_cubed;
@@ -27,10 +27,10 @@ typedef struct s_cubed t_cubed;
 typedef struct s_camera
 {
     int radius;
-    float top;
-    float bot;
-    float left;
-    float right;
+    int top;
+    int bot;
+    int left;
+    int right;
 }   t_cam;
 
 
@@ -49,18 +49,23 @@ typedef struct s_draw
 
 typedef struct s_minimap
 {
-    t_draw      *wdw;
-    t_cam       *cam;
+    t_draw      wdw;
+    t_cam       cam;
     t_data      *d;
     int i;
-    t_umlx      *ulx;
+    t_umlx      ulx;
 }   t_minimap; 
+
+typedef struct s_game
+{
+    t_umlx	u;
+	t_minimap mn;
+} t_game;
 
 
 
 
 unsigned int get_tile_color(char c);
-void    draw_minimap(t_minimap *map);
-void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
-
+void draw_minimap(t_minimap *map); // here we should be passing cub struct
+void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
 #endif

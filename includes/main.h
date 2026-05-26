@@ -15,6 +15,8 @@
 #include "../mlx_linux/mlx.h"
 
 // internal library headers ///////////////////////////////////////////////////
+#include "parser_structs.h"
+#include "wdw_mlx_struct.h"
 #include "parser_functions.h"
 #include "minimap.h"
 
@@ -52,11 +54,7 @@
 
 // STRUCTS //////////////////////////////////////////////////////////////////////
 
-typedef struct s_game
-{
-    t_umlx	u;
-	t_minimap mn;
-} t_game;
+
 
 
 #endif

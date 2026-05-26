@@ -28,6 +28,7 @@ void	game(t_data *d)
 
 	ft_bzero(&env, sizeof(t_game));
 	env.u.d = d;
+	env.mn.d = d;
 	env.u.mlx = mlx_init();
 	if (!env.u.mlx)
 		exit_exec(&env.u, 1);
@@ -36,8 +37,8 @@ void	game(t_data *d)
 		exit_exec(&env.u, 1);
 	env.u.img = mlx_new_image(env.u.mlx, WIN_W, WIN_H);
 	get_addr(&env.u);
+	env.mn.ulx = env.u;
 	// load_textenv.ures(&env.u);
-	env.mn.i = 42;
 	mlx_key_hook(env.u.win, hook, &env.u);
 	mlx_loop_hook(env.u.mlx, (int (*)())(void *)loop, &env);
 	mlx_loop(env.u.mlx);
