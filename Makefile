@@ -16,7 +16,6 @@ OBJ_DIR = build/
 SRCS    = $(addprefix $(SRC_DIR), main.c)
 
 P_FILES = init asset trim flood fill gnl mlx0 mlx1 utl0 utl1 utl2 exit \
- \
 test # ////////////////////////////////////////////////////////// remove test /
 # /////////////////////////////////////////////////////////////// remove test /
 SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(P_FILES)))

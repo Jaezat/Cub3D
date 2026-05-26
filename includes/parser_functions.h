@@ -51,7 +51,7 @@ void	paint_put(t_umlx *u);
 void	get_addr(t_umlx *u);
 
 // mlx1 ////////////////////////////////////////////////////////////////////////
-void	pick_action(int keycode);
+void	pick_action(int keycode, t_umlx *u);
 int		hook(int keycode, void *param);
 void	load_textures(t_umlx *u);
 int		loop(void *param);

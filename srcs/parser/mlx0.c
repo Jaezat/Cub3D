@@ -11,15 +11,49 @@ void	get_addr(t_umlx *u)
 
 void	paint_put(t_umlx *u)
 {
-	int	i;
+	int			j;
+	int			i;
+	int			r;
+	int			g;
+	int			b;
+	int			newc;
+	// static int	frame = 0;
 
-	i = 0;
-	while (i < WIN_H * WIN_W)
+	j = 0;
+	while (j < WIN_W)
 	{
-		u->img_data.addr[i] = rand();
-		i++;
+		i = 0;
+		while (i < WIN_H)
+		{
+			u->img_data.addr[WIN_W * i + j] = u->grad;
+			i++;
+		}
+		j++;
+		// printf("%x\n", newc);
 	}
+	newc = 0;
+	r = (char)(u->grad >> (2 * 8));
+	g = (char)(u->grad >> (1 * 8));
+	b = (char)(u->grad >> (0 * 8));
+	if ((0xffffff & rand()) % 6 == 0)
+		r = (r + 1) % 256;
+	if ((0xffffff & rand()) % 6 == 1)
+		g = (g + 1) % 256;
+	if ((0xffffff & rand()) % 6 == 2)
+		b = (b + 1) % 256;
+	if ((0xffffff & rand()) % 6 == 3)
+		r = (r - 1) % 256;
+	if ((0xffffff & rand()) % 6 == 4)
+		g = (g - 1) % 256;
+	if ((0xffffff & rand()) % 6 == 5)
+		b = (b - 1) % 256;
+	newc += (r << (2 * 8));
+	newc += (g << (1 * 8));
+	newc += (b << (0 * 8));
+	u->grad = newc;
 	mlx_put_image_to_window(u->mlx, u->win, u->img, 0, 0);
+	// printf("%d\n", frame++);
+	usleep(1000000 / 60);
 }
 
 void	game(t_data *d)

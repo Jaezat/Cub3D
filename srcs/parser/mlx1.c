@@ -1,12 +1,12 @@
 #include "main.h"
 
 // used to test gnl function in srcs/parser/gnl.c
-void	pick_action(int keycode)
+void	pick_action(int keycode, t_umlx *u)
 {
 	if (keycode == K_LEFT)
 		printf("keycode: K_LEFT\n");
 	if (keycode == K_A)
-		printf("keycode: K_A\n");
+		u->grad -= 100000;
 	if (keycode == K_UP)
 		printf("keycode: K_UP\n");
 	if (keycode == K_W)
@@ -14,11 +14,11 @@ void	pick_action(int keycode)
 	if (keycode == K_RIGHT)
 		printf("keycode: K_RIGHT\n");
 	if (keycode == K_D)
-		printf("keycode: K_D\n");
+		u->grad += 100000;
 	if (keycode == K_DOWN)
 		printf("keycode: K_DOWN\n");
 	if (keycode == K_S)
-		printf("keycode: K_S\n");
+		u->grad = 0;
 }
 
 // mlx_clear_window(p->u->mlx, p->u->win);
@@ -29,6 +29,7 @@ int	hook(int keycode, void *param)
 	t_umlx	*u;
 
 	u = param;
+	pick_action(keycode, u);
 	if (keycode == K_ESC)
 		exit_exec(u, 0);
 	return (1);

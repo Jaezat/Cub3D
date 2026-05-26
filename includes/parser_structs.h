@@ -72,6 +72,7 @@ typedef struct s_umlx
 	void		*win;
 	t_data		*d;
 	t_img_data	img_data;
+	int			grad;
 }				t_umlx;
 
 // u can be removed later depending on context
