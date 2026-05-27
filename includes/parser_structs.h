@@ -20,10 +20,10 @@
 // enums //////////////////////////////////////////////////////////////////////
 // this could be proportional to screen resolution
 // makes it slower on the iMacs
-# define WIN_W 1600
+# define WIN_W 16 * 50
 // common widescreeen ratio
-# define TO_RATIO / 16 * 9
-// # define TO_RATIO / 1
+// # define TO_RATIO / 16 * 9
+# define TO_RATIO / 1
 # define WIN_H WIN_W TO_RATIO
 // # define WIN_H 200
 

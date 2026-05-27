@@ -16,29 +16,24 @@ void	get_addr(t_umlx *u)
 void	put_player(t_umlx *u, float hf, float wf)
 {
 	int	i;
-	int	j;
 	int	h;
 	int	w;
+	int	j;
 
 	h = hf * (WIN_H / u->d->map_h);
 	w = wf * (WIN_W / u->d->map_w);
-	i = 0;
-	while (i < 10)
+	i = -4;
+	while (i < 5)
 	{
-		if ((h - i) > 0)
-			u->img_data.addr[WIN_W * (h - i) + w] = 0xff0000;
-		if ((h + i) < (WIN_H - 1))
-			u->img_data.addr[WIN_W * (h + i) + w] = 0xff0000;
+		j = -4;
+		while (j < 5)
+		{
+			if ((h - i) > 0 && (h + i) < (WIN_H + i))
+				if ((w - j) > 0 && (w + j) < (WIN_W + j))
+					u->img_data.addr[(int)(WIN_W * (h + i) + w + j)] = 0xff0000;
+			j++;
+		}
 		i++;
-	}
-	j = 0;
-	while (j < 10)
-	{
-		if ((w - j) > 0)
-			u->img_data.addr[WIN_W * h + (w - j)] = 0xff0000;
-		if ((w + j) < (WIN_W - 1))
-			u->img_data.addr[WIN_W * h + (w + j)] = 0xff0000;
-		j++;
 	}
 }
 
@@ -59,7 +54,9 @@ void	paint_put(t_umlx *u)
 		while (h < WIN_H)
 		{
 			hr = (WIN_H / u->d->map_h);
-			if (u->d->map[h / (hr + 1)][w / (wr + 1)] == '1')
+			if ((h % (WIN_H / u->d->map_h) == 0 || (w % (WIN_W / u->d->map_w) == 0)))
+				u->img_data.addr[WIN_W * h + w] = 0;
+			else if (u->d->map[h / (hr + 1)][w / (wr + 1)] == '1')
 				u->img_data.addr[WIN_W * h + w] = u->d->sky;
 			else
 				u->img_data.addr[WIN_W * h + w] = u->d->ground;
