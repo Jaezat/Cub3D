@@ -27,7 +27,7 @@
 
 // this could be proportional to screen resolution
 // makes it slower on the iMacs
-# define WIN_W 3000
+# define WIN_W 1600
 // common widescreeen ratio
 # define TO_RATIO / 16 * 9
 // # define TO_RATIO / 1

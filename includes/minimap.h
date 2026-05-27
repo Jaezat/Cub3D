@@ -5,11 +5,10 @@
 #define MAP_W 19
 #define MAP_H 7 // number of tiles i want in my map
 
-// amount of pixels per tile 
-#define TILE_SIZE 5
-/* the amount of pixels we get here is tile_size * tile_size */
-
-// colours
+// new minimap new me
+#define MINIMAP_SIZE 150
+#define MINIMAP_TILE 5
+#define TILE_SIZE MINIMAP_SIZE / MINIMAP_TILE 
 
 #define WALL   0xED094A  
 #define FLOOR  0x00BBCA  

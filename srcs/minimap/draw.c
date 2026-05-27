@@ -1,6 +1,43 @@
 #include "main.h"
 
-static void define_cam(t_minimap *map)
+void draw_minimap(t_minimap *map) // here we should be passing cub struct
+{ 
+    /* ahora necesitamos saber exactamente donde en el mapa vamos  */
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* static void define_cam(t_minimap *map)
 {
     map->cam.top = PLY_Y - RADIUS;
 	if (map->cam.top < 0)
@@ -46,7 +83,7 @@ void draw_minimap(t_minimap *map) // here we should be passing cub struct
         }
         map->wdw.map_y++;
     }
-} 
+}  */
 
 /* int	key_hook(int keycode, t_minimap *map)
 {
