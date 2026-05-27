@@ -35,25 +35,25 @@ void	put_player(t_umlx *u, float hf, float wf)
 
 void	paint_put(t_umlx *u)
 {
-	int	w;
-	int	h;
-	int	wr;
-	int	hr;
+	int		w;
+	int		h;
+	float	wr;
+	float	hr;
 
 	w = 0;
+	hr = ((float)WIN_H / u->d->map_h);
+	wr = ((float)WIN_W / u->d->map_w);
 	while (w < WIN_W)
 	{
-		wr = (WIN_W / u->d->map_w);
 		h = 0;
 		while (h < WIN_H)
 		{
-			hr = (WIN_H / u->d->map_h);
-			if ((h % ((WIN_H / 4) / u->d->map_h) == 0 || (w % ((WIN_W / 4) / u->d->map_w) == 0)))
-				u->img_data.addr[WIN_W * h + w] = 0;
-			else if (u->d->map[h / (hr + 1)][w / (wr + 1)] == '1')
-				u->img_data.addr[WIN_W * h + w] = u->d->sky;
+			if (h % (int)(hr) == 0 || (w % (int)wr == 0))
+				u->img_data.addr[WIN_W * h + w] = 0xffffff;
+			else if (u->d->map[(int)(h / (hr))][(int)(w / (wr))] == '1')
+				u->img_data.addr[WIN_W * h + w] = 0x303030;
 			else
-				u->img_data.addr[WIN_W * h + w] = u->d->ground;
+				u->img_data.addr[WIN_W * h + w] = 0x808080;
 			h++;
 		}
 		w++;
