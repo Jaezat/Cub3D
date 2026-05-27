@@ -1,7 +1,7 @@
-NO               ./assets/textures/lavender.xpm
+NO               ./assets/textures/not_impressed.xpm
 SO ./assets/textures/autumn.xpm
 
-WE                   ./assets/textures/badge.xpm
+WE                   ./assets/textures/lavender.xpm
 
 
 EA ./assets/textures/slate_wide.xpm                   

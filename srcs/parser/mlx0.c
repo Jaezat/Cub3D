@@ -7,10 +7,6 @@ void	get_addr(t_umlx *u)
 	im = &u->img_data;
 	im->addr = (int *)mlx_get_data_addr(u->img, &im->bpp, &im->line_s,
 			&im->endian);
-	if (im->endian)
-		printf("this\n");
-	else
-		printf("that\n");
 }
 
 void	put_player(t_umlx *u, float hf, float wf)
@@ -65,7 +61,6 @@ void	paint_put(t_umlx *u)
 		w++;
 	}
 	put_player(u, u->d->py, u->d->px);
-	mlx_put_image_to_window(u->mlx, u->win, u->img, 0, 0);
 	usleep(1000000 / 60);
 }
 

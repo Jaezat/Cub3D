@@ -51,6 +51,9 @@ int	loop(void *param)
 
 	(void)param;
 	u = param;
+	get_addr(u);
 	paint_put(u);
+	mlx_put_image_to_window(u->mlx, u->win, u->img, 0, 0);
+	// mlx_put_image_to_window(u->d->no, u->win, u->img, 0, 0);
 	return (0);
 }
