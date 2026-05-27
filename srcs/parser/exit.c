@@ -10,7 +10,6 @@ void	exit_exec(t_umlx *u, int exit_code)
 	if (u->img)
 		mlx_destroy_image(u->mlx, u->img);
 	if (u->win)
-		mlx_destroy_window(u->mlx, u->win);
 	i = 0;
 	while (i < 4)
 	{
@@ -18,6 +17,7 @@ void	exit_exec(t_umlx *u, int exit_code)
 		if (img->ptr)
 			mlx_destroy_image(u->mlx, img->ptr);
 		i++;
+		mlx_destroy_window(u->mlx, u->win);
 	}
 	if (u->mlx)
 	{

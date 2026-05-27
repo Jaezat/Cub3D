@@ -50,7 +50,7 @@ void	paint_put(t_umlx *u)
 		while (h < WIN_H)
 		{
 			hr = (WIN_H / u->d->map_h);
-			if ((h % (WIN_H / u->d->map_h) == 0 || (w % (WIN_W / u->d->map_w) == 0)))
+			if ((h % ((WIN_H / 4) / u->d->map_h) == 0 || (w % ((WIN_W / 4) / u->d->map_w) == 0)))
 				u->img_data.addr[WIN_W * h + w] = 0;
 			else if (u->d->map[h / (hr + 1)][w / (wr + 1)] == '1')
 				u->img_data.addr[WIN_W * h + w] = u->d->sky;
