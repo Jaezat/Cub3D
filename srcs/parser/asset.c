@@ -38,7 +38,7 @@ void	load_map_file(t_parser *p)
 	i = 0;
 	while (i < p->map_h)
 	{
-		p->map_tofree[i] = gnl(p->map_fd);
+		p->map_head[i] = gnl(p->map_fd);
 		i++;
 	}
 	if (i < p->map_h)
@@ -79,11 +79,11 @@ void	check_map_elements(t_parser *p)
 	i = 0;
 	while (i < p->map_h)
 	{
-		if (is_element_count(p, p->map_tofree[i]) == false)
+		if (is_element_count(p, p->map_head[i]) == false)
 			break ;
 		i++;
 	}
-	p->exec_map = p->map_tofree + i;
+	p->exec_map = p->map_head + i;
 	p->exec_map_h = p->map_h - i;
 	if (!p->ea || !p->no || !p->so || !p->we)
 		err_exit_msg("Missing XPM identifier", 0, p);
@@ -100,9 +100,9 @@ void	check_map(t_parser *p)
 	p->map_h = file_ln_count(p);
 	if (p->map_h < 3)
 		err_exit_msg("Map doesn't meet minimum size", 0, p);
-	p->map_tofree = malloc(sizeof(char *) * (p->map_h + 1));
-	ft_bzero(p->map_tofree, sizeof(char *) * (p->map_h + 1));
-	if (!p->map_tofree)
+	p->map_head = malloc(sizeof(char *) * (p->map_h + 1));
+	ft_bzero(p->map_head, sizeof(char *) * (p->map_h + 1));
+	if (!p->map_head)
 		err_exit_msg("Failed to allocate memory for map", 0, p);
 	load_map_file(p);
 	check_map_elements(p);

@@ -17,7 +17,8 @@
 #include "../mlx_linux/mlx.h"
 
 // internal library headers ///////////////////////////////////////////////////
-#include "parser_functions.h"
+#include "parser/p_structs.h"
+#include "parser/p_functions.h"
 
 // macros and defines /////////////////////////////////////////////////////////
 // good for color codes, hexes, tables, weird return codes (-1, 0, 1)
@@ -34,9 +35,16 @@
 # define K_D 100
 # define K_S 115
 
-# define R 0xff0000
-# define G 0x00ff00
-# define B 0x0000ff
+// this could be proportional to screen resolution
+// makes it slower on the iMacs
+# define WIN_W 16 * 50
+// common widescreeen ratio
+// # define TO_RATIO / 16 * 9
+# define TO_RATIO / 1
+# define WIN_H WIN_W TO_RATIO
+// # define WIN_H 200
+
+
 
 // FILE1 //////////////////////////////////////////////////////////////////////
 

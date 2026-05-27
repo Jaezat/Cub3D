@@ -87,7 +87,7 @@ t_data	*pass_it_on(t_parser *p)
 	d->ground = p->floor_hex;
 	d->sky = p->ceiling_hex;
 	d->map_h = p->exec_map_h;
-	d->map_w = p->exec_map_w;
+	d->map_w = p->exec_map_w - 1;
 	d->ea = memdup(p->ea, ft_strlen(p->ea) + 1);
 	d->we = memdup(p->we, ft_strlen(p->we) + 1);
 	d->so = memdup(p->so, ft_strlen(p->so) + 1);

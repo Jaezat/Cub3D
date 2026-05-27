@@ -17,15 +17,11 @@
 // 1 page size 4kb * 64 to get to texture size 512 x 512
 # define BUF_SIZE 4096 * 64 - 1
 
+# define R 0xff0000
+# define G 0x00ff00
+# define B 0x0000ff
+
 // enums //////////////////////////////////////////////////////////////////////
-// this could be proportional to screen resolution
-// makes it slower on the iMacs
-# define WIN_W 16 * 50
-// common widescreeen ratio
-// # define TO_RATIO / 16 * 9
-# define TO_RATIO / 1
-# define WIN_H WIN_W TO_RATIO
-// # define WIN_H 200
 
 // structures /////////////////////////////////////////////////////////////////
 
@@ -81,7 +77,7 @@ typedef struct s_parser
 {
 	int			map_fd;
 	char		*map_file;
-	char		**map_tofree;
+	char		**map_head;
 	char		**exec_map;
 	int			map_h;
 	char		*floor;

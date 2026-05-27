@@ -40,8 +40,6 @@ void	paint_put(t_umlx *u)
 	int	wr;
 	int	hr;
 
-	wr = 0;
-	hr = 0;
 	w = 0;
 	while (w < WIN_W)
 	{
