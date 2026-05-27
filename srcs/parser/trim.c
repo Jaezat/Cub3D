@@ -62,10 +62,10 @@ void	convert_colors(int floor, char **rgb, t_parser *p)
 	int	*hex;
 	int	i;
 
-	color = 0;
 	hex = p->hex_c;
-	if (floor)
+	if (floor == 0)
 		hex = p->hex_f;
+	color = 0;
 	while (color < 3)
 	{
 		i = 0;
@@ -88,17 +88,17 @@ void	color_array_to_int(int floor, t_parser *p)
 	unsigned int	tmp;
 
 	tmp = 0;
-	color_i = 0;
 	hex = p->hex_c;
-	if (floor)
+	if (floor == 0)
 		hex = p->hex_f;
+	color_i = 0;
 	while (color_i < 3)
 	{
-		tmp <<= (color_i * 8);
+		tmp <<= 8;
 		tmp += (hex[color_i]);
 		color_i++;
 	}
-	if (floor)
+	if (floor == 0)
 		p->floor_hex = tmp;
 	else
 		p->ceiling_hex = tmp;

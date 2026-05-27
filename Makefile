@@ -1,4 +1,4 @@
-NAME	= cub3d
+NAME	= cub3D
 CC		= cc
 MLX_DIR	= mlx_linux
 CFLAGS	= -Wall -Werror -Wextra -Iincludes

@@ -1,6 +1,7 @@
-#include "parser_structs.h"
 #ifndef PARSER_FUNCTIONS_H
 # define PARSER_FUNCTIONS_H
+
+#include "parser_structs.h"
 
 // init ///////////////////////////////////////////////////////////////////////
 bool	is_cubed_ext(char *filename, char *extension);

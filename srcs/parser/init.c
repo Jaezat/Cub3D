@@ -52,6 +52,7 @@ void	get_player(t_data *d, int x, int y)
 		d->dir = 270;
 	d->px = x + 0.5;
 	d->py = y + 0.5;
+	d->map[y][x] = '0';
 }
 
 void	get_floats(t_parser *p, t_data *d)

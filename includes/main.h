@@ -10,6 +10,8 @@
 #include <sys/time.h>
 #define _USE_MATH_DEFINES
 
+#ifndef MAIN_H
+# define MAIN_H
 ///////////////////////////////////////////////////////////////////////////////
 // compiled external headers //////////////////////////////////////////////////
 #include "../mlx_linux/mlx.h"
@@ -17,8 +19,6 @@
 // internal library headers ///////////////////////////////////////////////////
 #include "parser_functions.h"
 
-#ifndef MAIN_H
-# define MAIN_H
 // macros and defines /////////////////////////////////////////////////////////
 // good for color codes, hexes, tables, weird return codes (-1, 0, 1)
 
@@ -33,6 +33,10 @@
 # define K_W 119
 # define K_D 100
 # define K_S 115
+
+# define R 0xff0000
+# define G 0x00ff00
+# define B 0x0000ff
 
 // FILE1 //////////////////////////////////////////////////////////////////////
 

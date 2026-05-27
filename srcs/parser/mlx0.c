@@ -7,52 +7,68 @@ void	get_addr(t_umlx *u)
 	im = &u->img_data;
 	im->addr = (int *)mlx_get_data_addr(u->img, &im->bpp, &im->line_s,
 			&im->endian);
+	if (im->endian)
+		printf("this\n");
+	else
+		printf("that\n");
+}
+
+void	put_player(t_umlx *u, float hf, float wf)
+{
+	int	i;
+	int	j;
+	int	h;
+	int	w;
+
+	h = hf * (WIN_H / u->d->map_h);
+	w = wf * (WIN_W / u->d->map_w);
+	i = 0;
+	while (i < 10)
+	{
+		if ((h - i) > 0)
+			u->img_data.addr[WIN_W * (h - i) + w] = 0xff0000;
+		if ((h + i) < (WIN_H - 1))
+			u->img_data.addr[WIN_W * (h + i) + w] = 0xff0000;
+		i++;
+	}
+	j = 0;
+	while (j < 10)
+	{
+		if ((w - j) > 0)
+			u->img_data.addr[WIN_W * h + (w - j)] = 0xff0000;
+		if ((w + j) < (WIN_W - 1))
+			u->img_data.addr[WIN_W * h + (w + j)] = 0xff0000;
+		j++;
+	}
 }
 
 void	paint_put(t_umlx *u)
 {
-	int			j;
-	int			i;
-	int			r;
-	int			g;
-	int			b;
-	int			newc;
-	// static int	frame = 0;
+	int	w;
+	int	h;
+	int	wr;
+	int	hr;
 
-	j = 0;
-	while (j < WIN_W)
+	wr = 0;
+	hr = 0;
+	w = 0;
+	while (w < WIN_W)
 	{
-		i = 0;
-		while (i < WIN_H)
+		wr = (WIN_W / u->d->map_w);
+		h = 0;
+		while (h < WIN_H)
 		{
-			u->img_data.addr[WIN_W * i + j] = u->grad;
-			i++;
+			hr = (WIN_H / u->d->map_h);
+			if (u->d->map[h / (hr + 1)][w / (wr + 1)] == '1')
+				u->img_data.addr[WIN_W * h + w] = u->d->sky;
+			else
+				u->img_data.addr[WIN_W * h + w] = u->d->ground;
+			h++;
 		}
-		j++;
-		// printf("%x\n", newc);
+		w++;
 	}
-	newc = 0;
-	r = (char)(u->grad >> (2 * 8));
-	g = (char)(u->grad >> (1 * 8));
-	b = (char)(u->grad >> (0 * 8));
-	if ((0xffffff & rand()) % 6 == 0)
-		r = (r + 1) % 256;
-	if ((0xffffff & rand()) % 6 == 1)
-		g = (g + 1) % 256;
-	if ((0xffffff & rand()) % 6 == 2)
-		b = (b + 1) % 256;
-	if ((0xffffff & rand()) % 6 == 3)
-		r = (r - 1) % 256;
-	if ((0xffffff & rand()) % 6 == 4)
-		g = (g - 1) % 256;
-	if ((0xffffff & rand()) % 6 == 5)
-		b = (b - 1) % 256;
-	newc += (r << (2 * 8));
-	newc += (g << (1 * 8));
-	newc += (b << (0 * 8));
-	u->grad = newc;
+	put_player(u, u->d->py, u->d->px);
 	mlx_put_image_to_window(u->mlx, u->win, u->img, 0, 0);
-	// printf("%d\n", frame++);
 	usleep(1000000 / 60);
 }
 
@@ -65,12 +81,11 @@ void	game(t_data *d)
 	u.mlx = mlx_init();
 	if (!u.mlx)
 		exit_exec(&u, 1);
-	u.win = mlx_new_window(u.mlx, WIN_W, WIN_H, "Cub3d");
+	u.win = mlx_new_window(u.mlx, WIN_W, WIN_H, "Cub3D");
 	if (!u.win)
 		exit_exec(&u, 1);
 	u.img = mlx_new_image(u.mlx, WIN_W, WIN_H);
 	get_addr(&u);
-	// load_textures(&u);
 	mlx_key_hook(u.win, hook, &u);
 	mlx_loop_hook(u.mlx, (int (*)())(void *)loop, &u);
 	mlx_loop(u.mlx);

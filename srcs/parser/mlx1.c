@@ -3,22 +3,9 @@
 // used to test gnl function in srcs/parser/gnl.c
 void	pick_action(int keycode, t_umlx *u)
 {
+	(void)u;
 	if (keycode == K_LEFT)
 		printf("keycode: K_LEFT\n");
-	if (keycode == K_A)
-		u->grad -= 100000;
-	if (keycode == K_UP)
-		printf("keycode: K_UP\n");
-	if (keycode == K_W)
-		printf("keycode: K_W\n");
-	if (keycode == K_RIGHT)
-		printf("keycode: K_RIGHT\n");
-	if (keycode == K_D)
-		u->grad += 100000;
-	if (keycode == K_DOWN)
-		printf("keycode: K_DOWN\n");
-	if (keycode == K_S)
-		u->grad = 0;
 }
 
 // mlx_clear_window(p->u->mlx, p->u->win);
@@ -29,9 +16,9 @@ int	hook(int keycode, void *param)
 	t_umlx	*u;
 
 	u = param;
-	pick_action(keycode, u);
 	if (keycode == K_ESC)
 		exit_exec(u, 0);
+	pick_action(keycode, u);
 	return (1);
 }
 
@@ -60,26 +47,10 @@ void	load_textures(t_umlx *u)
 
 int	loop(void *param)
 {
-	// t_umlx		*u;
-	// int			i;
-	// int			j;
-	// static int	color = 0;
+	t_umlx	*u;
+
 	(void)param;
-	// u = param;
-	paint_put((t_umlx *)param);
-	// i = -1;
-	// while (++i < WIN_H)
-	// {
-	// 	j = -1;
-	// 	while (++j < WIN_W)
-	// 	{
-	// 		// u->img
-	// 	}
-	// 	// usleep(10);
-	// 	color += rand();
-	// }
-	// printf("%d\t", i);
-	// mlx_put_image_to_window(u->mlx, u->win, u->img, 100, 100);
-	// exit_exec(u, 0);
+	u = param;
+	paint_put(u);
 	return (0);
 }
