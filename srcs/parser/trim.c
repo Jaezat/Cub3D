@@ -69,7 +69,7 @@ void	convert_colors(int floor, char **rgb, t_parser *p)
 	while (color < 3)
 	{
 		i = 0;
-		while (ft_isdigit(rgb[color][i]) && i < 3)
+		while (rgb[color][i] && ft_isdigit(rgb[color][i]) && i < 4)
 		{
 			hex[color] *= 10;
 			hex[color] += rgb[color][i] - '0';
