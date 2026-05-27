@@ -19,7 +19,7 @@ void	paint_put(t_umlx *u)
 		u->img_data.addr[i] = rand();
 		i++;
 	}
-	mlx_put_image_to_window(u->mlx, u->win, u->img, 0, 0);
+	
 }
 
 void	game(t_data *d)

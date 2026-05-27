@@ -37,7 +37,6 @@ void draw_minimap(t_minimap *map) // here we should be passing cub struct
                 {
                     map->wdw.screen_x = (map->wdw.map_x * TILE_SIZE) + map->wdw.px_x;
                     map->wdw.screen_y = (map->wdw.map_y * TILE_SIZE) + map->wdw.px_y;
-                    printf("addr: %p\n", (void *)map->ulx.img_data.addr);
                     my_mlx_pixel_put(&map->ulx.img_data, map->wdw.screen_x, map->wdw.screen_y, map->wdw.color);
                     map->wdw.px_x++;
                 }
@@ -47,7 +46,6 @@ void draw_minimap(t_minimap *map) // here we should be passing cub struct
         }
         map->wdw.map_y++;
     }
-   
 } 
 
 /* int	key_hook(int keycode, t_minimap *map)
