@@ -1,8 +1,8 @@
 #include "main.h"
 
-void draw_minimap(t_minimap *map) // here we should be passing cub struct
+void draw_minimap(t_minimap *map) // info not committed so restarting
 { 
-    /* ahora necesitamos saber exactamente donde en el mapa vamos  */
+   
 
 
 }
