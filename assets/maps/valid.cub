@@ -6,9 +6,14 @@ WE                   ./assets/textures/lavender.xpm
 
 EA ./assets/textures/slate_wide.xpm                   
 
-F 127,255,0
-C                 0,127,255
+F                                             127, 255, 0
 
- 1
-1N1
- 1
+C            0, 127,         255         
+1111111
+1000001
+1011101
+1010001
+1011101
+10N0001
+1111111
+1111111

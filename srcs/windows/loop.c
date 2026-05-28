@@ -11,9 +11,9 @@ void	pick_action(int keycode, t_umlx *u)
 // mlx_clear_window(p->u->mlx, p->u->win);
 // the cleaning routine can be rearranged to clean everything
 // the mlx objects can be in one place
-int	hook(int keycode, void *param)
+int hook(int keycode, void *param)
 {
-	t_umlx	*u;
+	t_umlx *u;
 
 	u = param;
 	if (keycode == K_ESC)
@@ -22,12 +22,12 @@ int	hook(int keycode, void *param)
 	return (1);
 }
 
-void	load_textures(t_umlx *u)
+void load_textures(t_umlx *u)
 {
-	t_data	*d;
-	t_img	*img;
-	int		i;
-	char	**arr;
+	t_data *d;
+	t_img *img;
+	int i;
+	char **arr;
 
 	d = u->d;
 	arr = (char *[]){d->no, d->so, d->ea, d->we};
@@ -45,15 +45,28 @@ void	load_textures(t_umlx *u)
 	}
 }
 
-int	loop(void *param)
+int loop(void *param)
 {
-	t_umlx	*u;
+	t_game *env;
 
-	(void)param;
-	u = param;
-	get_addr(u);
-	paint_put(u);
-	mlx_put_image_to_window(u->mlx, u->win, u->img, 0, 0);
-	// mlx_put_image_to_window(u->d->no, u->win, u->img, 0, 0);
+	env = (t_game *)param;
+	paint_put(&env->u);
+	// draw_minimap(&env->mn);
+	mlx_put_image_to_window(env->u.mlx, env->u.win, env->u.img, 0, 0);
+
+	// i = -1;
+	// while (++i < WIN_H)
+	// {
+	// 	j = -1;
+	// 	while (++j < WIN_W)
+	// 	{
+	// 		// u->img
+	// 	}
+	// 	// usleep(10);
+	// 	color += rand();
+	// }
+	// printf("%d\t", i);
+	// mlx_put_image_to_window(u->mlx, u->win, u->img, 100, 100);
+	// exit_exec(u, 0);
 	return (0);
 }

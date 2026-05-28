@@ -53,23 +53,23 @@ typedef struct s_data
 // {
 // }			t_img;
 
-typedef struct s_img_data
-{
-	int			bpp;
-	int			endian;
-	int			line_s;
-	int			*addr;
-}				t_img_data;
+// typedef struct s_img_data
+// {
+// 	int			bpp;
+// 	int			endian;
+// 	int			line_s;
+// 	int			*addr;
+// }				t_img_data;
 
-typedef struct s_umlx
-{
-	void		*img;
-	void		*mlx;
-	void		*win;
-	t_data		*d;
-	t_img_data	img_data;
-	int			grad;
-}				t_umlx;
+// typedef struct s_umlx
+// {
+// 	void		*img;
+// 	void		*mlx;
+// 	void		*win;
+// 	t_data		*d;
+// 	t_img_data	img_data;
+// 	int			grad;
+// }				t_umlx;
 
 // u can be removed later depending on context
 // t_umlx	*u;
