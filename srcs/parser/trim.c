@@ -94,7 +94,7 @@ void	color_array_to_int(int floor, t_parser *p)
 		hex = p->hex_f;
 	while (color_i < 3)
 	{
-		tmp <<= (color_i * 8);
+		tmp <<= 8;
 		tmp += (hex[color_i]);
 		color_i++;
 	}

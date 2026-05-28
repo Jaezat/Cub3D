@@ -1,4 +1,3 @@
-#include "parser_structs.h"
 #ifndef PARSER_FUNCTIONS_H
 # define PARSER_FUNCTIONS_H
 

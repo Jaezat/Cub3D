@@ -18,14 +18,6 @@
 # define BUF_SIZE 4096 * 64 - 1
 
 // enums //////////////////////////////////////////////////////////////////////
-// this could be proportional to screen resolution
-// makes it slower on the iMacs
-# define WIN_W 1600
-// common widescreeen ratio
-# define TO_RATIO / 16 * 9
-// # define TO_RATIO / 1
-# define WIN_H WIN_W TO_RATIO
-// # define WIN_H 200
 
 // structures /////////////////////////////////////////////////////////////////
 
@@ -53,29 +45,6 @@ typedef struct s_data
 	float		py;
 }				t_data;
 
-// typedef struct s_img
-// {
-// }			t_img;
-
-typedef struct s_img_data
-{
-	int			bpp;
-	int			endian;
-	int			line_s;
-	int			*addr;
-}				t_img_data;
-
-typedef struct s_umlx
-{
-	void		*img;
-	void		*mlx;
-	void		*win;
-	t_data		*d;
-	t_img_data	img_data;
-}				t_umlx;
-
-// u can be removed later depending on context
-// t_umlx	*u;
 typedef struct s_parser
 {
 	int			map_fd;

@@ -15,11 +15,16 @@ OBJ_DIR = build/
 
 SRCS    = $(addprefix $(SRC_DIR), main.c)
 
-P_FILES = init asset trim flood fill gnl mlx0 mlx1 utl0 utl1 utl2 exit \
- \
-test # ////////////////////////////////////////////////////////// remove test /
+P_FILES 	= init asset trim flood fill gnl utl0 utl1 utl2 exit \
+			test
+MINI_FILES 	= draw utils 
+W_FILES 	= game loop 
+# ////////////////////////////////////////////////////////// remove test /
 # /////////////////////////////////////////////////////////////// remove test /
 SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(P_FILES)))
+SRCS	+= $(addprefix srcs/minimap/, $(addsuffix .c, $(MINI_FILES)))
+SRCS	+= $(addprefix srcs/windows/, $(addsuffix .c, $(W_FILES)))
+
 
 OBJS    = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
