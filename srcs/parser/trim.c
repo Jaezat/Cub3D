@@ -1,10 +1,6 @@
 #include "main.h"
 
-// this guy needs some SERIOUS UNIT TESTING
-// it runs the chars, then one space if it got here
-// it then moves the argument after the id to the start of str
-// it goes to the end char if its a newline it moves back one
-// it then moves back to ignore all ending spaces and places '\0'
+// unit testing or integral?
 void	trim_spaces(char *str)
 {
 	int	start;
@@ -104,7 +100,6 @@ void	color_array_to_int(int floor, t_parser *p)
 		p->ceiling_hex = tmp;
 }
 
-// this is trimming and checking colors one function does two things = bad
 void	trim_convert(t_parser *p)
 {
 	char	**arr;
