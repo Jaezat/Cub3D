@@ -14,7 +14,7 @@ int hook(int keycode, void *param)
 	u = param;
 	if (keycode == K_ESC)
 		exit_exec(u, 0);
-	pick_action(keycode, u);
+	// pick_action(keycode, u);
 	return (1);
 }
 

@@ -9,6 +9,12 @@ void	get_addr(t_umlx *u)
 			&im->endian);
 }
 
+void	safe_pix_put(t_umlx *u, int byte, int color)
+{
+	if (byte >= 0)
+		u->img_data.addr[byte] = color;
+}
+
 void	put_player(t_umlx *u, float hf, float wf)
 {
 	int	i;
@@ -26,7 +32,7 @@ void	put_player(t_umlx *u, float hf, float wf)
 		{
 			if ((h - i) > 0 && (h + i) < (WIN_H + i))
 				if ((w - j) > 0 && (w + j) < (WIN_W + j))
-					u->img_data.addr[(int)(WIN_W * (h + i) + w + j)] = 0xff0000;
+					safe_pix_put(u, (int)(WIN_W * (h + i) + w + j), 0xff0000);
 			j++;
 		}
 		i++;
@@ -62,9 +68,39 @@ void	paint_put(t_umlx *u)
 	usleep(1000000 / 60);
 }
 
+#define MOV_INC 0.1
+
+void	key_press(int keycode, void *param)
+{
+	t_game	*env;
+	t_data	*data;
+	t_umlx	*umlx;
+
+	env = param;
+	data = env->u.d;
+	umlx = &env->u;
+	(void)umlx;
+	if (keycode == K_W)
+		data->py -= MOV_INC;
+	if (keycode == K_S)
+		data->py += MOV_INC;
+	if (keycode == K_A)
+		data->px -= MOV_INC;
+	if (keycode == K_D)
+		data->px += MOV_INC;
+	printf("x %f\n", data->px);
+	printf("y %f\n", data->py);
+}
+
+typedef int				(*t_clean)();
+
+static inline t_clean	clean_cast(void *func)
+{
+	return ((t_clean)func);
+}
 void	game(t_data *d)
 {
-	t_game env;
+	t_game	env;
 
 	ft_bzero(&env, sizeof(t_game));
 	env.u.d = d;
@@ -72,33 +108,14 @@ void	game(t_data *d)
 	env.u.mlx = mlx_init();
 	if (!env.u.mlx)
 		exit_exec(&env.u, 1);
-	env.u.win = mlx_new_window(env.u.mlx, WIN_W, WIN_H, "Cenv.ub3d");
+	env.u.win = mlx_new_window(env.u.mlx, WIN_W, WIN_H, "Cub3D");
 	if (!env.u.win)
 		exit_exec(&env.u, 1);
 	env.u.img = mlx_new_image(env.u.mlx, WIN_W, WIN_H);
 	get_addr(&env.u);
 	env.mn.ulx = env.u;
-	// load_textenv.ures(&env.u);
-	mlx_key_hook(env.u.win, hook, &env.u);
-	mlx_loop_hook(env.u.mlx, (int (*)())(void *)loop, &env);
+	mlx_key_hook(env.u.win, hook, &env);
+	mlx_hook(env.u.win, 2, 1, clean_cast(key_press), &env);
+	mlx_loop_hook(env.u.mlx, clean_cast(loop), &env);
 	mlx_loop(env.u.mlx);
 }
-
-// void	game(t_data *d)
-// {
-// 	t_umlx	u;
-
-// 	ft_bzero(&u, sizeof(t_umlx));
-// 	u.d = d;
-// 	u.mlx = mlx_init();
-// 	if (!u.mlx)
-// 		exit_exec(&u, 1);
-// 	u.win = mlx_new_window(u.mlx, WIN_W, WIN_H, "Cub3d");
-// 	if (!u.win)
-// 		exit_exec(&u, 1);
-// 	load_textures(&u);
-// 	// u.img = mlx_new_image(u.mlx, WIN_W, WIN_H);
-// 	mlx_key_hook(u.win, hook, &u);
-// 	mlx_loop_hook(u.mlx, (int (*)())(void *)loop, &u);
-// 	mlx_loop(u.mlx);
-// }

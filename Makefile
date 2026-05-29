@@ -56,7 +56,7 @@ clean:
 	rm -rf $(OBJ_DIR) $(NAME)
 
 # This also needs discussion before submission
-fclean: clean mlx_clean
+fclean: clean
 	rm -f $(NAME)
 
 mlx_clean:
@@ -65,6 +65,8 @@ mlx_clean:
 re: fclean all
 
 # remoeve custom rules ////////////////////////////////////////////////////////
+
+force_clean: clean mlx_clean
 
 TESTMAP = assets/maps/valid.cub
 
