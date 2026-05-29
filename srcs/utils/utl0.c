@@ -10,9 +10,10 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-void	ft_puterr(char *str)
+void    ft_puterr(char *str)
 {
-	write(STDERR_FILENO, str, ft_strlen(str));
+    if (write(STDERR_FILENO, str, ft_strlen(str)) < 0)
+        return ;
 }
 
 void	safe_init(t_parser *p)
