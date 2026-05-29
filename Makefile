@@ -15,9 +15,9 @@ OBJ_DIR = build/
 
 SRCS    = $(addprefix $(SRC_DIR), main.c)
 
-P_FILES 	= init asset trim flood fill gnl utl0 utl1 utl2 exit \
+P_FILES 	= init asset trim flood fill copy gnl utl0 utl1 exit \
 			test
-MINI_FILES 	= draw utils 
+MINI_FILES 	= draw utils
 W_FILES 	= game loop 
 # ////////////////////////////////////////////////////////// remove test /
 # /////////////////////////////////////////////////////////////// remove test /
@@ -71,6 +71,9 @@ parse: re
 	sleep 0.3
 	clear
 	./$(NAME) $(TESTMAP)
+
+norme:
+	norminette srcs/parser/ | grep -vE "header"
 
 CFLAGS += -g
 CFLAGS += -O3

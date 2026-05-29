@@ -39,7 +39,11 @@ void	free_matrix(void *ref, int h);
 // fill ///////////////////////////////////////////////////////////////////////
 void	start_flooding(t_parser *p);
 void	splash(t_parser *p, int r, int c, char tag);
+
+// copy ///////////////////////////////////////////////////////////////////////
 t_data	*pass_it_on(t_parser *parser);
+void	remove_stray_lines(t_parser *parser, t_data *data);
+void	get_floats(t_parser *p, t_data *d);
 
 // mlx0 ////////////////////////////////////////////////////////////////////////
 // TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING TESTTING /////
