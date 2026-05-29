@@ -1,29 +1,19 @@
 ///////////////////////////////////////////////////////////////////////////////
-#ifndef PARSER_STRUCTS_H
-# define PARSER_STRUCTS_H
+#ifndef P_STRUCTS_H
+# define P_STRUCTS_H
 
-// internal library headers ///////////////////////////////////////////////////
-// can be broken down into smaller headers
-
-// macros and defines /////////////////////////////////////////////////////////
-
-// RT for return
+// RT means return
 # define RT_ERROR 1
 # define RT_SUCCESS 0
-// bool return for str diff
+// for confusing return numbers
 # define DIFF 1
 # define SAME 0
-// gnl is short lived, using big buffersize makes it faster
-// 1 page size 4kb * 64 to get to texture size 512 x 512
-# define BUF_SIZE 4096 * 64 - 1
+// to fit a page size
+# define BUF_SIZE 4096 - 1
 
 # define R 0xff0000
 # define G 0x00ff00
 # define B 0x0000ff
-
-// enums //////////////////////////////////////////////////////////////////////
-
-// structures /////////////////////////////////////////////////////////////////
 
 typedef struct s_img
 {
@@ -49,30 +39,6 @@ typedef struct s_data
 	float		py;
 }				t_data;
 
-// typedef struct s_img
-// {
-// }			t_img;
-
-// typedef struct s_img_data
-// {
-// 	int			bpp;
-// 	int			endian;
-// 	int			line_s;
-// 	int			*addr;
-// }				t_img_data;
-
-// typedef struct s_umlx
-// {
-// 	void		*img;
-// 	void		*mlx;
-// 	void		*win;
-// 	t_data		*d;
-// 	t_img_data	img_data;
-// 	int			grad;
-// }				t_umlx;
-
-// u can be removed later depending on context
-// t_umlx	*u;
 typedef struct s_parser
 {
 	int			map_fd;
@@ -98,5 +64,4 @@ typedef struct s_parser
 }				t_parser;
 
 #endif
-
 ///////////////////////////////////////////////////////////////////////////////

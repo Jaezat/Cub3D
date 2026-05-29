@@ -1,6 +1,5 @@
 #include "main.h"
 
-// used to test gnl function in srcs/parser/gnl.c
 void	pick_action(int keycode, t_umlx *u)
 {
 	(void)u;
@@ -8,9 +7,6 @@ void	pick_action(int keycode, t_umlx *u)
 		printf("keycode: K_LEFT\n");
 }
 
-// mlx_clear_window(p->u->mlx, p->u->win);
-// the cleaning routine can be rearranged to clean everything
-// the mlx objects can be in one place
 int hook(int keycode, void *param)
 {
 	t_umlx *u;
@@ -53,20 +49,5 @@ int loop(void *param)
 	paint_put(&env->u);
 	// draw_minimap(&env->mn);
 	mlx_put_image_to_window(env->u.mlx, env->u.win, env->u.img, 0, 0);
-
-	// i = -1;
-	// while (++i < WIN_H)
-	// {
-	// 	j = -1;
-	// 	while (++j < WIN_W)
-	// 	{
-	// 		// u->img
-	// 	}
-	// 	// usleep(10);
-	// 	color += rand();
-	// }
-	// printf("%d\t", i);
-	// mlx_put_image_to_window(u->mlx, u->win, u->img, 100, 100);
-	// exit_exec(u, 0);
 	return (0);
 }
