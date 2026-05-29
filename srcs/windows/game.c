@@ -94,7 +94,7 @@ void	key_press(int keycode, void *param)
 
 typedef int				(*t_clean)();
 
-static inline t_clean	clean_cast(void *func)
+static inline t_clean	func(void *func)
 {
 	return ((t_clean)func);
 }
@@ -115,7 +115,7 @@ void	game(t_data *d)
 	get_addr(&env.u);
 	env.mn.ulx = env.u;
 	mlx_key_hook(env.u.win, hook, &env);
-	mlx_hook(env.u.win, 2, 1, clean_cast(key_press), &env);
-	mlx_loop_hook(env.u.mlx, clean_cast(loop), &env);
+	mlx_hook(env.u.win, 2, 1, func(key_press), &env);
+	mlx_loop_hook(env.u.mlx, func(loop), &env);
 	mlx_loop(env.u.mlx);
 }

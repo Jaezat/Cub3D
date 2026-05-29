@@ -14,7 +14,7 @@ bool	is_cubed_ext(char *filename, char *extension)
 	return (true);
 }
 
-// are the pointer arithmetics safe in all cases?
+// unit test
 void	extension_check(char *file, char *ext, t_parser *p)
 {
 	int	ext_len;
