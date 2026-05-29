@@ -1,11 +1,11 @@
 #include "main.h"
 
-void draw_minimap(t_minimap *map) // info not committed so restarting
-{ 
+// void draw_minimap(t_minimap *map) // info not committed so restarting
+// { 
    
 
 
-}
+// }
 
 
 

@@ -9,17 +9,57 @@ void	get_addr(t_umlx *u)
 			&im->endian);
 }
 
-void	paint_put(t_umlx *u)
+void	put_player(t_umlx *u, float hf, float wf)
 {
 	int	i;
+	int	h;
+	int	w;
+	int	j;
 
-	i = 0;
-	while (i < WIN_H * WIN_W)
+	h = hf * (WIN_H / u->d->map_h);
+	w = wf * (WIN_W / u->d->map_w);
+	i = -4;
+	while (i < 5)
 	{
-		u->img_data.addr[i] = rand();
+		j = -4;
+		while (j < 5)
+		{
+			if ((h - i) > 0 && (h + i) < (WIN_H + i))
+				if ((w - j) > 0 && (w + j) < (WIN_W + j))
+					u->img_data.addr[(int)(WIN_W * (h + i) + w + j)] = 0xff0000;
+			j++;
+		}
 		i++;
 	}
-	
+}
+
+void	paint_put(t_umlx *u)
+{
+	int		w;
+	int		h;
+	float	wr;
+	float	hr;
+
+	w = 0;
+	hr = ((float)WIN_H / u->d->map_h);
+	wr = ((float)WIN_W / u->d->map_w);
+	while (w < WIN_W)
+	{
+		h = 0;
+		while (h < WIN_H)
+		{
+			if (h % (int)(hr) == 0 || (w % (int)wr == 0))
+				u->img_data.addr[WIN_W * h + w] = 0xffffff;
+			else if (u->d->map[(int)(h / (hr))][(int)(w / (wr))] == '1')
+				u->img_data.addr[WIN_W * h + w] = 0x303030;
+			else
+				u->img_data.addr[WIN_W * h + w] = 0x808080;
+			h++;
+		}
+		w++;
+	}
+	put_player(u, u->d->py, u->d->px);
+	usleep(1000000 / 60);
 }
 
 void	game(t_data *d)

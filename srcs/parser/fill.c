@@ -30,7 +30,7 @@ void	start_flooding(t_parser *p)
 	char	dir;
 
 	i = 0;
-	while (i < p->exec_map_h)
+	while (i < p->exec_map_h && p->exec_map[i])
 	{
 		j = 0;
 		while (j < p->exec_map_w)
@@ -38,7 +38,6 @@ void	start_flooding(t_parser *p)
 			c = p->map[i][j];
 			if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 			{
-				// p->dir
 				dir = p->map[i][j];
 				splash(p, i, j, 'F');
 				splash(p, i, j, '0');
@@ -48,54 +47,4 @@ void	start_flooding(t_parser *p)
 		}
 		i++;
 	}
-}
-
-void	*memdup(void *src, size_t size)
-{
-	char	*dest;
-
-	dest = malloc(size);
-	if (!dest)
-		return (NULL);
-	tf_memcpy(dest, src, size);
-	return (dest);
-}
-
-bool	copy_matrix(t_parser *p, t_data *d)
-{
-	int	i;
-
-	i = 0;
-	while (i < p->exec_map_h)
-	{
-		d->map[i] = memdup(p->map[i], p->exec_map_w);
-		if (!d->map[i])
-			return (free_data(d), false);
-		i++;
-	}
-	return (true);
-}
-
-t_data	*pass_it_on(t_parser *p)
-{
-	t_data	*d;
-
-	d = malloc(sizeof(t_data));
-	if (!d)
-		return (NULL);
-	ft_bzero(d, sizeof(t_data));
-	d->ground = p->floor_hex;
-	d->sky = p->ceiling_hex;
-	d->map_h = p->exec_map_h;
-	d->map_w = p->exec_map_w;
-	d->ea = memdup(p->ea, ft_strlen(p->ea) + 1);
-	d->we = memdup(p->we, ft_strlen(p->we) + 1);
-	d->so = memdup(p->so, ft_strlen(p->so) + 1);
-	d->no = memdup(p->no, ft_strlen(p->no) + 1);
-	d->map = memdup(p->map, p->exec_map_h * sizeof(char *));
-	if (!d->ea || !d->we || !d->so || !d->no || !d->map)
-		return (free_data(d), NULL);
-	if (copy_matrix(p, d) == false)
-		d = NULL;
-	return (d);
 }

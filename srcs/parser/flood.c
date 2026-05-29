@@ -28,7 +28,7 @@ void	check_valid_chars(t_parser *p)
 
 	player = 0;
 	i = 0;
-	while (i < p->exec_map_h)
+	while (i < p->exec_map_h && p->exec_map[i])
 	{
 		j = 0;
 		while (p->exec_map[i][j])
@@ -75,7 +75,7 @@ void	alloc_fill_matrix(t_parser *p, char **map)
 
 	last_char = 0;
 	i = 0;
-	while (i < p->exec_map_h)
+	while (i < p->exec_map_h && p->exec_map[i])
 	{
 		map[i] = malloc(p->exec_map_w);
 		if (!map[i])
@@ -99,7 +99,8 @@ void	flood_init(t_parser *p)
 
 	check_valid_chars(p);
 	get_check_width(p);
-	map = malloc(p->exec_map_h * sizeof(char *));
+	map = malloc((p->exec_map_h + 1) * sizeof(char *));
+	ft_bzero(map, (p->exec_map_h + 1) * sizeof(char *));
 	if (!map)
 		err_exit_msg("Failed to allocate memory for map array", 0, p);
 	p->map = map;

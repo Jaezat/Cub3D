@@ -52,32 +52,7 @@ void	get_player(t_data *d, int x, int y)
 		d->dir = 270;
 	d->px = x + 0.5;
 	d->py = y + 0.5;
-}
-
-void	get_floats(t_parser *p, t_data *d)
-{
-	int		y;
-	int		x;
-	char	lt;
-
-	y = 0;
-	while (y < d->map_h)
-	{
-		x = 0;
-		while (x < d->map_w)
-		{
-			lt = d->map[y][x];
-			if (lt == 'N' || lt == 'E' || lt == 'S' || lt == 'W')
-			{
-				get_player(d, x, y);
-				return ;
-			}
-			x++;
-		}
-		y++;
-	}
-	free_data(d);
-	err_exit_msg("Couldn't find the player", 0, p);
+	d->map[y][x] = '0';
 }
 
 t_data	*parsing(int argc, char **argv)

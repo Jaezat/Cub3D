@@ -10,8 +10,7 @@ void	exit_exec(t_umlx *u, int exit_code)
 	if (u->img)
 		mlx_destroy_image(u->mlx, u->img);
 	if (u->win)
-		mlx_destroy_window(u->mlx, u->win);
-	i = 0;
+		i = 0;
 	while (i < 4)
 	{
 		img = u->d->imgs + i;
@@ -19,6 +18,7 @@ void	exit_exec(t_umlx *u, int exit_code)
 			mlx_destroy_image(u->mlx, img->ptr);
 		i++;
 	}
+	mlx_destroy_window(u->mlx, u->win);
 	if (u->mlx)
 	{
 		mlx_destroy_display(u->mlx);
@@ -32,8 +32,8 @@ void	exit_exec(t_umlx *u, int exit_code)
 void	exit_parse(t_parser *p, int exit_co)
 {
 	ft_safe_close(&p->map_fd);
-	if (p->map_tofree)
-		free_map(&p->map_tofree);
+	if (p->map_head)
+		free_map(&p->map_head);
 	if (p->map)
 	{
 		free_matrix(p->map, p->exec_map_h);

@@ -65,6 +65,6 @@ typedef struct s_game
 
 
 unsigned int get_tile_color(char c);
-void draw_minimap(t_minimap *map); // here we should be passing cub struct
+// void draw_minimap(t_minimap *map); // here we should be passing cub struct
 void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
 #endif

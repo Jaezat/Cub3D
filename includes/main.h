@@ -1,6 +1,4 @@
 ///////////////////////////////////////////////////////////////////////////////
-
-// external library headers ///////////////////////////////////////////////////
 #include <fcntl.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -10,31 +8,21 @@
 #include <sys/time.h>
 #define _USE_MATH_DEFINES
 
-///////////////////////////////////////////////////////////////////////////////
-// compiled external headers //////////////////////////////////////////////////
-#include "../mlx_linux/mlx.h"
-
-// internal library headers ///////////////////////////////////////////////////
-#include "parser_structs.h"
-#include "wdw_mlx_struct.h"
-#include "parser_functions.h"
-#include "minimap.h"
-
 #ifndef MAIN_H
 # define MAIN_H
-// macros and defines /////////////////////////////////////////////////////////
-// good for color codes, hexes, tables, weird return codes (-1, 0, 1)
+#include "../mlx_linux/mlx.h"
 
-// this could be proportional to screen resolution
-// makes it slower on the iMacs
-# define WIN_W 1600
-// common widescreeen ratio
-# define TO_RATIO / 16 * 9
+#include "parser/p_structs.h"
+#include "wdw_mlx_struct.h"
+#include "parser/p_functions.h"
+#include "parser/p_utils.h"
+#include "minimap.h"
+
+# define WIN_W 800
+# define TO_RATIO / 4 * 3
 // # define TO_RATIO / 1
 # define WIN_H WIN_W TO_RATIO
-// # define WIN_H 200
 
-// mlx keycodes
 # define K_LEFT 65361
 # define K_UP 65362
 # define K_RIGHT 65363
@@ -46,17 +34,5 @@
 # define K_D 100
 # define K_S 115
 
-// FILE1 //////////////////////////////////////////////////////////////////////
-
-// FILE2 //////////////////////////////////////////////////////////////////////
-
-// FILE3 //////////////////////////////////////////////////////////////////////
-
-// STRUCTS //////////////////////////////////////////////////////////////////////
-
-
-
-
 #endif
-
 ///////////////////////////////////////////////////////////////////////////////

@@ -43,19 +43,18 @@ void	print_t_parser(t_parser *p)
 	printf("%s\n", p->ea);
 	printf("%x\n", p->ceiling_hex);
 	printf("%x\n", (p->ceiling_hex & (0xff << (8 * 0))) >> (8 * 0));
+	printf("%x\n", (p->ceiling_hex & (0xff << (8 * 1))) >> (8 * 1));
 	printf("%x\n", (p->ceiling_hex & (0xff << (8 * 2))) >> (8 * 2));
-	printf("%x\n", (p->ceiling_hex & (0xff << (8 * 3))) >> (8 * 3));
 	printf("%x\n", p->floor_hex);
 	printf("%x\n", (p->floor_hex & (0xff << (8 * 0))) >> (8 * 0));
+	printf("%x\n", (p->floor_hex & (0xff << (8 * 1))) >> (8 * 1));
 	printf("%x\n", (p->floor_hex & (0xff << (8 * 2))) >> (8 * 2));
-	printf("%x\n", (p->floor_hex & (0xff << (8 * 3))) >> (8 * 3));
 	i = 0;
 	while (p->exec_map[i])
 	{
 		printf("%s", p->exec_map[i]);
 		i++;
 	}
-	printf("\n");
 }
 
 void	print_t_data(t_data *d)
@@ -63,6 +62,7 @@ void	print_t_data(t_data *d)
 	int	i;
 	int	j;
 
+	printf("w %d h %d\n", d->map_w, d->map_h);
 	printf("%s\n", d->no);
 	printf("%s\n", d->so);
 	printf("%s\n", d->we);
@@ -82,7 +82,6 @@ void	print_t_data(t_data *d)
 		printf("\n");
 		i++;
 	}
-	printf("\n");
 }
 
 void	disp_map_arr(t_parser *p)
