@@ -15,13 +15,13 @@ OBJ_DIR = build/
 
 SRCS    = $(addprefix $(SRC_DIR), main.c)
 
-P_FILES 	= init asset trim flood fill copy gnl utl0 utl1 exit \
-			test
+PARSE 		= init asset trim flood fill copy
+# remove test /////////////////////////////////////////////////////////////////
+UTILS		= gnl utl0 utl1 exit test
 MINI_FILES 	= draw utils
 W_FILES 	= game loop 
-# ////////////////////////////////////////////////////////// remove test /
-# /////////////////////////////////////////////////////////////// remove test /
-SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(P_FILES)))
+SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(PARSE)))
+SRCS	+= $(addprefix srcs/utils/, $(addsuffix .c, $(UTILS)))
 SRCS	+= $(addprefix srcs/minimap/, $(addsuffix .c, $(MINI_FILES)))
 SRCS	+= $(addprefix srcs/windows/, $(addsuffix .c, $(W_FILES)))
 
@@ -54,10 +54,12 @@ $(MLX_DIR):
 	@git clone https://github.com/42paris/minilibx-linux.git $(MLX_DIR)
 	@$(MAKE) -C $(MLX_DIR)
 
+# I thought this was a good idea but we need to discuss this before submitting
 clean:
-	rm -rf $(OBJ_DIR)
+	rm -rf $(OBJ_DIR) $(NAME)
 
-fclean: clean
+# This also needs discussion before submission
+fclean: clean mlx_clean
 	rm -f $(NAME)
 
 mlx_clean:
@@ -65,9 +67,12 @@ mlx_clean:
 
 re: fclean all
 
+# /////////////////////////////////////////////////////////////////////////////
+# remoeve custom rules ////////////////////////////////////////////////////////
+
 TESTMAP = assets/maps/valid.cub
 
-parse: re
+parse: clean all
 	sleep 0.3
 	clear
 	./$(NAME) $(TESTMAP)
