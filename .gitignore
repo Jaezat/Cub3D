@@ -5,3 +5,4 @@ tools/
 
 # dumps that build in my computer when valgrind crashes
 vgcore.*
+.venv
