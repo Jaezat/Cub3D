@@ -7,9 +7,9 @@ void	pick_action(int keycode, t_umlx *u)
 		printf("keycode: K_LEFT\n");
 }
 
-int hook(int keycode, void *param)
+int	hook(int keycode, void *param)
 {
-	t_umlx *u;
+	t_umlx	*u;
 
 	u = param;
 	if (keycode == K_ESC)
@@ -17,12 +17,12 @@ int hook(int keycode, void *param)
 	return (1);
 }
 
-void load_textures(t_umlx *u)
+void	load_textures(t_umlx *u)
 {
-	t_data *d;
-	t_img *img;
-	int i;
-	char **arr;
+	t_data	*d;
+	t_img	*img;
+	int		i;
+	char	**arr;
 
 	d = u->d;
 	arr = (char *[]){d->no, d->so, d->ea, d->we};
@@ -40,13 +40,14 @@ void load_textures(t_umlx *u)
 	}
 }
 
-int loop(void *param)
+// draw_minimap(&env->mn);
+int	loop(void *param)
 {
-	t_game *env;
+	t_game	*env;
 
 	env = (t_game *)param;
-	paint_put(&env->u);
-	// draw_minimap(&env->mn);
+	raycast(&env->u);
 	mlx_put_image_to_window(env->u.mlx, env->u.win, env->u.img, 0, 0);
+	usleep(1000000 / 60);
 	return (0);
 }

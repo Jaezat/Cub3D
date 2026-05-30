@@ -50,26 +50,27 @@ void	single_ray(t_umlx *u)
 	{
 		x = (sin(u->d->dir) * offset / 10 + u->d->px);
 		y = (cos(u->d->dir) * offset / 10 + u->d->py);
-		put_square(u, y, x, 0x0000ff);
+		put_square(u, y, x, 0x0000a0);
 		offset--;
 	}
 }
 
-void	multi_ray(t_umlx *u)
-{
-	int	i;
+// void	multi_ray(t_umlx *u)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < 10)
-	{
-		u->d->dir += 0.02;
-		single_ray(u);
-		i++;
-	}
-	u->d->dir -= 0.2;
-}
+// 	i = 0;
+//
+// 	while (i < 10)
+// 	{
+// 		u->d->dir += 0.02;
+// 		single_ray(u);
+// 		i++;
+// 	}
+// 	u->d->dir -= 0.2;
+// }
 
-void	paint_put(t_umlx *u)
+void	raycast(t_umlx *u)
 {
 	int	w;
 	int	h;
@@ -87,21 +88,16 @@ void	paint_put(t_umlx *u)
 			if (h % hr == 0 || (w % wr == 0))
 				u->img_data.addr[WIN_W * h + w] = 0;
 			else if (u->d->map[(h / hr)][(w / wr)] == '1')
-				u->img_data.addr[WIN_W * h + w] = 0xffffff;
+				u->img_data.addr[WIN_W * h + w] = u->d->sky - 0x222222;
 			else
-				u->img_data.addr[WIN_W * h + w] = 0xffffff;
+				u->img_data.addr[WIN_W * h + w] = u->d->sky;
 			h++;
 		}
 		w++;
 	}
-	put_square(u, u->d->py, u->d->px, 0xff0000);
-	multi_ray(u);
-	// single_ray(u);
-	usleep(1000000 / 60);
+	put_square(u, u->d->py, u->d->px, 0xa00000);
+	single_ray(u);
 }
-
-#define MOV_INC 0.25
-#define ANG_INC 0.2
 
 void	key_press(int keycode, void *param)
 {
@@ -126,8 +122,6 @@ void	key_press(int keycode, void *param)
 	if (keycode == K_LEFT)
 		data->dir += ANG_INC;
 }
-
-typedef int				(*t_clean)();
 
 static inline t_clean	func(void *func)
 {
