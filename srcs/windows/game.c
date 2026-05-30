@@ -50,7 +50,6 @@ void	single_ray(t_umlx *u)
 	{
 		x = (sin(u->d->dir) * offset / 10 + u->d->px);
 		y = (cos(u->d->dir) * offset / 10 + u->d->py);
-		// safe_pix_put(u, y * WIN_W + x, 0x0000ff);
 		put_square(u, y, x, 0x0000ff);
 		offset--;
 	}
