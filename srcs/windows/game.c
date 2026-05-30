@@ -24,11 +24,11 @@ void	put_square(t_umlx *u, float hf, float wf, int color)
 
 	h = hf * (WIN_H / u->d->map_h);
 	w = wf * (WIN_W / u->d->map_w);
-	i = -4;
-	while (i < 5)
+	i = -2;
+	while (i < 3)
 	{
-		j = -4;
-		while (j < 5)
+		j = -2;
+		while (j < 3)
 		{
 			if ((h + i) > 0 && (h + i) < (WIN_H + i))
 				if ((w + j) > 0 && (w + j) < (WIN_W + j))
@@ -43,9 +43,9 @@ void	single_ray(t_umlx *u)
 {
 	float	x;
 	float	y;
+	int		offset;
 
-	int offset = 10;
-
+	offset = 10;
 	while (offset > 0)
 	{
 		x = (sin(u->d->dir) * offset / 10 + u->d->px);
@@ -53,6 +53,20 @@ void	single_ray(t_umlx *u)
 		put_square(u, y, x, 0x0000ff);
 		offset--;
 	}
+}
+
+void	multi_ray(t_umlx *u)
+{
+	int	i;
+
+	i = 0;
+	while (i < 10)
+	{
+		u->d->dir += 0.02;
+		single_ray(u);
+		i++;
+	}
+	u->d->dir -= 0.2;
 }
 
 void	paint_put(t_umlx *u)
@@ -71,17 +85,18 @@ void	paint_put(t_umlx *u)
 		while (h < WIN_H)
 		{
 			if (h % hr == 0 || (w % wr == 0))
-				u->img_data.addr[WIN_W * h + w] = 0xffffff;
+				u->img_data.addr[WIN_W * h + w] = 0;
 			else if (u->d->map[(h / hr)][(w / wr)] == '1')
-				u->img_data.addr[WIN_W * h + w] = 0x303030;
+				u->img_data.addr[WIN_W * h + w] = 0xffffff;
 			else
-				u->img_data.addr[WIN_W * h + w] = 0x808080;
+				u->img_data.addr[WIN_W * h + w] = 0xffffff;
 			h++;
 		}
 		w++;
 	}
 	put_square(u, u->d->py, u->d->px, 0xff0000);
-	single_ray(u);
+	multi_ray(u);
+	// single_ray(u);
 	usleep(1000000 / 60);
 }
 
