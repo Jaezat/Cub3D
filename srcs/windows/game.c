@@ -44,9 +44,16 @@ void	single_ray(t_umlx *u)
 	float	x;
 	float	y;
 
-	x = sin(u->d->dir) + u->d->px;
-	y = cos(u->d->dir) + u->d->py;
-	put_square(u, y, x, 0x0000ff);
+	int offset = 10;
+
+	while (offset > 0)
+	{
+		x = (sin(u->d->dir) * offset / 10 + u->d->px);
+		y = (cos(u->d->dir) * offset / 10 + u->d->py);
+		// safe_pix_put(u, y * WIN_W + x, 0x0000ff);
+		put_square(u, y, x, 0x0000ff);
+		offset--;
+	}
 }
 
 void	paint_put(t_umlx *u)
