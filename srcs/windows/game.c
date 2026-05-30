@@ -11,11 +11,11 @@ void	get_addr(t_umlx *u)
 
 void	safe_pix_put(t_umlx *u, int byte, int color)
 {
-	if (byte >= 0)
+	if (byte >= 0 && byte < WIN_H * WIN_W)
 		u->img_data.addr[byte] = color;
 }
 
-void	put_player(t_umlx *u, float hf, float wf)
+void	put_square(t_umlx *u, float hf, float wf, int color)
 {
 	int	i;
 	int	h;
@@ -32,52 +32,21 @@ void	put_player(t_umlx *u, float hf, float wf)
 		{
 			if ((h + i) > 0 && (h + i) < (WIN_H + i))
 				if ((w + j) > 0 && (w + j) < (WIN_W + j))
-					safe_pix_put(u, (int)(WIN_W * (h + i) + w + j), 0xff0000);
+					safe_pix_put(u, (int)(WIN_W * (h + i) + w + j), color);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	e_o_bolas(t_umlx *u)
+void	single_ray(t_umlx *u)
 {
-	float	angle;
-	float	radian;
 	float	x;
 	float	y;
-	float	p1;
-	float	p2;
-	int		i;
-	int		offset;
 
-	i = 0;
-	offset = 100;
-	while (i < 90)
-	{
-		angle = i;
-		radian = angle * M_PI / 180;
-		x = sin(radian);
-		y = cos(radian);
-		p1 = offset * x;
-		p2 = offset * y;
-		safe_pix_put(u, WIN_W * ((int)p1 + offset) + ((int)p2 + offset),
-			rand());
-		i++;
-	}
-	offset = 200;
-	i = 0;
-	while (i < 90)
-	{
-		angle = i;
-		radian = angle * M_PI / 180;
-		x = sin(radian);
-		y = cos(radian);
-		p1 = offset * x;
-		p2 = offset * y;
-		safe_pix_put(u, WIN_W * ((int)p1 + offset) + ((int)p2 + offset),
-			rand());
-		i++;
-	}
+	x = sin(u->d->dir) + u->d->px;
+	y = cos(u->d->dir) + u->d->py;
+	put_square(u, y, x, 0x0000ff);
 }
 
 void	paint_put(t_umlx *u)
@@ -105,12 +74,13 @@ void	paint_put(t_umlx *u)
 		}
 		w++;
 	}
-	put_player(u, u->d->py, u->d->px);
-	e_o_bolas(u);
+	put_square(u, u->d->py, u->d->px, 0xff0000);
+	single_ray(u);
 	usleep(1000000 / 60);
 }
 
 #define MOV_INC 0.25
+#define ANG_INC 0.2
 
 void	key_press(int keycode, void *param)
 {
@@ -130,6 +100,10 @@ void	key_press(int keycode, void *param)
 		data->px -= MOV_INC;
 	if (keycode == K_D)
 		data->px += MOV_INC;
+	if (keycode == K_RIGHT)
+		data->dir -= ANG_INC;
+	if (keycode == K_LEFT)
+		data->dir += ANG_INC;
 }
 
 typedef int				(*t_clean)();
