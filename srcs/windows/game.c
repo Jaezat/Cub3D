@@ -30,8 +30,8 @@ void	put_player(t_umlx *u, float hf, float wf)
 		j = -4;
 		while (j < 5)
 		{
-			if ((h - i) > 0 && (h + i) < (WIN_H + i))
-				if ((w - j) > 0 && (w + j) < (WIN_W + j))
+			if ((h + i) > 0 && (h + i) < (WIN_H + i))
+				if ((w + j) > 0 && (w + j) < (WIN_W + j))
 					safe_pix_put(u, (int)(WIN_W * (h + i) + w + j), 0xff0000);
 			j++;
 		}
@@ -39,24 +39,65 @@ void	put_player(t_umlx *u, float hf, float wf)
 	}
 }
 
+void	e_o_bolas(t_umlx *u)
+{
+	float	angle;
+	float	radian;
+	float	x;
+	float	y;
+	float	p1;
+	float	p2;
+	int		i;
+	int		offset;
+
+	i = 0;
+	offset = 100;
+	while (i < 90)
+	{
+		angle = i;
+		radian = angle * M_PI / 180;
+		x = sin(radian);
+		y = cos(radian);
+		p1 = offset * x;
+		p2 = offset * y;
+		safe_pix_put(u, WIN_W * ((int)p1 + offset) + ((int)p2 + offset),
+			rand());
+		i++;
+	}
+	offset = 200;
+	i = 0;
+	while (i < 90)
+	{
+		angle = i;
+		radian = angle * M_PI / 180;
+		x = sin(radian);
+		y = cos(radian);
+		p1 = offset * x;
+		p2 = offset * y;
+		safe_pix_put(u, WIN_W * ((int)p1 + offset) + ((int)p2 + offset),
+			rand());
+		i++;
+	}
+}
+
 void	paint_put(t_umlx *u)
 {
-	int		w;
-	int		h;
-	float	wr;
-	float	hr;
+	int	w;
+	int	h;
+	int	wr;
+	int	hr;
 
+	hr = WIN_H / u->d->map_h;
+	wr = WIN_W / u->d->map_w;
 	w = 0;
-	hr = ((float)WIN_H / u->d->map_h);
-	wr = ((float)WIN_W / u->d->map_w);
 	while (w < WIN_W)
 	{
 		h = 0;
 		while (h < WIN_H)
 		{
-			if (h % (int)(hr) == 0 || (w % (int)wr == 0))
+			if (h % hr == 0 || (w % wr == 0))
 				u->img_data.addr[WIN_W * h + w] = 0xffffff;
-			else if (u->d->map[(int)(h / (hr))][(int)(w / (wr))] == '1')
+			else if (u->d->map[(h / hr)][(w / wr)] == '1')
 				u->img_data.addr[WIN_W * h + w] = 0x303030;
 			else
 				u->img_data.addr[WIN_W * h + w] = 0x808080;
@@ -65,10 +106,11 @@ void	paint_put(t_umlx *u)
 		w++;
 	}
 	put_player(u, u->d->py, u->d->px);
+	e_o_bolas(u);
 	usleep(1000000 / 60);
 }
 
-#define MOV_INC 0.1
+#define MOV_INC 0.25
 
 void	key_press(int keycode, void *param)
 {
@@ -88,8 +130,6 @@ void	key_press(int keycode, void *param)
 		data->px -= MOV_INC;
 	if (keycode == K_D)
 		data->px += MOV_INC;
-	printf("x %f\n", data->px);
-	printf("y %f\n", data->py);
 }
 
 typedef int				(*t_clean)();
@@ -98,6 +138,7 @@ static inline t_clean	func(void *func)
 {
 	return ((t_clean)func);
 }
+
 void	game(t_data *d)
 {
 	t_game	env;
