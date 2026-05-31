@@ -82,6 +82,7 @@ CFLAGS += -g
 CFLAGS += -O3
 VFLAGS += -s
 VFLAGS += --track-fds=all
+VFLAGS += --trace-children=yes
 VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all
 
 parsev: re

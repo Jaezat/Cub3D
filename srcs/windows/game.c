@@ -32,26 +32,43 @@ void	put_square(t_umlx *u, float hf, float wf, int color)
 		{
 			if ((h + i) > 0 && (h + i) < (WIN_H + i))
 				if ((w + j) > 0 && (w + j) < (WIN_W + j))
+				{
 					safe_pix_put(u, (int)(WIN_W * (h + i) + w + j), color);
+				}
 			j++;
 		}
 		i++;
 	}
 }
 
+void	put_dot(t_umlx *u, float hf, float wf, int color)
+{
+	int	h;
+	int	w;
+
+	h = hf * (WIN_H / u->d->map_h);
+	w = wf * (WIN_W / u->d->map_w);
+	if (h > 0 && h < (WIN_H))
+		if (w > 0 && w < (WIN_W))
+			safe_pix_put(u, (int)(WIN_W * h + w), color);
+}
+
 void	single_ray(t_umlx *u)
 {
 	float	x;
 	float	y;
-	int		offset;
 
-	offset = 10;
-	while (offset > 0)
+	x = (sin(u->d->dir) + u->d->px);
+	y = (cos(u->d->dir) + u->d->py);
+	while (1)
 	{
-		x = (sin(u->d->dir) * offset / 10 + u->d->px);
-		y = (cos(u->d->dir) * offset / 10 + u->d->py);
-		put_square(u, y, x, 0x0000a0);
-		offset--;
+		if (x < 0 || x >= WIN_W)
+			break ;
+		if (y < 0 || y >= WIN_H)
+			break ;
+		put_dot(u, y, x, 0x0000ff);
+		x = x+0.01;
+		y = y+0.01;
 	}
 }
 
@@ -95,7 +112,7 @@ void	raycast(t_umlx *u)
 		}
 		w++;
 	}
-	put_square(u, u->d->py, u->d->px, 0xa00000);
+	put_square(u, u->d->py, u->d->px, 0xff0000);
 	single_ray(u);
 }
 
@@ -118,9 +135,9 @@ void	key_press(int keycode, void *param)
 	if (keycode == K_D)
 		data->px += MOV_INC;
 	if (keycode == K_RIGHT)
-		data->dir -= ANG_INC;
+		data->dir -= ANG_INC * M_PI / 180.0;
 	if (keycode == K_LEFT)
-		data->dir += ANG_INC;
+		data->dir += ANG_INC * M_PI / 180.0;
 }
 
 static inline t_clean	func(void *func)
