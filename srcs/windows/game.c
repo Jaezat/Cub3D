@@ -58,8 +58,8 @@ void	single_ray(t_umlx *u)
 	float	x;
 	float	y;
 
-	x = (sin(u->d->dir) + u->d->px);
-	y = (cos(u->d->dir) + u->d->py);
+	x = sin(u->d->dir) + u->d->px;
+	y = cos(u->d->dir) + u->d->py;
 	while (1)
 	{
 		if (x < 0 || x >= WIN_W)
@@ -71,9 +71,9 @@ void	single_ray(t_umlx *u)
 			put_square(u, y, x, 0xff0000);
 		}
 		else
-			put_dot(u, y, x, 0x0000ff);
-		x = x + 0.01;
-		y = y + 0.01;
+			put_square(u, y, x, 0x0000ff);
+		x = x + sin(u->d->dir);
+		y = y + cos(u->d->dir);
 	}
 }
 
@@ -110,7 +110,7 @@ void	raycast(t_umlx *u)
 			if (h % hr == 0 || (w % wr == 0))
 				u->img_data.addr[WIN_W * h + w] = 0;
 			else if (u->d->map[(h / hr)][(w / wr)] == '1')
-				u->img_data.addr[WIN_W * h + w] = u->d->sky - 0x222222;
+				u->img_data.addr[WIN_W * h + w] = u->d->ground;
 			else
 				u->img_data.addr[WIN_W * h + w] = u->d->sky;
 			h++;
@@ -167,7 +167,7 @@ void	game(t_data *d)
 	get_addr(&env.u);
 	env.mn.ulx = env.u;
 	mlx_key_hook(env.u.win, hook, &env);
-	// mlx_hook(env.u.win, 2, 1, func(key_press), &env);
+	mlx_hook(env.u.win, 2, 1, func(key_press), &env);
 	mlx_loop_hook(env.u.mlx, func(loop), &env);
 	mlx_loop(env.u.mlx);
 }
