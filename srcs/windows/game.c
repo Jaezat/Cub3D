@@ -66,9 +66,14 @@ void	single_ray(t_umlx *u)
 			break ;
 		if (y < 0 || y >= WIN_H)
 			break ;
-		put_dot(u, y, x, 0x0000ff);
-		x = x+0.01;
-		y = y+0.01;
+		if ((u->img_data.addr[(int)(WIN_W * y + x)] == 0))
+		{
+			put_square(u, y, x, 0xff0000);
+		}
+		else
+			put_dot(u, y, x, 0x0000ff);
+		x = x + 0.01;
+		y = y + 0.01;
 	}
 }
 
@@ -162,7 +167,7 @@ void	game(t_data *d)
 	get_addr(&env.u);
 	env.mn.ulx = env.u;
 	mlx_key_hook(env.u.win, hook, &env);
-	mlx_hook(env.u.win, 2, 1, func(key_press), &env);
+	// mlx_hook(env.u.win, 2, 1, func(key_press), &env);
 	mlx_loop_hook(env.u.mlx, func(loop), &env);
 	mlx_loop(env.u.mlx);
 }

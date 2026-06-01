@@ -46,7 +46,8 @@ int	loop(void *param)
 	t_game	*env;
 
 	env = (t_game *)param;
-	raycast(&env->u);
+	// raycast(&env->u);
+	// minimap
 	mlx_put_image_to_window(env->u.mlx, env->u.win, env->u.img, 0, 0);
 	usleep(1000000 / 60);
 	return (0);
