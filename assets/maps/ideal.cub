@@ -1,9 +1,12 @@
-NO ./assets/textures/lavender.xpm
+NO               ./assets/textures/lavender.xpm
 SO ./assets/textures/autumn.xpm
-WE ./assets/textures/badge.xpm
-EA ./assets/textures/slate_wide.xpm                   
-F 127,255,0
-C 0,127,255
+
+WE                   ./assets/textures/badge.xpm
+
+
+EA ./assets/textures/slate_wide.xpm
+F 200,100,0
+C 225,30,0
 1111111
 1000001
 1011101

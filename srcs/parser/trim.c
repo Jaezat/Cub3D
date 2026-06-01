@@ -1,6 +1,6 @@
 #include "main.h"
 
-// unit testing or integral?
+// unit test
 void	trim_spaces(char *str)
 {
 	int	start;

@@ -1,6 +1,6 @@
 #include "main.h"
 
-// this needs unit testing
+// uni test
 size_t	file_ln_count(t_parser *p)
 {
 	char	buf[BUF_SIZE + 1];
@@ -65,13 +65,7 @@ bool	is_element_count(t_parser *p, char *str)
 	return (true);
 }
 
-// this is clunky, does it always work??
-// second part checks if there is one element of each
-// and the proceed to open them
-// check .xpm ending similar to .cub
-// count colors with commas and conver to int arr or single hexa 0xffffff
-// err_exit_msg("Map requires one file per direction", 0, p);
-
+// unit test
 void	check_map_elements(t_parser *p)
 {
 	int	i;
