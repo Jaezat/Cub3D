@@ -41,13 +41,14 @@ void	load_textures(t_umlx *u)
 }
 
 // draw_minimap(&env->mn);
+// minimap
+// sleep is badly done
 int	loop(void *param)
 {
 	t_game	*env;
 
 	env = (t_game *)param;
 	raycast(&env->u);
-	// minimap
 	mlx_put_image_to_window(env->u.mlx, env->u.win, env->u.img, 0, 0);
 	usleep(1000000 / 60);
 	return (0);

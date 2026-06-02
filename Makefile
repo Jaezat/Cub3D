@@ -70,8 +70,7 @@ force_clean: clean mlx_clean
 
 TESTMAP = assets/maps/valid.cub
 
-parse: clean all
-	sleep 0.3
+run: clean all
 	clear
 	./$(NAME) $(TESTMAP)
 
@@ -80,13 +79,12 @@ norme:
 
 CFLAGS += -g
 CFLAGS += -O3
-VFLAGS += -s
-VFLAGS += --track-fds=all
-VFLAGS += --trace-children=yes
-VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all
+# VFLAGS += -s
+# VFLAGS += --track-fds=all
+# VFLAGS += --trace-children=yes
+# VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all
 
-parsev: re
-	sleep 0.3
+mem: re
 	clear
 	valgrind $(VFLAGS) ./$(NAME) ./$(TESTMAP)
 

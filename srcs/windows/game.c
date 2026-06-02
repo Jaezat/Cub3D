@@ -1,5 +1,6 @@
 #include "main.h"
 
+// this whole function needs protection
 void	get_addr(t_umlx *u)
 {
 	t_img_data	*im;
@@ -58,8 +59,8 @@ void	single_ray(t_umlx *u)
 	float	x;
 	float	y;
 
-	x = sin(u->d->dir) + u->d->px;
-	y = cos(u->d->dir) + u->d->py;
+	x = cos(u->d->dir) + u->d->px;
+	y = sin(u->d->dir) + u->d->py;
 	while (1)
 	{
 		if (x < 0 || x >= WIN_W)
@@ -72,8 +73,8 @@ void	single_ray(t_umlx *u)
 		}
 		else
 			put_square(u, y, x, 0x0000ff);
-		x = x + sin(u->d->dir);
-		y = y + cos(u->d->dir);
+		x = x + cos(u->d->dir);
+		y = y + sin(u->d->dir);
 	}
 }
 
@@ -140,9 +141,9 @@ void	key_press(int keycode, void *param)
 	if (keycode == K_D)
 		data->px += MOV_INC;
 	if (keycode == K_RIGHT)
-		data->dir -= ANG_INC * M_PI / 180.0;
-	if (keycode == K_LEFT)
 		data->dir += ANG_INC * M_PI / 180.0;
+	if (keycode == K_LEFT)
+		data->dir -= ANG_INC * M_PI / 180.0;
 }
 
 static inline t_clean	func(void *func)

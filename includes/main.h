@@ -6,10 +6,11 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <math.h>
 # include <sys/time.h>
 
-# define _USE_MATH_DEFINES
+// # define _USE_MATH_DEFINES
+// # define __USE_MISC
+# include <math.h>
 
 # include "../mlx_linux/mlx.h"
 # include "parser/p_structs.h"
@@ -23,6 +24,7 @@
 # define TO_RATIO / 1
 # define WIN_H WIN_W TO_RATIO
 
+# define M_PI		3.14159265358979323846
 # define RAD M_PI / 180.0
 
 # define K_LEFT 65361
