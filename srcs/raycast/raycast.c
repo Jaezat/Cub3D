@@ -15,6 +15,27 @@
 // 	u->d->dir -= 0.2;
 // }
 
+void	find_block(t_umlx *u)
+{
+	float	x;
+	float	y;
+
+	x = cos(u->d->dir) + u->d->px;
+	y = sin(u->d->dir) + u->d->py;
+	while (1)
+	{
+		if (x < 0 || x >= WIN_W)
+			break ;
+		if (y < 0 || y >= WIN_H)
+			break ;
+		put_square(u, (int)y + 0.5, (int)x + 0.5, 0x00ff00);
+		x = x + cos(u->d->dir);
+		y = y + sin(u->d->dir);
+	}
+	//
+	// printf("next wall: %d %d\n", x, y);
+}
+
 void	put_background(t_umlx *u)
 {
 	int	w;
@@ -41,7 +62,7 @@ void	put_background(t_umlx *u)
 		w++;
 	}
 	put_square(u, u->d->py, u->d->px, 0xff0000);
-	single_ray(u);
+	find_block(u);
 }
 
 void	load_textures(t_umlx *u)

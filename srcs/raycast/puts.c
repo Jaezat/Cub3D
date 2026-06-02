@@ -25,17 +25,15 @@ void	put_square(t_umlx *u, float hf, float wf, int color)
 
 	h = hf * (WIN_H / u->d->map_h);
 	w = wf * (WIN_W / u->d->map_w);
-	i = -2;
-	while (i < 3)
+	i = -4;
+	while (i < 5)
 	{
-		j = -2;
-		while (j < 3)
+		j = -4;
+		while (j < 5)
 		{
 			if ((h + i) > 0 && (h + i) < (WIN_H + i))
 				if ((w + j) > 0 && (w + j) < (WIN_W + j))
-				{
 					safe_pix_put(u, (int)(WIN_W * (h + i) + w + j), color);
-				}
 			j++;
 		}
 		i++;
@@ -77,4 +75,3 @@ void	single_ray(t_umlx *u)
 		y = y + sin(u->d->dir);
 	}
 }
-
