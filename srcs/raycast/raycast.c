@@ -15,31 +15,73 @@
 // 	u->d->dir -= 0.2;
 // }
 
-void	find_block(t_umlx *u)
+void	draw_column(t_umlx *u, int x, double distance)
+{
+	int	ystart;
+
+	// int	start;
+	ystart = WIN_H / 2;
+	// start = x;
+	(void)distance;
+	int steps = WIN_H / distance;
+	while (ystart >= 0 && steps)
+	{
+		// printf("here %d\n", ystart);
+		// usleep(1000000/5);
+		if (((ystart - steps) * WIN_W + x) < WIN_H * WIN_W - 1)
+			if (((ystart - steps) * WIN_W + x) >= 0)
+				u->img_data.addr[(ystart - steps) * WIN_W + x] = 0x808080;
+		if (((ystart + steps) * WIN_W + x) < WIN_H * WIN_W - 1)
+			if (((ystart + steps) * WIN_W + x) >= 0)
+				u->img_data.addr[(ystart + steps) * WIN_W + x] = 0x808080;
+		ystart++;
+		steps--;
+	}
+}
+
+void	find_block(t_umlx *u, float dir)
 {
 	float	x;
 	float	y;
 	float	offset;
+	float	hypotenuse;
 
 	offset = 1;
-	x = cos(u->d->dir) / offset + u->d->px;
-	y = sin(u->d->dir) / offset + u->d->py;
+	x = cos(dir) / offset + u->d->px;
+	y = sin(dir) / offset + u->d->py;
 	while (1)
 	{
 		if (x < 0 || x >= WIN_W)
 			break ;
 		if (y < 0 || y >= WIN_H)
 			break ;
-		put_dot(u, y, x, 0x0000ff);
 		if ((int)y >= 0 && (int)x >= 0)
 			if ((int)y <= u->d->map_h && (int)x <= u->d->map_w)
 				if (u->d->map[(int)y][(int)x] == '1')
 				{
-					put_square(u, (int)y + 0.5, (int)x + 0.5, 0x00ff00);
+					hypotenuse = (y - u->d->py) * (y - u->d->py) + (x
+							- u->d->px) * (x - u->d->px);
+					put_square(u, y, x, 0x0000ff);
+					draw_column(u, (int)(x * WIN_W / u->d->map_w),
+						sqrt(hypotenuse));
 					break ;
 				}
-		x = x + cos(u->d->dir) / offset;
-		y = y + sin(u->d->dir) / offset;
+		x = x + cos(dir) / offset;
+		y = y + sin(dir) / offset;
+	}
+}
+
+void	apperture(t_umlx *u)
+{
+	float	ang_offset;
+	int		lines;
+
+	lines = 71;
+	ang_offset = -35 * M_PI / 180;
+	while (lines--)
+	{
+		find_block(u, u->d->dir + ang_offset);
+		ang_offset = ang_offset + (1 * M_PI / 180);
 	}
 }
 
@@ -47,29 +89,30 @@ void	put_background(t_umlx *u)
 {
 	int	w;
 	int	h;
-	int	wr;
-	int	hr;
 
-	hr = WIN_H / u->d->map_h;
-	wr = WIN_W / u->d->map_w;
+	// int	wr;
+	// int	hr;
+	// hr = WIN_H / u->d->map_h;
+	// wr = WIN_W / u->d->map_w;
 	w = 0;
 	while (w < WIN_W)
 	{
 		h = 0;
 		while (h < WIN_H)
 		{
-			if (h % hr == 0 || (w % wr == 0))
-				u->img_data.addr[WIN_W * h + w] = 0;
-			else if (u->d->map[(h / hr)][(w / wr)] == '1')
-				u->img_data.addr[WIN_W * h + w] = u->d->ground;
-			else
-				u->img_data.addr[WIN_W * h + w] = u->d->sky;
+			u->img_data.addr[WIN_W * h + w] = 0;
+			// if (h % hr == 0 || (w % wr == 0))
+			// 	u->img_data.addr[WIN_W * h + w] = 0;
+			// else if (u->d->map[(h / hr)][(w / wr)] == '1')
+			// 	u->img_data.addr[WIN_W * h + w] = u->d->ground;
+			// else
+			// 	u->img_data.addr[WIN_W * h + w] = u->d->sky;
 			h++;
 		}
 		w++;
 	}
 	put_square(u, u->d->py, u->d->px, 0xff0000);
-	find_block(u);
+	apperture(u);
 }
 
 void	load_textures(t_umlx *u)
