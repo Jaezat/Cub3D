@@ -1,7 +1,7 @@
 NAME	= cub3D
 CC		= cc
 MLX_DIR	= mlx_linux
-CFLAGS	= -Wall -Werror -Wextra -Iincludes
+CFLAGS	= -Wall -Werror -Wextra -Iincludes 
 CFLAGS	+= -I$(INC_DIR) -I$(MLX_DIR)
 RM          = rm -rf
 # MAKE_NP	= make --no-print-directory # not in use
@@ -68,7 +68,7 @@ re: fclean all
 
 force_clean: clean mlx_clean
 
-TESTMAP = assets/maps/valid.cub
+TESTMAP = assets/maps/thinny.cub
 
 parse: clean all
 	sleep 0.3

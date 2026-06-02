@@ -16,7 +16,9 @@
 # include "wdw_mlx_struct.h"
 # include "parser/p_functions.h"
 # include "parser/p_utils.h"
-# include "minimap.h"
+# include "minimap/mn_structs.h"
+# include "minimap/mn_functions.h"
+
 
 # define WIN_W 800
 // # define TO_RATIO / 16 * 9

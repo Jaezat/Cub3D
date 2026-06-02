@@ -1,13 +1,13 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./assets/textures/lavender.xpm
+SO ./assets/textures/autumn.xpm
+WE ./assets/textures/badge.xpm
+EA ./assets/textures/slate_wide.xpm
 F 200,100,0
 C 225,30,0
 1111111
 1000001
 1011101
-101E000
+101E001
 1011101
 1000001
 1111111

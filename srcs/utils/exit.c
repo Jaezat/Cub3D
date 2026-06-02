@@ -7,6 +7,7 @@ void	exit_exec(t_umlx *u, int exit_code)
 	int		i;
 	t_img	*img;
 
+	i = 0;
 	if (u->img)
 		mlx_destroy_image(u->mlx, u->img);
 	if (u->win)

@@ -1,120 +1,120 @@
 #include "main.h"
 
-// void draw_minimap(t_minimap *map) // info not committed so restarting
-// { 
-   
-
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* static void define_cam(t_minimap *map)
+static void draw_borders(t_minimap *map)
 {
-    map->cam.top = PLY_Y - RADIUS;
-	if (map->cam.top < 0)
-		map->cam.top = 0;
-    map->cam.bot = PLY_Y + RADIUS;
-	if (map->cam.top > MAP_H)
-		map->cam.top = MAP_H;
-    map->cam.left = PLY_X - RADIUS;
-	if (map->cam.left < 0)
-		map->cam.left = 0;
-    map->cam.right = PLY_X + RADIUS;
-	if (map->cam.left > MAP_W)
-		map->cam.left = MAP_W;
+    int x;
+    int y;
+    int start;
+    int end;
+
+    set_cam_values(map);
+    start = MINIMAP_TILE_SIZE - 2;
+    end = MINIMAP_TILE_SIZE + CAM_SIZE * MINIMAP_TILE_SIZE + 2;
+    y = start;
+    while (y <= end)
+    {
+        x = start;
+        while (x <= end)
+        {
+            my_mlx_pixel_put(&map->ulx.img_data, x, y, 0xFF33CC);
+            x++;
+        }
+        y++;
+    }
+} 
+
+static void draw_tiles(t_minimap *map)
+{
+    double y;
+    double x;
+    char m;
+
+    set_cam_values(map);
+    y = map->cam.y;
+    while (y < map->cam.limit_y)
+    {
+        x = map->cam.x;
+        while (x < map->cam.limit_x)
+        {
+            m = map->d->map[(int)y][(int)x];
+            map->cam.c = get_tile_color(m);
+            paint_pixel(map, (int)x, (int)y);
+            x++;
+        }
+        y++;
+    }
+}
+
+static void paint_player(t_minimap *map, double pp_x, double pp_y)
+{
+    int px_y;
+    int px_x;
+    int size;
+
+    px_y = 0;
+    size = 10;
+    while(px_y < size)
+    {
+        px_x = 0;
+        while(px_x < size)
+        {
+            my_mlx_pixel_put(&map->ulx.img_data, pp_x + px_x, pp_y + px_y, map->cam.c);
+            px_x++;
+        }
+        px_y++;
+    }
+}
+
+static void draw_player(t_minimap *map)
+{
+    double x;
+    double y;
+    double player_px_x;
+    double player_px_y;
+
+
+    x = map->d->px - map->cam.x;
+    y = map->d->py - map->cam.y;
+    player_px_x = x * MINIMAP_TILE_SIZE;
+    player_px_y = y * MINIMAP_TILE_SIZE;
+    map->cam.c = 0xFF33CC;
+    paint_player(map, player_px_x, player_px_y);
+}
+
+void draw_minimap(t_minimap *map)
+{
+    draw_borders(map);
+    draw_tiles(map);
+    draw_player(map);
+    //move player?
 }
 
 
 
-void draw_minimap(t_minimap *map) // here we should be passing cub struct
-{    
-    define_cam(map);
-    map->wdw.map_y = map->cam.top;
-    while(map->wdw.map_y < map->cam.bot)
-    {
-        map->wdw.map_x  = map->cam.left;
-        while(map->wdw.map_x < map->cam.right)
-        {
-            map->wdw.c_map = map->d->map[map->wdw.map_y][map->wdw.map_x];
-            map->wdw.color = get_tile_color(map->wdw.c_map);
-            map->wdw.px_y = 0;
-            while(map->wdw.px_y < TILE_SIZE)
-            {
-                map->wdw.px_x = 0;
-                while(map->wdw.px_x < TILE_SIZE)
-                {
-                    map->wdw.screen_x = (map->wdw.map_x * TILE_SIZE) + map->wdw.px_x;
-                    map->wdw.screen_y = (map->wdw.map_y * TILE_SIZE) + map->wdw.px_y;
-                    my_mlx_pixel_put(&map->ulx.img_data, map->wdw.screen_x, map->wdw.screen_y, map->wdw.color);
-                    map->wdw.px_x++;
-                }
-                map->wdw.px_y++;
-            }
-            map->wdw.map_x++;
-        }
-        map->wdw.map_y++;
-    }
-}  */
 
-/* int	key_hook(int keycode, t_minimap *map)
-{
-    if (keycode == K_ESC)
-	{
-		// mlx_clear_window(p->u->mlx, p->u->win);
-		mlx_destroy_image(p->u->mlx, p->u->img);
-		mlx_destroy_window(p->u->mlx, p->u->win);
-		mlx_destroy_display(p->u->mlx);
-		free(p->u->mlx);
-		exit_routine(p, 0);
-	}
-	 so basicamente aca:
-    - 65307 -> ESC
-    - Ok so en esta parte voy a estar necesitando varias cosas:
-        - For movement (WASD):
-            - update on where the player is (pos_x, pos_y)
-            - which way to move forward (dir_x, dir_y)
-            - how fast do i move? a var like move_speed
-        - For rotation (left & right):
-            - the exact location of player (dir_x, dir_y) in order to rotate
-            - camera plane (it basically defines how wide my FOV is)
-                - narrow FOV -> zoomed in
-                - wider FOV -> zoomed out
-            - se llama plane_x / plane_y, no fov_x/fov_y
-                - porque no es solo el angulo de vision
-                - es literalmente el plano de la camara en el mundo
-                - y siempre tiene que estar perpendicular a dir
-                - si dir rota, plane rota con el, siempre juntos
-            - how fast do i turn? a var like rot_speed
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
