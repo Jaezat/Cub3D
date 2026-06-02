@@ -25,11 +25,11 @@ void	put_square(t_umlx *u, float hf, float wf, int color)
 
 	h = hf * (WIN_H / u->d->map_h);
 	w = wf * (WIN_W / u->d->map_w);
-	i = -4;
-	while (i < 5)
+	i = -3;
+	while (i < 4)
 	{
-		j = -4;
-		while (j < 5)
+		j = -3;
+		while (j < 4)
 		{
 			if ((h + i) > 0 && (h + i) < (WIN_H + i))
 				if ((w + j) > 0 && (w + j) < (WIN_W + j))

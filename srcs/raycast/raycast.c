@@ -19,21 +19,28 @@ void	find_block(t_umlx *u)
 {
 	float	x;
 	float	y;
+	float	offset;
 
-	x = cos(u->d->dir) + u->d->px;
-	y = sin(u->d->dir) + u->d->py;
+	offset = 1;
+	x = cos(u->d->dir) / offset + u->d->px;
+	y = sin(u->d->dir) / offset + u->d->py;
 	while (1)
 	{
 		if (x < 0 || x >= WIN_W)
 			break ;
 		if (y < 0 || y >= WIN_H)
 			break ;
-		put_square(u, (int)y + 0.5, (int)x + 0.5, 0x00ff00);
-		x = x + cos(u->d->dir);
-		y = y + sin(u->d->dir);
+		put_dot(u, y, x, 0x0000ff);
+		if ((int)y >= 0 && (int)x >= 0)
+			if ((int)y <= u->d->map_h && (int)x <= u->d->map_w)
+				if (u->d->map[(int)y][(int)x] == '1')
+				{
+					put_square(u, (int)y + 0.5, (int)x + 0.5, 0x00ff00);
+					break ;
+				}
+		x = x + cos(u->d->dir) / offset;
+		y = y + sin(u->d->dir) / offset;
 	}
-	//
-	// printf("next wall: %d %d\n", x, y);
 }
 
 void	put_background(t_umlx *u)
