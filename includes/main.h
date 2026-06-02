@@ -8,8 +8,6 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-// # define _USE_MATH_DEFINES
-// # define __USE_MISC
 # include <math.h>
 
 # include "../mlx_linux/mlx.h"
@@ -17,6 +15,7 @@
 # include "wdw_mlx_struct.h"
 # include "parser/p_functions.h"
 # include "parser/p_utils.h"
+# include "raycast/raycast.h"
 # include "minimap.h"
 
 # define WIN_W 800

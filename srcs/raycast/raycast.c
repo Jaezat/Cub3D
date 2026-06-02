@@ -1,0 +1,68 @@
+#include "main.h"
+
+// void	multi_ray(t_umlx *u)
+// {
+// 	int	i;
+
+// 	i = 0;
+//
+// 	while (i < 10)
+// 	{
+// 		u->d->dir += 0.02;
+// 		single_ray(u);
+// 		i++;
+// 	}
+// 	u->d->dir -= 0.2;
+// }
+
+void	put_background(t_umlx *u)
+{
+	int	w;
+	int	h;
+	int	wr;
+	int	hr;
+
+	hr = WIN_H / u->d->map_h;
+	wr = WIN_W / u->d->map_w;
+	w = 0;
+	while (w < WIN_W)
+	{
+		h = 0;
+		while (h < WIN_H)
+		{
+			if (h % hr == 0 || (w % wr == 0))
+				u->img_data.addr[WIN_W * h + w] = 0;
+			else if (u->d->map[(h / hr)][(w / wr)] == '1')
+				u->img_data.addr[WIN_W * h + w] = u->d->ground;
+			else
+				u->img_data.addr[WIN_W * h + w] = u->d->sky;
+			h++;
+		}
+		w++;
+	}
+	put_square(u, u->d->py, u->d->px, 0xff0000);
+	single_ray(u);
+}
+
+void	load_textures(t_umlx *u)
+{
+	t_data	*d;
+	t_img	*img;
+	int		i;
+	char	**arr;
+
+	d = u->d;
+	arr = (char *[]){d->no, d->so, d->ea, d->we};
+	i = 0;
+	while (i < 4)
+	{
+		img = &d->imgs[i];
+		img->ptr = mlx_xpm_file_to_image(u->mlx, arr[i], &img->w, &img->h);
+		if (!img->ptr)
+		{
+			ft_puterr("Error\nFailed to load textures\n");
+			exit_exec(u, 1);
+		}
+		i++;
+	}
+}

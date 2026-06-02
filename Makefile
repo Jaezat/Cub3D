@@ -15,11 +15,13 @@ OBJ_DIR = build/
 SRCS    = $(addprefix $(SRC_DIR), main.c)
 
 PARSE 		= init asset trim flood fill copy
+RAYCAST		= raycast puts
 # remove test /////////////////////////////////////////////////////////////////
 UTILS		= gnl utl0 utl1 exit test
 MINI_FILES 	= draw utils
 W_FILES 	= game loop 
 SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(PARSE)))
+SRCS	+= $(addprefix srcs/raycast/, $(addsuffix .c, $(RAYCAST)))
 SRCS	+= $(addprefix srcs/utils/, $(addsuffix .c, $(UTILS)))
 SRCS	+= $(addprefix srcs/minimap/, $(addsuffix .c, $(MINI_FILES)))
 SRCS	+= $(addprefix srcs/windows/, $(addsuffix .c, $(W_FILES)))
@@ -66,12 +68,14 @@ re: fclean all
 
 # remoeve custom rules ////////////////////////////////////////////////////////
 
-force_clean: clean mlx_clean
+total_makeover: clean mlx_clean
 
 TESTMAP = assets/maps/valid.cub
 
-run: clean all
-	clear
+go: all
+	./$(NAME) $(TESTMAP)
+
+do_over: clean all
 	./$(NAME) $(TESTMAP)
 
 norme:
@@ -84,7 +88,7 @@ CFLAGS += -O3
 # VFLAGS += --trace-children=yes
 # VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all
 
-mem: re
+err: re
 	clear
 	valgrind $(VFLAGS) ./$(NAME) ./$(TESTMAP)
 
