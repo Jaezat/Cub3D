@@ -39,7 +39,7 @@ void	draw_column(t_umlx *u, int x, double distance)
 	}
 }
 
-void	find_block(t_umlx *u, float dir)
+void	find_block(t_umlx *u, float dir, int line)
 {
 	float	x;
 	float	y;
@@ -62,7 +62,7 @@ void	find_block(t_umlx *u, float dir)
 					hypotenuse = (y - u->d->py) * (y - u->d->py) + (x
 							- u->d->px) * (x - u->d->px);
 					put_square(u, y, x, 0x0000ff);
-					draw_column(u, (int)(x * WIN_W / u->d->map_w),
+					draw_column(u, (int)(line * WIN_W / 70),
 						sqrt(hypotenuse));
 					break ;
 				}
@@ -80,7 +80,7 @@ void	apperture(t_umlx *u)
 	ang_offset = -35 * M_PI / 180;
 	while (lines--)
 	{
-		find_block(u, u->d->dir + ang_offset);
+		find_block(u, u->d->dir + ang_offset, lines);
 		ang_offset = ang_offset + (1 * M_PI / 180);
 	}
 }
