@@ -1,6 +1,6 @@
 #include "main.h"
 
-/* static void draw_borders(t_minimap *map)
+static void draw_borders(t_minimap *map)
 {
     int x;
     int y;
@@ -22,7 +22,6 @@
         y++;
     }
 } 
-} */
 
 static void draw_tiles(t_minimap *map)
 {
@@ -84,7 +83,7 @@ static void draw_player(t_minimap *map)
 
 void draw_minimap(t_minimap *map)
 {
-    // draw_borders(map);
+    draw_borders(map);
     draw_tiles(map);
     draw_player(map);
     //move player?

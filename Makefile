@@ -68,9 +68,9 @@ re: fclean all
 
 force_clean: clean mlx_clean
 
-TESTMAP = assets/maps/thinny.cub
+TESTMAP = assets/maps/valid.cub
 
-parse: clean all
+cub: clean all
 	sleep 0.3
 	clear
 	./$(NAME) $(TESTMAP)

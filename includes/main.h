@@ -1,5 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
-
+#ifndef MAIN_H
+# define MAIN_H
 // external library headers ///////////////////////////////////////////////////
 #include <fcntl.h>
 #include <stdbool.h>
@@ -19,30 +20,8 @@
 # include "wdw_mlx_struct.h"
 # include "parser/p_functions.h"
 # include "parser/p_utils.h"
-# include "minimap/mn_functions.h"
-# include "minimap/mn_structs.h"
-
-
-#ifndef MAIN_H
-# define MAIN_H
-# include <fcntl.h>
-# include <stdbool.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <math.h>
-# include <sys/time.h>
-
-# define _USE_MATH_DEFINES
-
-# include "../mlx_linux/mlx.h"
-# include "parser/p_structs.h"
-# include "wdw_mlx_struct.h"
-# include "parser/p_functions.h"
-# include "parser/p_utils.h"
 # include "minimap/mn_structs.h"
 # include "minimap/mn_functions.h"
-
 
 # define WIN_W 800
 // # define TO_RATIO / 16 * 9

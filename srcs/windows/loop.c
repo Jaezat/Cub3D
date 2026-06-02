@@ -46,11 +46,8 @@ int	loop(void *param)
 	t_game	*env;
 
 	env = (t_game *)param;
-<<<<<<< HEAD
 	// raycast(&env->u);
-=======
 	// paint_put(&env->u);
->>>>>>> c879c5f (Camera done, working on movements now)
 	draw_minimap(&env->mn);
 	mlx_put_image_to_window(env->u.mlx, env->u.win, env->u.img, 0, 0);
 	usleep(1000000 / 60);
