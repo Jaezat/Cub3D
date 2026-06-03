@@ -6,9 +6,9 @@ WE                   ./assets/textures/lavender.xpm
 
 EA ./assets/textures/slate_wide.xpm                   
 
-F                                             100,100,100
+F                                             127,255,0
 
-C            253, 246, 227
+C            0, 127, 255
 11111111
 10000001
 10000001

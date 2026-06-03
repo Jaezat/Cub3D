@@ -2,8 +2,8 @@ SO ./assets/textures/autumn.xpm
 WE ./assets/textures/lavender.xpm
 EA ./assets/textures/slate_wide.xpm
 NO ./assets/textures/not_impressed.xpm
-F 100,100,100
-C 253, 246, 227
+F 63, 130, 63
+C 80, 100, 255
 1111111111111111111
 1000000000000000001
 1000000000000000001
