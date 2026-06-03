@@ -15,14 +15,14 @@
 // 	u->d->dir -= 0.2;
 // }
 
-void	draw_column(t_umlx *u, int x, double distance)
+void	draw_column(t_umlx *u, int x, double distance, float ang_offset)
 {
 	int	ystart;
 	int	steps;
 	int	brightness;
 
 	ystart = WIN_H / 2;
-	steps = WIN_H / (distance * 2) + 50;
+	steps = WIN_H / (distance * cos(ang_offset));
 	brightness = (int)(255 / distance) << 8 & (rand() & 0x00ff00);
 	while (steps)
 	{
@@ -38,7 +38,7 @@ void	draw_column(t_umlx *u, int x, double distance)
 	}
 }
 
-void	find_block(t_umlx *u, float dir, int line)
+void	find_block(t_umlx *u, float dir, int line, float ang_offset)
 {
 	float	x;
 	float	y;
@@ -61,7 +61,7 @@ void	find_block(t_umlx *u, float dir, int line)
 					hypotenuse = (y - u->d->py) * (y - u->d->py) + (x
 							- u->d->px) * (x - u->d->px);
 					// put_dot(u, y, x, 0x0000ff);
-					draw_column(u, line, sqrt(hypotenuse));
+					draw_column(u, line, sqrt(hypotenuse), ang_offset);
 					break ;
 				}
 		x = x + cos(dir) / offset;
@@ -78,7 +78,7 @@ void	apperture(t_umlx *u)
 	ang_offset = -35 * M_PI / 180;
 	while (line < WIN_W)
 	{
-		find_block(u, u->d->dir + ang_offset, line);
+		find_block(u, u->d->dir + ang_offset, line, ang_offset);
 		ang_offset = ang_offset + (((float)70 / WIN_W) * M_PI / 180);
 		line++;
 	}
