@@ -23,7 +23,7 @@ void	draw_column(t_umlx *u, int x, double distance, float ang_offset)
 
 	ystart = WIN_H / 2;
 	steps = WIN_H / (distance * cos(ang_offset));
-	brightness = (int)(255 / distance) << 8 & (rand() & 0x00ff00);
+	brightness = (int)(255 / distance) << 8 & 0x00ff00;
 	while (steps)
 	{
 		if (((ystart - steps) * WIN_W + x) < WIN_H * WIN_W - 1)
@@ -42,12 +42,12 @@ void	find_block(t_umlx *u, float dir, int line, float ang_offset)
 {
 	float	x;
 	float	y;
-	float	offset;
-	float	hypotenuse;
+	float	jump;
+	float	hyp;
 
-	offset = 10;
-	x = cos(dir) / offset + u->d->px;
-	y = sin(dir) / offset + u->d->py;
+	jump = 1;
+	x = cos(dir) / jump + (int)u->d->px;
+	y = sin(dir) / jump + (int)u->d->py;
 	while (1)
 	{
 		if (x < 0 || x >= WIN_W)
@@ -55,17 +55,20 @@ void	find_block(t_umlx *u, float dir, int line, float ang_offset)
 		if (y < 0 || y >= WIN_H)
 			break ;
 		if (y >= 0 && x >= 0)
-			if ((int)y <= u->d->map_h && (int)x <= u->d->map_w)
+			if ((int)y < u->d->map_h && (int)x < u->d->map_w)
 				if (u->d->map[(int)y][(int)x] == '1')
 				{
-					hypotenuse = (y - u->d->py) * (y - u->d->py) + (x
-							- u->d->px) * (x - u->d->px);
-					// put_dot(u, y, x, 0x0000ff);
-					draw_column(u, line, sqrt(hypotenuse), ang_offset);
+					hyp = hypot(y - u->d->py, x - u->d->px);
+					(void)hyp;
+					(void)ang_offset;
+					(void)line;
+					put_dot(u, y, x, 0xff0000);
+					draw_column(u, line, hyp, ang_offset);
 					break ;
 				}
-		x = x + cos(dir) / offset;
-		y = y + sin(dir) / offset;
+		put_dot(u, y, x, 0x0000ff);
+		x = x + cos(dir) / jump;
+		y = y + sin(dir) / jump;
 	}
 }
 
@@ -89,19 +92,20 @@ void	put_background(t_umlx *u)
 	int	w;
 	int	h;
 
-	w = 0;
-	while (w < WIN_W)
+	h = 0;
+	while (h < WIN_H)
 	{
-		h = 0;
-		while (h < WIN_H)
+		w = 0;
+		while (w < WIN_W)
 		{
-			if (h < WIN_H / 2)
-				u->img_data.addr[WIN_W * h + w] = u->d->sky;
-			else
-				u->img_data.addr[WIN_W * h + w] = u->d->ground;
-			h++;
+			u->img_data.addr[WIN_W * h + w] = 0;
+			// if (h < WIN_H / 2)
+			// 	u->img_data.addr[WIN_W * h + w] = u->d->sky;
+			// else
+			// 	u->img_data.addr[WIN_W * h + w] = u->d->ground;
+			w++;
 		}
-		w++;
+		h++;
 	}
 	apperture(u);
 	put_square(u, u->d->py, u->d->px, 0xff0000);

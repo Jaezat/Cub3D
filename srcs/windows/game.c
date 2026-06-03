@@ -1,9 +1,9 @@
 #include "main.h"
 
 // this can be removed on 42's pcs maybe
-static inline t_clean	func(void *func)
+static inline t_clean	func(void *f_ptr)
 {
-	return ((t_clean)func);
+	return ((t_clean)f_ptr);
 }
 
 void	game(t_data *d)
