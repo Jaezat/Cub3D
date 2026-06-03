@@ -22,8 +22,8 @@ void	draw_column(t_umlx *u, int x, double distance)
 	int	brightness;
 
 	ystart = WIN_H / 2;
-	steps = WIN_H / distance;
-	brightness = (int)(255 / distance) << 8 & 0x00ff00;
+	steps = WIN_H / (distance * 2) + 50;
+	brightness = (int)(255 / distance) << 8 & (rand() & 0x00ff00);
 	while (steps)
 	{
 		if (((ystart - steps) * WIN_W + x) < WIN_H * WIN_W - 1)
