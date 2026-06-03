@@ -19,17 +19,21 @@ void	draw_column(t_umlx *u, int x, double distance)
 {
 	int	ystart;
 	int	steps;
+	int	brightness;
 
 	ystart = WIN_H / 2;
 	steps = WIN_H / distance;
+	brightness = (int)(255 / distance) << 8;
 	while (steps)
 	{
 		if (((ystart - steps) * WIN_W + x) < WIN_H * WIN_W - 1)
 			if (((ystart - steps) * WIN_W + x) >= 0)
-				u->img_data.addr[(ystart - steps) * WIN_W + x] = 0x005000;
+				u->img_data.addr[(ystart - steps) * WIN_W
+					+ x] = brightness & 0x00ff00;
 		if (((ystart + steps - 1) * WIN_W + x) < WIN_H * WIN_W - 1)
 			if (((ystart + steps - 1) * WIN_W + x) >= 0)
-				u->img_data.addr[(ystart + steps - 1) * WIN_W + x] = 0x005000;
+				u->img_data.addr[(ystart + steps - 1) * WIN_W
+					+ x] = brightness & 0x00ff00;
 		steps--;
 	}
 }
@@ -41,7 +45,7 @@ void	find_block(t_umlx *u, float dir, int line)
 	float	offset;
 	float	hypotenuse;
 
-	offset = 1;
+	offset = 10;
 	x = cos(dir) / offset + u->d->px;
 	y = sin(dir) / offset + u->d->py;
 	while (1)
