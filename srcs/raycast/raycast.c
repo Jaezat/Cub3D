@@ -46,8 +46,8 @@ void	find_block(t_umlx *u, float dir, int line, float ang_offset)
 	float	hyp;
 
 	jump = 1;
-	x = cos(dir) / jump + (int)u->d->px;
-	y = sin(dir) / jump + (int)u->d->py;
+	x = cos(dir) / jump + u->d->px;
+	y = sin(dir) / jump + u->d->py;
 	while (1)
 	{
 		if (x < 0 || x >= WIN_W)
@@ -63,7 +63,7 @@ void	find_block(t_umlx *u, float dir, int line, float ang_offset)
 					(void)ang_offset;
 					(void)line;
 					put_dot(u, y, x, 0xff0000);
-					draw_column(u, line, hyp, ang_offset);
+					// draw_column(u, line, hyp, ang_offset);
 					break ;
 				}
 		put_dot(u, y, x, 0x0000ff);
@@ -99,6 +99,8 @@ void	put_background(t_umlx *u)
 		while (w < WIN_W)
 		{
 			u->img_data.addr[WIN_W * h + w] = 0;
+			if (h % (WIN_H/u->d->map_h) && w % (WIN_W/u->d->map_w))
+				u->img_data.addr[WIN_W * h + w] = 0xffffff;
 			// if (h < WIN_H / 2)
 			// 	u->img_data.addr[WIN_W * h + w] = u->d->sky;
 			// else
