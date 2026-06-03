@@ -70,7 +70,7 @@ re: fclean all
 
 total_makeover: clean mlx_clean
 
-TESTMAP = assets/maps/big_test.cub
+TESTMAP = assets/maps/big.cub
 
 go: all
 	./$(NAME) $(TESTMAP)

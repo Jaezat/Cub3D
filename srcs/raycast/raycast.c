@@ -42,8 +42,8 @@ void	find_block(t_umlx *u, float dir, int line, float ang_offset)
 {
 	float	x;
 	float	y;
-	float	jump;
 	float	hyp;
+	float	jump;
 
 	jump = 1;
 	x = cos(dir) / jump + u->d->px;
@@ -54,18 +54,20 @@ void	find_block(t_umlx *u, float dir, int line, float ang_offset)
 			break ;
 		if (y < 0 || y >= WIN_H)
 			break ;
-		if (y >= 0 && x >= 0)
-			if ((int)y < u->d->map_h && (int)x < u->d->map_w)
-				if (u->d->map[(int)y][(int)x] == '1')
-				{
-					hyp = hypot(y - u->d->py, x - u->d->px);
-					(void)hyp;
-					(void)ang_offset;
-					(void)line;
-					put_dot(u, y, x, 0xff0000);
-					// draw_column(u, line, hyp, ang_offset);
-					break ;
-				}
+		if ((int)y < u->d->map_h && (int)x < u->d->map_w)
+			if (u->d->map[(int)y][(int)x] == '1')
+			{
+				hyp = hypot(y - u->d->py, x - u->d->px);
+				(void)hyp;
+				(void)ang_offset;
+				(void)line;
+				put_dot(u, y, x, 0xff0000);
+				// draw_column(u, line, hyp, ang_offset);
+				break ;
+			}
+		put_square(u, (float)0.5 + WIN_H / u->d->map_h * (int)y / (WIN_H
+				/ u->d->map_h), (float)0.5 + WIN_W / u->d->map_w * (int)x
+			/ (WIN_W / u->d->map_w), 0x008000);
 		put_dot(u, y, x, 0x0000ff);
 		x = x + cos(dir) / jump;
 		y = y + sin(dir) / jump;
@@ -87,10 +89,23 @@ void	apperture(t_umlx *u)
 	}
 }
 
+void	project(t_umlx *u)
+{
+	float	x;
+	float	y;
+
+	x = cos(u->d->dir) + u->d->px;
+	y = sin(u->d->dir) + u->d->py;
+	// put_square(u, y, x, 0x008000);
+	put_square(u, 0.5 + (int)y, 0.5 + (int)x, 0x008000);
+}
+
 void	put_background(t_umlx *u)
 {
 	int	w;
 	int	h;
+			int x;
+			int y;
 
 	h = 0;
 	while (h < WIN_H)
@@ -98,9 +113,11 @@ void	put_background(t_umlx *u)
 		w = 0;
 		while (w < WIN_W)
 		{
-			u->img_data.addr[WIN_W * h + w] = 0;
-			if (h % (WIN_H/u->d->map_h) && w % (WIN_W/u->d->map_w))
-				u->img_data.addr[WIN_W * h + w] = 0xffffff;
+			u->img_data.addr[WIN_W * h + w] = 0xffffff;
+			x = w / (WIN_W / u->d->map_w + 1);
+			y = h / (WIN_H / u->d->map_h + 1);
+			if (u->d->map[y][x] == '1')
+				u->img_data.addr[WIN_W * h + w] = 0;
 			// if (h < WIN_H / 2)
 			// 	u->img_data.addr[WIN_W * h + w] = u->d->sky;
 			// else
@@ -109,7 +126,8 @@ void	put_background(t_umlx *u)
 		}
 		h++;
 	}
-	apperture(u);
+	// apperture(u);
+	project(u);
 	put_square(u, u->d->py, u->d->px, 0xff0000);
 }
 
