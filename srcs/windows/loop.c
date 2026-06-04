@@ -46,6 +46,7 @@ int	loop(void *param)
 	t_game	*env;
 
 	env = (t_game *)param;
+	/* rotate & move player should be before outputting anything into the map */
 	// raycast(&env->u);
 	// paint_put(&env->u);
 	draw_minimap(&env->mn);

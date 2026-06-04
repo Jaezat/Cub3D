@@ -121,30 +121,6 @@ void	raycast(t_umlx *u)
 	single_ray(u);
 }
 
-void	key_press(int keycode, void *param)
-{
-	t_game	*env;
-	t_data	*data;
-	t_umlx	*umlx;
-
-	env = param;
-	data = env->u.d;
-	umlx = &env->u;
-	(void)umlx;
-	if (keycode == K_W)
-		data->py -= MOV_INC;
-	if (keycode == K_S)
-		data->py += MOV_INC;
-	if (keycode == K_A)
-		data->px -= MOV_INC;
-	if (keycode == K_D)
-		data->px += MOV_INC;
-	if (keycode == K_RIGHT)
-		data->dir -= ANG_INC * M_PI / 180.0;
-	if (keycode == K_LEFT)
-		data->dir += ANG_INC * M_PI / 180.0;
-}
-
 static inline t_clean	func(void *func)
 {
 	return ((t_clean)func);
@@ -166,8 +142,7 @@ void	game(t_data *d)
 	env.u.img = mlx_new_image(env.u.mlx, WIN_W, WIN_H);
 	get_addr(&env.u);
 	env.mn.ulx = env.u;
-	mlx_key_hook(env.u.win, hook, &env);
-	mlx_hook(env.u.win, 2, 1, func(key_press), &env);
+	hooks_keys(&env);
 	mlx_loop_hook(env.u.mlx, func(loop), &env);
 	mlx_loop(env.u.mlx);
 }

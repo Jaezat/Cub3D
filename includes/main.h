@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include <math.h>
 #include <sys/time.h>
+#include <X11/X.h>
+#include <X11/keysym.h>
 #define _USE_MATH_DEFINES
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -17,11 +19,13 @@
 
 // internal library headers ///////////////////////////////////////////////////
 # include "parser/p_structs.h"
-# include "wdw_mlx_struct.h"
+# include "windows/wdw_mlx_struct.h"
 # include "parser/p_functions.h"
 # include "parser/p_utils.h"
 # include "minimap/mn_structs.h"
+# include "windows/keys.h"
 # include "minimap/mn_functions.h"
+
 
 # define WIN_W 800
 // # define TO_RATIO / 16 * 9
@@ -44,8 +48,15 @@
 #define MOV_INC 0.25
 #define ANG_INC 6
 
+// main structs ? ////////////////////////////////////////////////////////////////
+
+
 // keep this ? ////////////////////////////////////////////////////////////////
 typedef int				(*t_clean)();
+
+
+
+
 
 #endif
 ///////////////////////////////////////////////////////////////////////////////

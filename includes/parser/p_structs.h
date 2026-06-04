@@ -22,6 +22,16 @@ typedef struct s_img
 	void		*ptr;
 }				t_img;
 
+typedef struct s_keys
+{
+	int w;
+	int a;
+	int s;
+	int d;
+	int left;
+	int right;
+}	t_keys;
+
 typedef struct s_data
 {
 	char		**map;
@@ -37,6 +47,7 @@ typedef struct s_data
 	float		dir;
 	float		px;
 	float		py;
+	t_keys		key;
 }				t_data;
 
 typedef struct s_parser
