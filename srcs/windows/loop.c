@@ -56,7 +56,7 @@ int	hook(int keycode, void *param)
 // draw_minimap(&env->mn);
 // minimap
 // sleep is badly done
-int	loop(void *param)
+int		loop(void *param)
 {
 	t_game	*env;
 

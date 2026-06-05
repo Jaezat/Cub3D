@@ -28,17 +28,16 @@ void	draw_column(t_umlx *u, int x, double distance, float ang_offset)
 	{
 		if (((ystart - steps) * WIN_W + x) < WIN_H * WIN_W - 1)
 			if (((ystart - steps) * WIN_W + x) >= 0)
-				u->img_data.addr[(ystart - steps) * WIN_W
-					+ x] = brightness;
+				u->img_data.addr[(ystart - steps) * WIN_W + x] = brightness;
 		if (((ystart + steps - 1) * WIN_W + x) < WIN_H * WIN_W - 1)
 			if (((ystart + steps - 1) * WIN_W + x) >= 0)
-				u->img_data.addr[(ystart + steps - 1) * WIN_W
-					+ x] = brightness;
+				u->img_data.addr[(ystart + steps - 1) * WIN_W + x] = brightness;
 		steps--;
 	}
 }
 
-void	precision_jump(t_umlx *u, float dir, int line, float ang_offset, float x, float y)
+void	precision_jump(t_umlx *u, float dir, int line, float ang_offset,
+		float x, float y)
 {
 	float	hyp;
 	float	jump;
@@ -124,35 +123,31 @@ void	apperture(t_umlx *u)
 	}
 }
 
-void	project(t_umlx *u)
+void    project(t_umlx *u)
 {
-	float	x;
-	float	y;
-
-	x = cos(u->d->dir) + u->d->px;
-	y = sin(u->d->dir) + u->d->py;
-	// put_square(u, y, x, 0x008000);
-	put_square(u, 0.5 + (int)y, 0.5 + (int)x, 0x008000);
+	(void)u;
 }
-
 void	put_background(t_umlx *u)
 {
 	int	w;
 	int	h;
-	// int x;
-	// int y;
 
+	// int	x;
+	// int	y;
 	h = 0;
 	while (h < WIN_H)
 	{
 		w = 0;
 		while (w < WIN_W)
 		{
-			// u->img_data.addr[WIN_W * h + w] = 0xffffff;
+			u->img_data.addr[WIN_W * h + w] = 0xffffff;
+			if (w % (WIN_W / u->d->map_w + 1))
+				if (h % (WIN_H / u->d->map_h + 1))
+					u->img_data.addr[WIN_W * h + w] = 0xcacaca;
 			// x = w / (WIN_W / u->d->map_w + 1);
 			// y = h / (WIN_H / u->d->map_h + 1);
 			// if (u->d->map[y][x] == '1')
-				u->img_data.addr[WIN_W * h + w] = 0;
+			// 	u->img_data.addr[WIN_W * h + w] = 0;
 			// if (h < WIN_H / 2)
 			// 	u->img_data.addr[WIN_W * h + w] = u->d->sky;
 			// else
@@ -161,8 +156,8 @@ void	put_background(t_umlx *u)
 		}
 		h++;
 	}
-	apperture(u);
-	// project(u);
+	// apperture(u);
+	// projegct(u);
 	put_square(u, u->d->py, u->d->px, 0xff0000);
 }
 

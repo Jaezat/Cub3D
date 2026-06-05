@@ -18,7 +18,7 @@
 # include "raycast/raycast.h"
 # include "minimap.h"
 
-# define WIN_W 1000
+# define WIN_W 800
 // # define TO_RATIO / 16 * 9
 # define TO_RATIO / 1
 # define WIN_H WIN_W TO_RATIO
