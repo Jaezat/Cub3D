@@ -11,13 +11,25 @@ void	key_press(int keycode, void *param)
 	umlx = &env->u;
 	(void)umlx;
 	if (keycode == K_W)
-		data->py -= MOV_INC;
+	{
+		data->py += sin(env->u.d->dir) * MOV_INC;
+		data->px += cos(env->u.d->dir) * MOV_INC;
+	}
 	if (keycode == K_S)
-		data->py += MOV_INC;
+	{
+		data->py -= sin(env->u.d->dir) * MOV_INC;
+		data->px -= cos(env->u.d->dir) * MOV_INC;
+	}
 	if (keycode == K_A)
-		data->px -= MOV_INC;
+	{
+		data->py -= sin(env->u.d->dir + (90 * M_PI / 180)) * MOV_INC;
+		data->px -= cos(env->u.d->dir + (90 * M_PI / 180)) * MOV_INC;
+	}
 	if (keycode == K_D)
-		data->px += MOV_INC;
+	{
+		data->py += sin(env->u.d->dir + (90 * M_PI / 180)) * MOV_INC;
+		data->px += cos(env->u.d->dir + (90 * M_PI / 180)) * MOV_INC;
+	}
 	if (keycode == K_RIGHT)
 		data->dir += ANG_INC * M_PI / 180.0;
 	if (keycode == K_LEFT)

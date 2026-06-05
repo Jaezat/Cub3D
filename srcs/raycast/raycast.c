@@ -24,17 +24,50 @@ void	draw_column(t_umlx *u, int x, double distance, float ang_offset)
 	ystart = WIN_H / 2;
 	steps = WIN_H / (distance * cos(ang_offset));
 	brightness = (int)(255 / distance) << 8 & 0x00ff00;
-	while (steps)
+	while (steps >= 0)
 	{
 		if (((ystart - steps) * WIN_W + x) < WIN_H * WIN_W - 1)
 			if (((ystart - steps) * WIN_W + x) >= 0)
 				u->img_data.addr[(ystart - steps) * WIN_W
-					+ x] = brightness & 0x00ff00;
+					+ x] = brightness;
 		if (((ystart + steps - 1) * WIN_W + x) < WIN_H * WIN_W - 1)
 			if (((ystart + steps - 1) * WIN_W + x) >= 0)
 				u->img_data.addr[(ystart + steps - 1) * WIN_W
-					+ x] = brightness & 0x00ff00;
+					+ x] = brightness;
 		steps--;
+	}
+}
+
+void	precision_jump(t_umlx *u, float dir, int line, float ang_offset, float x, float y)
+{
+	float	hyp;
+	float	jump;
+
+	jump = 1000;
+	while (1)
+	{
+		if (x < 0 || x >= WIN_W)
+			break ;
+		if (y < 0 || y >= WIN_H)
+			break ;
+		if ((int)y < u->d->map_h && (int)x < u->d->map_w)
+			if (u->d->map[(int)y][(int)x] == '1')
+			{
+				hyp = hypot(y - u->d->py, x - u->d->px);
+				(void)hyp;
+				(void)ang_offset;
+				(void)line;
+				put_dot(u, y, x, 0xff0000);
+				// usleep(1);
+				draw_column(u, line, hyp, ang_offset);
+				break ;
+			}
+		// put_square(u, (float)0.5 + WIN_H / u->d->map_h * (int)y / (WIN_H
+		// 		/ u->d->map_h), (float)0.5 + WIN_W / u->d->map_w * (int)x
+		// 	/ (WIN_W / u->d->map_w), 0x008000);
+		// put_dot(u, y, x, 0x0000ff);
+		x = x + cos(dir) / jump;
+		y = y + sin(dir) / jump;
 	}
 }
 
@@ -45,7 +78,7 @@ void	find_block(t_umlx *u, float dir, int line, float ang_offset)
 	float	hyp;
 	float	jump;
 
-	jump = 1;
+	jump = 10;
 	x = cos(dir) / jump + u->d->px;
 	y = sin(dir) / jump + u->d->py;
 	while (1)
@@ -61,14 +94,16 @@ void	find_block(t_umlx *u, float dir, int line, float ang_offset)
 				(void)hyp;
 				(void)ang_offset;
 				(void)line;
-				put_dot(u, y, x, 0xff0000);
-				// draw_column(u, line, hyp, ang_offset);
+				// put_dot(u, y, x, 0xff0000);
+				x = x - cos(dir) / jump;
+				y = y - sin(dir) / jump;
+				precision_jump(u, dir, line, ang_offset, x, y);
 				break ;
 			}
-		put_square(u, (float)0.5 + WIN_H / u->d->map_h * (int)y / (WIN_H
-				/ u->d->map_h), (float)0.5 + WIN_W / u->d->map_w * (int)x
-			/ (WIN_W / u->d->map_w), 0x008000);
-		put_dot(u, y, x, 0x0000ff);
+		// put_square(u, (float)0.5 + WIN_H / u->d->map_h * (int)y / (WIN_H
+		// 		/ u->d->map_h), (float)0.5 + WIN_W / u->d->map_w * (int)x
+		// 	/ (WIN_W / u->d->map_w), 0x008000);
+		// put_dot(u, y, x, 0x0000ff);
 		x = x + cos(dir) / jump;
 		y = y + sin(dir) / jump;
 	}
@@ -104,8 +139,8 @@ void	put_background(t_umlx *u)
 {
 	int	w;
 	int	h;
-			int x;
-			int y;
+	// int x;
+	// int y;
 
 	h = 0;
 	while (h < WIN_H)
@@ -113,10 +148,10 @@ void	put_background(t_umlx *u)
 		w = 0;
 		while (w < WIN_W)
 		{
-			u->img_data.addr[WIN_W * h + w] = 0xffffff;
-			x = w / (WIN_W / u->d->map_w + 1);
-			y = h / (WIN_H / u->d->map_h + 1);
-			if (u->d->map[y][x] == '1')
+			// u->img_data.addr[WIN_W * h + w] = 0xffffff;
+			// x = w / (WIN_W / u->d->map_w + 1);
+			// y = h / (WIN_H / u->d->map_h + 1);
+			// if (u->d->map[y][x] == '1')
 				u->img_data.addr[WIN_W * h + w] = 0;
 			// if (h < WIN_H / 2)
 			// 	u->img_data.addr[WIN_W * h + w] = u->d->sky;
@@ -126,8 +161,8 @@ void	put_background(t_umlx *u)
 		}
 		h++;
 	}
-	// apperture(u);
-	project(u);
+	apperture(u);
+	// project(u);
 	put_square(u, u->d->py, u->d->px, 0xff0000);
 }
 
