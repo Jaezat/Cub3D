@@ -6,6 +6,18 @@ static inline t_clean	func(void *f_ptr)
 	return ((t_clean)f_ptr);
 }
 
+void	player_set_discreet(t_game *env)
+{
+	t_data	*d;
+	t_umlx	*u;
+
+	d = env->u.d;
+	u = &env->u;
+	d->px = 1;
+	d->py = 1;
+	(void)u;
+}
+
 void	game(t_data *d)
 {
 	t_game	env;
@@ -24,6 +36,7 @@ void	game(t_data *d)
 	env.mn.ulx = env.u;
 	mlx_key_hook(env.u.win, hook, &env);
 	mlx_hook(env.u.win, 2, 1, func(key_press), &env);
+	player_set_discreet(&env);
 	mlx_loop_hook(env.u.mlx, func(loop), &env);
 	mlx_loop(env.u.mlx);
 }

@@ -23,7 +23,7 @@
 # define TO_RATIO / 1
 # define WIN_H WIN_W TO_RATIO
 
-# define M_PI		3.14159265358979323846
+# define M_PI 3.14159265358979323846
 # define RAD M_PI / 180.0
 
 # define K_LEFT 65361

@@ -3,37 +3,57 @@
 void	key_press(int keycode, void *param)
 {
 	t_game	*env;
-	t_data	*data;
+	t_data	*d;
 	t_umlx	*umlx;
 
 	env = param;
-	data = env->u.d;
+	d = env->u.d;
 	umlx = &env->u;
 	(void)umlx;
+	// if (keycode == K_W)
+	// {
+	// 	d->py += sin(env->u.d->dir) * MOV_INC;
+	// 	d->px += cos(env->u.d->dir) * MOV_INC;
+	// }
+	// if (keycode == K_S)
+	// {
+	// 	d->py -= sin(env->u.d->dir) * MOV_INC;
+	// 	d->px -= cos(env->u.d->dir) * MOV_INC;
+	// }
+	// if (keycode == K_A)
+	// {
+	// 	d->py -= sin(env->u.d->dir + (90 * M_PI / 180)) * MOV_INC;
+	// 	d->px -= cos(env->u.d->dir + (90 * M_PI / 180)) * MOV_INC;
+	// }
+	// if (keycode == K_D)
+	// {
+	// 	d->py += sin(env->u.d->dir + (90 * M_PI / 180)) * MOV_INC;
+	// 	d->px += cos(env->u.d->dir + (90 * M_PI / 180)) * MOV_INC;
+	// }
 	if (keycode == K_W)
 	{
-		data->py += sin(env->u.d->dir) * MOV_INC;
-		data->px += cos(env->u.d->dir) * MOV_INC;
+		if (d->map[(int)(d->py - MOV_INC)][(int)d->px] != '1')
+			d->py -= MOV_INC;
 	}
 	if (keycode == K_S)
 	{
-		data->py -= sin(env->u.d->dir) * MOV_INC;
-		data->px -= cos(env->u.d->dir) * MOV_INC;
+		if (d->map[(int)(d->py + MOV_INC)][(int)d->px] != '1')
+			d->py += MOV_INC;
 	}
 	if (keycode == K_A)
 	{
-		data->py -= sin(env->u.d->dir + (90 * M_PI / 180)) * MOV_INC;
-		data->px -= cos(env->u.d->dir + (90 * M_PI / 180)) * MOV_INC;
+		if (d->map[(int)(d->py)][(int)(d->px - MOV_INC)] != '1')
+			d->px -= MOV_INC;
 	}
 	if (keycode == K_D)
 	{
-		data->py += sin(env->u.d->dir + (90 * M_PI / 180)) * MOV_INC;
-		data->px += cos(env->u.d->dir + (90 * M_PI / 180)) * MOV_INC;
+		if (d->map[(int)(d->py)][(int)(d->px + MOV_INC)] != '1')
+			d->px += MOV_INC;
 	}
 	if (keycode == K_RIGHT)
-		data->dir += ANG_INC * M_PI / 180.0;
+		d->dir += ANG_INC * M_PI / 180.0;
 	if (keycode == K_LEFT)
-		data->dir -= ANG_INC * M_PI / 180.0;
+		d->dir -= ANG_INC * M_PI / 180.0;
 }
 
 void	pick_action(int keycode, t_umlx *u)
@@ -56,7 +76,7 @@ int	hook(int keycode, void *param)
 // draw_minimap(&env->mn);
 // minimap
 // sleep is badly done
-int		loop(void *param)
+int	loop(void *param)
 {
 	t_game	*env;
 
