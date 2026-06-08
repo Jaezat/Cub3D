@@ -20,60 +20,6 @@
 #define PLY_Y   5
 #define RADIUS  1
 
-
-typedef struct s_cubed t_cubed;
-
-typedef struct s_camera
-{
-    int radius;
-    int top;
-    int bot;
-    int left;
-    int right;
-}   t_cam;
-
-
-typedef struct s_draw
-{
-    int map_y;
-    int map_x;
-    int px_y;
-    int px_x;
-    int screen_x;
-    int screen_y;
-    unsigned int color;
-    char c_map;
-}   t_draw;
-
-
-typedef struct s_minimap
-{
-    t_draw      wdw;
-    t_cam       cam;
-    t_data      *d;
-    int i;
-    t_umlx      ulx;
-}   t_minimap; 
-
-typedef struct s_keys {
-    int w;
-    int a;
-    int s;
-    int d;
-    int left;
-    int right;
-} t_keys;
-
-typedef struct s_game
-{
-    t_umlx	u;
-	t_minimap mn;
-    t_keys key;
-} t_game;
-
-
-
-
 unsigned int get_tile_color(char c);
 // void draw_minimap(t_minimap *map); // here we should be passing cub struct
 void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color);

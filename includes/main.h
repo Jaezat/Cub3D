@@ -7,12 +7,13 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
-
 # include <math.h>
 
 # include "../mlx_linux/mlx.h"
+
+# include "structs.h"
+
 # include "parser/p_structs.h"
-# include "wdw_mlx_struct.h"
 # include "parser/p_functions.h"
 # include "parser/p_utils.h"
 # include "raycast/raycast.h"
