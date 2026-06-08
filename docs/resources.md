@@ -4,7 +4,6 @@
 
 * [Raycasting: Parmadi](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/)
 * [Raycasting: Wheeler](https://timallanwheeler.com/blog/2023/04/01/wolfenstein-3d-raycasting-in-c/)
-* [Trigonometry](https://www.askamathematician.com/2014/10/q-why-radians/)
 
 ### Silent header and comment
 
@@ -42,3 +41,4 @@ Name
 ## License
 
 This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details -->
+
