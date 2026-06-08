@@ -1,7 +1,8 @@
 NAME	= cub3D
 CC		= cc
 MLX_DIR	= mlx_linux
-CFLAGS	= -Wall -Werror -Wextra -Iincludes
+CFLAGS	= -Wall -Wextra -Iincludes
+# CFLAGS	+= -Werror
 CFLAGS	+= -I$(INC_DIR) -I$(MLX_DIR)
 RM          = rm -rf
 # MAKE_NP	= make --no-print-directory # not in use
@@ -15,11 +16,13 @@ OBJ_DIR = build/
 SRCS    = $(addprefix $(SRC_DIR), main.c)
 
 PARSE 		= init asset trim flood fill copy
+RAYCAST		= raycast puts
 # remove test /////////////////////////////////////////////////////////////////
 UTILS		= gnl utl0 utl1 exit test
 MINI_FILES 	= draw utils
 W_FILES 	= game loop 
 SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(PARSE)))
+SRCS	+= $(addprefix srcs/raycast/, $(addsuffix .c, $(RAYCAST)))
 SRCS	+= $(addprefix srcs/utils/, $(addsuffix .c, $(UTILS)))
 SRCS	+= $(addprefix srcs/minimap/, $(addsuffix .c, $(MINI_FILES)))
 SRCS	+= $(addprefix srcs/windows/, $(addsuffix .c, $(W_FILES)))
@@ -66,13 +69,14 @@ re: fclean all
 
 # remoeve custom rules ////////////////////////////////////////////////////////
 
-force_clean: clean mlx_clean
+total_makeover: clean mlx_clean
 
-TESTMAP = assets/maps/valid.cub
+TESTMAP = assets/maps/big.cub
 
-parse: clean all
-	sleep 0.3
-	clear
+go: all
+	./$(NAME) $(TESTMAP)
+
+do_over: clean all
 	./$(NAME) $(TESTMAP)
 
 norme:
@@ -81,12 +85,11 @@ norme:
 CFLAGS += -g
 CFLAGS += -O3
 VFLAGS += -s
-VFLAGS += --track-fds=all
-VFLAGS += --trace-children=yes
-VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all
+# VFLAGS += --track-fds=all
+# VFLAGS += --trace-children=yes
+# VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all
 
-parsev: re
-	sleep 0.3
+err: re
 	clear
 	valgrind $(VFLAGS) ./$(NAME) ./$(TESTMAP)
 
