@@ -55,15 +55,15 @@
 // 		printf("keycode: K_LEFT\n");
 // }
 
-// int	hook(int keycode, void *param)
-// {
-// 	t_umlx	*u;
+int	hook(int keycode, void *param)
+{
+	t_env	*env;
 
-// 	u = param;
-// 	if (keycode == K_ESC)
-// 		exit_exec(u, 0);
-// 	return (1);
-// }
+	env = param;
+	if (keycode == XK_Escape)
+		exit_exec(env, 0);
+	return (1);
+}
 
 // void	movement(t_env *game)
 // {
@@ -109,7 +109,7 @@ int	loop(void *param)
 {
 	t_env	*env;
 
-	env = (t_env *)param;
+	env = param;
 	// movement(env);
 	// put_background(&env->u);
 	mlx_put_image_to_window(env->umlx.mlx, env->umlx.win, env->umlx.img, 0, 0);

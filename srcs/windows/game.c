@@ -29,7 +29,7 @@ void	game(t_data *d)
 	gm.umlx.mlx = mlx_init();
 	if (!gm.umlx.mlx)
 		exit_exec(&gm, 1);
-	gm.umlx.win = mlx_new_window(&gm.umlx, WIN_W, WIN_H, "Cub3D");
+	gm.umlx.win = mlx_new_window(gm.umlx.mlx, WIN_W, WIN_H, "Cub3D");
 	if (!gm.umlx.win)
 		exit_exec(&gm, 1);
 	gm.umlx.img = mlx_new_image(gm.umlx.mlx, WIN_W, WIN_H);
@@ -39,6 +39,6 @@ void	game(t_data *d)
 	// mlx_key_hook(gm.umlx.win, hook, &gm);
 	// mlx_hook(gm.umlx.win, 2, 1 << 0, func(key_press), &gm);
 	// mlx_hook(gm.umlx.win, 3, 1 << 1, func(key_release), &gm);
-	// mlx_loop_hook(gm.umlx.mlx, func(loop), &gm);
+	mlx_loop_hook(gm.umlx.mlx, func(loop), &gm);
 	mlx_loop(gm.umlx.mlx);
 }
