@@ -1,6 +1,8 @@
 *.o
 cub3D
 mlx_linux/
+tools/
+
+# dumps that build in my computer when valgrind crashes
 vgcore.*
 .venv
-.kilo
