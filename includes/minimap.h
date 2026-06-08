@@ -55,10 +55,20 @@ typedef struct s_minimap
     t_umlx      ulx;
 }   t_minimap; 
 
+typedef struct s_keys {
+    int w;
+    int a;
+    int s;
+    int d;
+    int left;
+    int right;
+} t_keys;
+
 typedef struct s_game
 {
     t_umlx	u;
 	t_minimap mn;
+    t_keys key;
 } t_game;
 
 

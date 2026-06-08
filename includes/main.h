@@ -37,8 +37,8 @@
 # define K_D 100
 # define K_S 115
 
-#define MOV_INC 0.25
-#define ANG_INC 6
+#define MOV_INC 0.1
+#define ANG_INC 2
 
 // keep this ? ////////////////////////////////////////////////////////////////
 typedef int				(*t_clean)();

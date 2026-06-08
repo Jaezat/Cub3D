@@ -1,7 +1,8 @@
 NAME	= cub3D
 CC		= cc
 MLX_DIR	= mlx_linux
-CFLAGS	= -Wall -Werror -Wextra -Iincludes
+CFLAGS	= -Wall -Wextra -Iincludes
+# CFLAGS	+= -Werror
 CFLAGS	+= -I$(INC_DIR) -I$(MLX_DIR)
 RM          = rm -rf
 # MAKE_NP	= make --no-print-directory # not in use

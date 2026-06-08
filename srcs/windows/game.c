@@ -18,6 +18,8 @@ void	player_set_discreet(t_game *env)
 	(void)u;
 }
 
+void					key_release(int keycode, void *param);
+
 void	game(t_data *d)
 {
 	t_game	env;
@@ -34,9 +36,10 @@ void	game(t_data *d)
 	env.u.img = mlx_new_image(env.u.mlx, WIN_W, WIN_H);
 	get_addr(&env.u);
 	env.mn.ulx = env.u;
+	// player_set_discreet(&env);
 	mlx_key_hook(env.u.win, hook, &env);
-	mlx_hook(env.u.win, 2, 1, func(key_press), &env);
-	player_set_discreet(&env);
+	mlx_hook(env.u.win, 2, 1 << 0, func(key_press), &env);
+	mlx_hook(env.u.win, 3, 1 << 1, func(key_release), &env);
 	mlx_loop_hook(env.u.mlx, func(loop), &env);
 	mlx_loop(env.u.mlx);
 }

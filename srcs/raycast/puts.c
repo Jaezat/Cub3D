@@ -52,6 +52,21 @@ void	put_dot(t_umlx *u, float hf, float wf, int color)
 			safe_pix_put(u, (int)(WIN_W * h + w), color);
 }
 
+void	add_pigment(t_umlx *u, float hf, float wf, int color)
+{
+	int	h;
+	int	w;
+
+	h = hf * (WIN_H / u->d->map_h);
+	w = wf * (WIN_W / u->d->map_w);
+	if (h > 0 && h < (WIN_H))
+		if (w > 0 && w < (WIN_W))
+		{
+			if ((int)(WIN_W * h + w) >= 0 && (int)(WIN_W * h + w) < WIN_H * WIN_W)
+				u->img_data.addr[(int)(WIN_W * h + w)] += color;
+		}
+}
+
 void	single_ray(t_umlx *u)
 {
 	float	x;
