@@ -40,13 +40,13 @@ void	get_floats(t_parser *p, t_data *d);
 
 // mlx0 ////////////////////////////////////////////////////////////////////////
 void	game(t_data *d);
-void	raycast(t_umlx *u);
-void	get_addr(t_umlx *u);
+void    raycast(t_env *env);
+void    get_addr(t_env *env);
 
 // mlx1 ////////////////////////////////////////////////////////////////////////
-void	pick_action(int keycode, t_umlx *u);
+void    pick_action(int keycode, t_env *env);
 int		hook(int keycode, void *param);
-void	load_textures(t_umlx *u);
+void    load_textures(t_env *env);
 int		loop(void *param);
 
 #endif

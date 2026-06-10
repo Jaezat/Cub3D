@@ -2,19 +2,23 @@
 
 // i dont know about this one // if (u->img) mlx_destroy_image(u->mlx, u->img);
 // should aways have an error message even when mlx funcs fail??
-void	exit_exec(t_umlx *u, int exit_code)
+void	exit_exec(t_env *env, int exit_code)
 {
 	int		i;
+	t_umlx	*u;
+	t_data	*d;
 	t_img	*img;
 
 	i = 0;
+	d = env->data;
+	u = &env->umlx;
 	if (u->img)
 		mlx_destroy_image(u->mlx, u->img);
 	if (u->win)
 		i = 0;
 	while (i < 4)
 	{
-		img = u->d->imgs + i;
+		img = d->imgs + i;
 		if (img->ptr)
 			mlx_destroy_image(u->mlx, img->ptr);
 		i++;
@@ -25,8 +29,8 @@ void	exit_exec(t_umlx *u, int exit_code)
 		mlx_destroy_display(u->mlx);
 		free(u->mlx);
 	}
-	if (u->d)
-		free_data(u->d);
+	if (env->data)
+		free_data(env->data);
 	exit(exit_code);
 }
 

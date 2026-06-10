@@ -1,130 +1,6 @@
 #include "main.h"
 
-void	get_addr(t_umlx *u)
-{
-	t_img_data	*im;
-
-	im = &u->img_data;
-	im->addr = (int *)mlx_get_data_addr(u->img, &im->bpp, &im->line_s,
-			&im->endian);
-}
-
-void	safe_pix_put(t_umlx *u, int byte, int color)
-{
-	if (byte >= 0 && byte < WIN_H * WIN_W)
-		u->img_data.addr[byte] = color;
-}
-
-void	put_square(t_umlx *u, float hf, float wf, int color)
-{
-	int	i;
-	int	h;
-	int	w;
-	int	j;
-
-	h = hf * (WIN_H / u->d->map_h);
-	w = wf * (WIN_W / u->d->map_w);
-	i = -2;
-	while (i < 3)
-	{
-		j = -2;
-		while (j < 3)
-		{
-			if ((h + i) > 0 && (h + i) < (WIN_H + i))
-				if ((w + j) > 0 && (w + j) < (WIN_W + j))
-				{
-					safe_pix_put(u, (int)(WIN_W * (h + i) + w + j), color);
-				}
-			j++;
-		}
-		i++;
-	}
-}
-
-void	put_dot(t_umlx *u, float hf, float wf, int color)
-{
-	int	h;
-	int	w;
-
-	h = hf * (WIN_H / u->d->map_h);
-	w = wf * (WIN_W / u->d->map_w);
-	if (h > 0 && h < (WIN_H))
-		if (w > 0 && w < (WIN_W))
-			safe_pix_put(u, (int)(WIN_W * h + w), color);
-}
-
-void	single_ray(t_umlx *u)
-{
-	float	x;
-	float	y;
-
-	x = (sin(u->d->dir) + u->d->px);
-	y = (cos(u->d->dir) + u->d->py);
-	while (1)
-	{
-		if (x < 0 || x >= WIN_W)
-			break ;
-		if (y < 0 || y >= WIN_H)
-			break ;
-		if (u->img_data.addr[(int)(WIN_W * y + x)] == 0)
-		{
-			put_square(u, y, x, 0xff0000);
-		}
-		else
-			put_dot(u, y, x, 0x0000ff);
-		x = x + 0.01;
-		y = y + 0.01;
-	}
-}
-
-// void	multi_ray(t_umlx *u)
-// {
-// 	int	i;
-
-// 	i = 0;
-//
-// 	while (i < 10)
-// 	{
-// 		u->d->dir += 0.02;
-// 		single_ray(u);
-// 		i++;
-// 	}
-// 	u->d->dir -= 0.2;
-// }
-
-void	raycast(t_umlx *u)
-{
-	int	w;
-	int	h;
-	int	wr;
-	int	hr;
-
-	hr = WIN_H / u->d->map_h;
-	wr = WIN_W / u->d->map_w;
-	w = 0;
-	while (w < WIN_W)
-	{
-		h = 0;
-		while (h < WIN_H)
-		{
-			if (h % hr == 0 || (w % wr == 0))
-				u->img_data.addr[WIN_W * h + w] = 0;
-			else if (u->d->map[(h / hr)][(w / wr)] == '1')
-				u->img_data.addr[WIN_W * h + w] = u->d->sky - 0x222222;
-			else
-				u->img_data.addr[WIN_W * h + w] = u->d->sky;
-			h++;
-		}
-		w++;
-	}
-	put_square(u, u->d->py, u->d->px, 0xff0000);
-	single_ray(u);
-}
-
-static inline t_clean	func(void *func)
-{
-	return ((t_clean)func);
-}
+/* OLD VERSION
 
 void	game(t_data *d)
 {
@@ -145,4 +21,80 @@ void	game(t_data *d)
 	hooks_keys(&env);
 	mlx_loop_hook(env.u.mlx, func(loop), &env);
 	mlx_loop(env.u.mlx);
+}
+*/
+
+
+
+
+// this can be removed on 42's pcs maybe
+static inline t_clean	func(void *f_ptr)
+{
+	return ((t_clean)f_ptr);
+}
+
+// void	player_set_discreet(t_env *env)
+// {
+// 	t_data	*d;
+// 	t_umlx	*u;
+
+// 	d = env->u.d;
+// 	u = &env->u;
+// 	d->px = 1;
+// 	d->py = 1;
+// 	(void)u;
+// }
+
+/* 
+before claude
+
+
+void					key_release(int keycode, void *param);
+
+// new version
+
+void	game(t_data *d)
+{
+	t_env	gm;
+
+	ft_bzero(&gm, sizeof(t_env));
+	gm.data = d;
+	gm.umlx.mlx = mlx_init();
+	if (!gm.umlx.mlx)
+		exit_exec(&gm, 1);
+	gm.umlx.win = mlx_new_window(&gm.umlx, WIN_W, WIN_H, "Cub3D");
+	if (!gm.umlx.win)
+		exit_exec(&gm, 1);
+	gm.umlx.img = mlx_new_image(gm.umlx.mlx, WIN_W, WIN_H);
+	get_addr(&gm.umlx);
+	gm.mn.ulx = gm.u;
+	hooks_keys(&env);
+	// player_set_discreet(&gm);
+	mlx_loop_hook(gm.umlx.mlx, func(loop), &gm);
+	mlx_loop(gm.umlx.mlx);
+}
+ */
+
+/* static inline t_clean	func(void *f_ptr)
+{
+	return ((t_clean)f_ptr);
+} */
+
+void	game(t_data *d)
+{
+	t_env	gm;
+
+	ft_bzero(&gm, sizeof(t_env));
+	gm.data = d;
+	gm.umlx.mlx = mlx_init();
+	if (!gm.umlx.mlx)
+		exit_exec(&gm, 1);
+	gm.umlx.win = mlx_new_window(gm.umlx.mlx, WIN_W, WIN_H, "Cub3D");
+	if (!gm.umlx.win)
+		exit_exec(&gm, 1);
+	gm.umlx.img = mlx_new_image(gm.umlx.mlx, WIN_W, WIN_H);
+	// get_addr(&gm.umlx);
+	hooks_keys(&gm);
+	mlx_loop_hook(gm.umlx.mlx, func(loop), &gm);
+	mlx_loop(gm.umlx.mlx);
 }

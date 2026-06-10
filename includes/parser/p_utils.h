@@ -11,7 +11,7 @@ char	*gnl(int fd);
 
 // exit ///////////////////////////////////////////////////////////////////////
 void	exit_parse(t_parser *p, int exit_co);
-void	exit_exec(t_umlx *u, int exit_code);
+void    exit_exec(t_env *env, int exit_code);
 void	free_data(t_data *d);
 void	free_map(void *ref);
 void	err_exit_msg(char *msg, char *arg, t_parser *p);

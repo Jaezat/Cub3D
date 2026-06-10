@@ -1,56 +1,135 @@
 #include "main.h"
 
-void	pick_action(int keycode, t_umlx *u)
-{
-	(void)u;
-	if (keycode == K_LEFT)
-		printf("keycode: K_LEFT\n");
-}
+// void	key_press(int keycode, void *param)
+// {
+// 	t_env	*env;
+// 	t_data	*d;
+// 	t_umlx	*umlx;
 
-int	hook(int keycode, void *param)
-{
-	t_umlx	*u;
+// 	env = param;
+// 	d = env->u.d;
+// 	umlx = &env->u;
+// 	if (keycode == K_W)
+// 		env->key.w = true;
+// 	if (keycode == K_S)
+// 		env->key.s = true;
+// 	if (keycode == K_A)
+// 		env->key.a = true;
+// 	if (keycode == K_D)
+// 		env->key.d = true;
+// 	if (keycode == K_RIGHT)
+// 		env->key.right = true;
+// 	if (keycode == K_LEFT)
+// 		env->key.left = true;
+// 	if (keycode == K_ESC)
+// 		exit_exec(umlx, 0);
+// }
 
-	u = param;
-	if (keycode == K_ESC)
-		exit_exec(u, 0);
-	return (1);
-}
+// void	key_release(int keycode, void *param)
+// {
+// 	t_env	*env;
+// 	t_data	*d;
+// 	t_umlx	*umlx;
 
-void	load_textures(t_umlx *u)
-{
-	t_data	*d;
-	t_img	*img;
-	int		i;
-	char	**arr;
+// 	env = param;
+// 	d = env->u.d;
+// 	umlx = &env->u;
+// 	if (keycode == K_W)
+// 		env->key.w = false;
+// 	if (keycode == K_S)
+// 		env->key.s = false;
+// 	if (keycode == K_A)
+// 		env->key.a = false;
+// 	if (keycode == K_D)
+// 		env->key.d = false;
+// 	if (keycode == K_RIGHT)
+// 		env->key.right = false;
+// 	if (keycode == K_LEFT)
+// 		env->key.left = false;
+// }
 
-	d = u->d;
-	arr = (char *[]){d->no, d->so, d->ea, d->we};
-	i = 0;
-	while (i < 4)
-	{
-		img = &d->imgs[i];
-		img->ptr = mlx_xpm_file_to_image(u->mlx, arr[i], &img->w, &img->h);
-		if (!img->ptr)
-		{
-			ft_puterr("Error\nFailed to load textures\n");
-			exit_exec(u, 1);
-		}
-		i++;
-	}
-}
+// void	pick_action(int keycode, t_umlx *u)
+// {
+// 	(void)u;
+// 	if (keycode == K_LEFT)
+// 		printf("keycode: K_LEFT\n");
+// }
 
-// draw_minimap(&env->mn);
+// int	hook(int keycode, void *param)
+// {
+// 	t_umlx	*u;
+
+// 	u = param;
+// 	if (keycode == K_ESC)
+// 		exit_exec(u, 0);
+// 	return (1);
+// }
+
+// void	movement(t_env *game)
+// {
+// 	t_data	*data;
+// 	float	x;
+// 	float	y;
+
+// 	data = game->u.d;
+// 	x = data->px;
+// 	y = data->py;
+// 	if (game->key.left)
+// 		data->dir -= ANG_INC * M_PI / 180.0;
+// 	if (game->key.right)
+// 		data->dir += ANG_INC * M_PI / 180.0;
+// 	if (game->key.w)
+// 	{
+// 		data->py += sin(data->dir) * MOV_INC;
+// 		data->px += cos(data->dir) * MOV_INC;
+// 	}
+// 	if (game->key.s)
+// 	{
+// 		data->py -= sin(data->dir) * MOV_INC;
+// 		data->px -= cos(data->dir) * MOV_INC;
+// 	}
+// 	if (game->key.a)
+// 	{
+// 		data->py -= sin(data->dir + (90 * M_PI / 180)) * MOV_INC;
+// 		data->px -= cos(data->dir + (90 * M_PI / 180)) * MOV_INC;
+// 	}
+// 	if (game->key.d)
+// 	{
+// 		data->py += sin(data->dir + (90 * M_PI / 180)) * MOV_INC;
+// 		data->px += cos(data->dir + (90 * M_PI / 180)) * MOV_INC;
+// 	}
+// 	if (data->map[(int)data->py][(int)data->px] == '1')
+// 	{
+// 		data->px = data->map_w / 2;
+// 		data->py = data->map_h / 2;
+// 	}
+// }
+
+
+/* 
+before claude
+
 int	loop(void *param)
 {
-	t_game	*env;
+	t_env	*env;
 
-	env = (t_game *)param;
-	/* rotate & move player should be before outputting anything into the map */
-	// raycast(&env->u);
-	// paint_put(&env->u);
-	draw_minimap(&env->mn);
-	mlx_put_image_to_window(env->u.mlx, env->u.win, env->u.img, 0, 0);
+	env = (t_env *)param;
+	rotate & move player should be before outputting anything into the map 
+	raycast(&env->u);
+	paint_put(&env->u);
+	draw_minimap(&env);
+	mlx_put_image_to_window(env->umlx.mlx, env->umlx.win, env->umlx.img, 0, 0);
+	usleep(1000000 / 60);
+	return (0);
+} */
+
+int	loop(void *param)
+{
+	t_env	*env;
+
+	env = (t_env *)param;
+	draw_minimap(env);
+	mlx_put_image_to_window(env->umlx.mlx, env->umlx.win, env->umlx.img, 0, 0);
 	usleep(1000000 / 60);
 	return (0);
 }

@@ -1,0 +1,1835 @@
+diff --git a/.gitattributes b/.gitattributes
+index 0d0b13e..8c66973 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -1,8 +1,8 @@
+ *.xpm linguist-vendored
+ *.cub linguist-vendored	
+ *.pdf linguist-vendored
+-# this removes the excessive amount of line contributions when you add external files
+ 
++# this removes the excessive amount of line contributions when you add external files
+ # alternative: this also ignores the files
+ # *.xpm binary
+ # *.cub binary
+\ No newline at end of file
+diff --git a/.gitignore b/.gitignore
+index d713440..d3f0ba0 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,8 +1,6 @@
+ *.o
+ cub3D
+ mlx_linux/
+-tools/
+-
+-# dumps that build in my computer when valgrind crashes
+ vgcore.*
+-.venv
+\ No newline at end of file
++.venv
++.kilo
+\ No newline at end of file
+diff --git a/Makefile b/Makefile
+index 7bd2a93..07919a1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,7 +1,8 @@
+ NAME	= cub3D
+ CC		= cc
+ MLX_DIR	= mlx_linux
+-CFLAGS	= -Wall -Werror -Wextra -Iincludes 
++CFLAGS	= -Wall -Wextra -Iincludes
++# CFLAGS	+= -Werror
+ CFLAGS	+= -I$(INC_DIR) -I$(MLX_DIR)
+ RM          = rm -rf
+ # MAKE_NP	= make --no-print-directory # not in use
+@@ -15,11 +16,13 @@ OBJ_DIR = build/
+ SRCS    = $(addprefix $(SRC_DIR), main.c)
+ 
+ PARSE 		= init asset trim flood fill copy
++RAYCAST		= raycast puts
+ # remove test /////////////////////////////////////////////////////////////////
+ UTILS		= gnl utl0 utl1 exit test
+ MINI_FILES 	= draw utils
+ W_FILES 	= game loop 
+ SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(PARSE)))
++SRCS	+= $(addprefix srcs/raycast/, $(addsuffix .c, $(RAYCAST)))
+ SRCS	+= $(addprefix srcs/utils/, $(addsuffix .c, $(UTILS)))
+ SRCS	+= $(addprefix srcs/minimap/, $(addsuffix .c, $(MINI_FILES)))
+ SRCS	+= $(addprefix srcs/windows/, $(addsuffix .c, $(W_FILES)))
+@@ -66,13 +69,14 @@ re: fclean all
+ 
+ # remoeve custom rules ////////////////////////////////////////////////////////
+ 
+-force_clean: clean mlx_clean
++total_makeover: clean mlx_clean
+ 
+-TESTMAP = assets/maps/valid.cub
++TESTMAP = assets/maps/big.cub
+ 
+-cub: clean all
+-	sleep 0.3
+-	clear
++go: all
++	./$(NAME) $(TESTMAP)
++
++do_over: clean all
+ 	./$(NAME) $(TESTMAP)
+ 
+ norme:
+@@ -81,12 +85,11 @@ norme:
+ CFLAGS += -g
+ CFLAGS += -O3
+ VFLAGS += -s
+-VFLAGS += --track-fds=all
+-VFLAGS += --trace-children=yes
+-VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all
++# VFLAGS += --track-fds=all
++# VFLAGS += --trace-children=yes
++# VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all
+ 
+-parsev: re
+-	sleep 0.3
++err: re
+ 	clear
+ 	valgrind $(VFLAGS) ./$(NAME) ./$(TESTMAP)
+ 
+diff --git a/assets/maps/big.cub b/assets/maps/big.cub
+new file mode 100644
+index 0000000..2415f45
+--- /dev/null
++++ b/assets/maps/big.cub
+@@ -0,0 +1,27 @@
++SO ./assets/textures/autumn.xpm
++WE ./assets/textures/lavender.xpm
++EA ./assets/textures/slate_wide.xpm
++NO ./assets/textures/not_impressed.xpm
++F 63, 130, 63
++C 80, 100, 255
++
++111111111111111111111
++100000000000000000001
++101000000000000000001
++100000000000100000001
++100000000000000000001
++100000000000000000001
++100000000000000000001
++100000000000000000001
++10000000000N000000001
++100100000000000000001
++100000000000000000001
++100000000000000000001
++100000000000000100001
++100000000000000000001
++100000000000000000001
++100000000000000000001
++100000000100000000001
++100000000000000000101
++100000000000000000001
++111111111111111111111
+\ No newline at end of file
+diff --git a/assets/maps/flood.cub b/assets/maps/flood.cub
+index 43230c7..871265a 100644
+--- a/assets/maps/flood.cub
++++ b/assets/maps/flood.cub
+@@ -1,13 +1,13 @@
+-NO ./assets/textures/lavender.xpm
+-SO ./assets/textures/autumn.xpm
+-WE ./assets/textures/badge.xpm
+-EA ./assets/textures/slate_wide.xpm
++NO ./path_to_the_north_texture
++SO ./path_to_the_south_texture
++WE ./path_to_the_west_texture
++EA ./path_to_the_east_texture
+ F 200,100,0
+ C 225,30,0
+ 1111111
+ 1000001
+ 1011101
+-101E001
++101E000
+ 1011101
+ 1000001
+ 1111111
+diff --git a/assets/maps/thinny.cub b/assets/maps/thinny.cub
+index a472c58..f2d9374 100644
+--- a/assets/maps/thinny.cub
++++ b/assets/maps/thinny.cub
+@@ -6,5 +6,4 @@ F 127,255,0
+ C 0,127,255
+ 1111111111111111111111111111111111
+ 10E0000000000000000000000000000001
+-1000000000000000000000000000000001
+ 1111111111111111111111111111111111
+\ No newline at end of file
+diff --git a/assets/maps/valid.cub b/assets/maps/valid.cub
+index 6125e5e..5d1a527 100644
+--- a/assets/maps/valid.cub
++++ b/assets/maps/valid.cub
+@@ -6,12 +6,14 @@ WE                   ./assets/textures/lavender.xpm
+ 
+ EA ./assets/textures/slate_wide.xpm                   
+ 
+-F                                             127, 255, 0
++F                                             127,255,0
+ 
+-C            253, 246, 227
++C            0, 127, 255
+ 11111111
+-1E001
+-10001
+-10001
+-11111
+-1
++10000001
++10000001
++100N0001
++10000001
++10000001
++10000001
++11111111
+\ No newline at end of file
+diff --git a/cub3D b/cub3D
+deleted file mode 100755
+index fb00f73..0000000
+Binary files a/cub3D and /dev/null differ
+diff --git a/docs/resources.md b/docs/resources.md
+index 531788d..b34f231 100644
+--- a/docs/resources.md
++++ b/docs/resources.md
+@@ -4,6 +4,7 @@
+ 
+ * [Raycasting: Parmadi](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/)
+ * [Raycasting: Wheeler](https://timallanwheeler.com/blog/2023/04/01/wolfenstein-3d-raycasting-in-c/)
++* [Trigonometry](https://www.askamathematician.com/2014/10/q-why-radians/)
+ 
+ ### Silent header and comment
+ 
+@@ -41,4 +42,3 @@ Name
+ ## License
+ 
+ This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details -->
+-
+diff --git a/includes/main.h b/includes/main.h
+index 608b06c..ff2fb18 100644
+--- a/includes/main.h
++++ b/includes/main.h
+@@ -1,37 +1,30 @@
+ ///////////////////////////////////////////////////////////////////////////////
+ #ifndef MAIN_H
+ # define MAIN_H
+-// external library headers ///////////////////////////////////////////////////
+-#include <fcntl.h>
+-#include <stdbool.h>
+-#include <stdio.h>
+-#include <stdlib.h>
+-#include <unistd.h>
+-#include <math.h>
+-#include <sys/time.h>
+-#include <X11/X.h>
+-#include <X11/keysym.h>
+-#define _USE_MATH_DEFINES
++# include <fcntl.h>
++# include <stdbool.h>
++# include <stdio.h>
++# include <stdlib.h>
++# include <unistd.h>
++# include <sys/time.h>
++# include <math.h>
+ 
+-///////////////////////////////////////////////////////////////////////////////
+-// compiled external headers //////////////////////////////////////////////////
+-#include "../mlx_linux/mlx.h"
++# include "../mlx_linux/mlx.h"
++
++# include "structs.h"
+ 
+-// internal library headers ///////////////////////////////////////////////////
+ # include "parser/p_structs.h"
+-# include "windows/wdw_mlx_struct.h"
+ # include "parser/p_functions.h"
+ # include "parser/p_utils.h"
+-# include "minimap/mn_structs.h"
+-# include "windows/keys.h"
+-# include "minimap/mn_functions.h"
+-
++# include "raycast/raycast.h"
++# include "minimap.h"
+ 
+ # define WIN_W 800
+ // # define TO_RATIO / 16 * 9
+ # define TO_RATIO / 1
+ # define WIN_H WIN_W TO_RATIO
+ 
++# define M_PI 3.14159265358979323846
+ # define RAD M_PI / 180.0
+ 
+ # define K_LEFT 65361
+@@ -45,18 +38,11 @@
+ # define K_D 100
+ # define K_S 115
+ 
+-#define MOV_INC 0.25
+-#define ANG_INC 6
+-
+-// main structs ? ////////////////////////////////////////////////////////////////
+-
++#define MOV_INC 0.1
++#define ANG_INC 2
+ 
+ // keep this ? ////////////////////////////////////////////////////////////////
+ typedef int				(*t_clean)();
+ 
+-
+-
+-
+-
+ #endif
+ ///////////////////////////////////////////////////////////////////////////////
+\ No newline at end of file
+diff --git a/includes/minimap.h b/includes/minimap.h
+new file mode 100644
+index 0000000..10b9527
+--- /dev/null
++++ b/includes/minimap.h
+@@ -0,0 +1,26 @@
++#ifndef MINIMAP_H
++#define MINIMAP_H
++
++// minimap height and minimap width -> this is just a tester
++#define MAP_W 19
++#define MAP_H 7 // number of tiles i want in my map
++
++// new minimap new me
++#define MINIMAP_SIZE 150
++#define MINIMAP_TILE 5
++#define TILE_SIZE MINIMAP_SIZE / MINIMAP_TILE 
++
++#define WALL   0xED094A  
++#define FLOOR  0x00BBCA  
++#define PLAYER 0x9E5167  
++#define EMPTY  0x000000  
++
++// this is harcoded atm, this should be a struct 
++#define PLY_X   2
++#define PLY_Y   5
++#define RADIUS  1
++
++unsigned int get_tile_color(char c);
++// void draw_minimap(t_minimap *map); // here we should be passing cub struct
++void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
++#endif
+\ No newline at end of file
+diff --git a/includes/minimap/mn_functions.h b/includes/minimap/mn_functions.h
+deleted file mode 100644
+index cb157ad..0000000
+--- a/includes/minimap/mn_functions.h
++++ /dev/null
+@@ -1,11 +0,0 @@
+-#ifndef MNP_FUNCTIONS_H
+-#define MNP_FUNCTIONS_H
+-
+-
+-unsigned int get_tile_color(char c);
+-void draw_minimap(t_minimap *map); // here we should be passing cub struct
+-void my_mlx_pixel_put(t_img_data *data, int x, int y, int color);
+-void set_cam_values(t_minimap *map);
+-void paint_pixel(t_minimap *map, int x, int y);
+-
+-#endif
+\ No newline at end of file
+diff --git a/includes/minimap/mn_structs.h b/includes/minimap/mn_structs.h
+deleted file mode 100644
+index 0052bda..0000000
+--- a/includes/minimap/mn_structs.h
++++ /dev/null
+@@ -1,44 +0,0 @@
+-#ifndef MNP_STRUCTS_H
+-#define MNP_STRUCTS_H
+-
+-#define MAP_W 19
+-#define MAP_H 7 // number of tiles i want in my map
+-
+-// new minimap new me
+-#define MINIMAP_SIZE 200
+-#define MINIMAP_TILE 10
+-#define MINIMAP_TILE_SIZE (MINIMAP_SIZE / CAM_SIZE)
+-#define CAM_SIZE 5
+-
+-#define WALL   0xFFFF00 
+-#define FLOOR  0x66CCFF  
+-#define PLAYER 0x6600CC 
+-#define EMPTY  0x000000  
+-
+-typedef struct s_cubed t_cubed;
+-
+-typedef struct s_camera
+-{
+-    double x; // coordenada x de donde empieza la camara en el mapa
+-    double y; // coordenada y de donde empieza la camara
+-    double limit_x;
+-    double limit_y;
+-    unsigned int c;
+-}   t_cam;
+-
+-typedef struct s_minimap
+-{
+-    t_cam       cam;
+-    t_data      *d;
+-    int i;
+-    t_umlx      ulx;
+-}   t_minimap; 
+-
+-typedef struct s_game
+-{
+-    t_umlx	u;
+-	t_minimap mn;
+-} t_game;
+-
+-
+-#endif 
+\ No newline at end of file
+diff --git a/includes/parser/p_functions.h b/includes/parser/p_functions.h
+index bcac858..1d37045 100644
+--- a/includes/parser/p_functions.h
++++ b/includes/parser/p_functions.h
+@@ -40,7 +40,7 @@ void	get_floats(t_parser *p, t_data *d);
+ 
+ // mlx0 ////////////////////////////////////////////////////////////////////////
+ void	game(t_data *d);
+-void	raycast(t_umlx *u);
++void	put_background(t_umlx *u);
+ void	get_addr(t_umlx *u);
+ 
+ // mlx1 ////////////////////////////////////////////////////////////////////////
+diff --git a/includes/parser/p_structs.h b/includes/parser/p_structs.h
+index 0d320c8..562a932 100644
+--- a/includes/parser/p_structs.h
++++ b/includes/parser/p_structs.h
+@@ -15,64 +15,5 @@
+ # define G 0x00ff00
+ # define B 0x0000ff
+ 
+-typedef struct s_img
+-{
+-	int			w;
+-	int			h;
+-	void		*ptr;
+-}				t_img;
+-
+-typedef struct s_keys
+-{
+-	int w;
+-	int a;
+-	int s;
+-	int d;
+-	int left;
+-	int right;
+-}	t_keys;
+-
+-typedef struct s_data
+-{
+-	char		**map;
+-	int			sky;
+-	int			ground;
+-	int			map_h;
+-	int			map_w;
+-	char		*no;
+-	char		*so;
+-	char		*we;
+-	char		*ea;
+-	t_img		imgs[4];
+-	float		dir;
+-	float		px;
+-	float		py;
+-	t_keys		key;
+-}				t_data;
+-
+-typedef struct s_parser
+-{
+-	int			map_fd;
+-	char		*map_file;
+-	char		**map_head;
+-	char		**exec_map;
+-	int			map_h;
+-	char		*floor;
+-	char		*ceiling;
+-	char		*rgb_f[3];
+-	char		*rgb_c[3];
+-	int			hex_f[3];
+-	int			hex_c[3];
+-	char		**map;
+-	int			ceiling_hex;
+-	int			floor_hex;
+-	int			exec_map_h;
+-	int			exec_map_w;
+-	char		*no;
+-	char		*so;
+-	char		*we;
+-	char		*ea;
+-}				t_parser;
+-
+ #endif
+ ///////////////////////////////////////////////////////////////////////////////
+\ No newline at end of file
+diff --git a/includes/parser/p_utils.h b/includes/parser/p_utils.h
+index 6c5898a..2890cc4 100644
+--- a/includes/parser/p_utils.h
++++ b/includes/parser/p_utils.h
+@@ -11,7 +11,7 @@ char	*gnl(int fd);
+ 
+ // exit ///////////////////////////////////////////////////////////////////////
+ void	exit_parse(t_parser *p, int exit_co);
+-void	exit_exec(t_umlx *u, int exit_code);
++void	exit_exec(t_env *env, int exit_code);
+ void	free_data(t_data *d);
+ void	free_map(void *ref);
+ void	err_exit_msg(char *msg, char *arg, t_parser *p);
+diff --git a/includes/raycast/raycast.h b/includes/raycast/raycast.h
+new file mode 100644
+index 0000000..f65bac8
+--- /dev/null
++++ b/includes/raycast/raycast.h
+@@ -0,0 +1,16 @@
++#ifndef RAYCAST_H
++# define RAYCAST_H
++
++// put_background
++void	put_background(t_umlx *u);
++void	key_press(int keycode, void *param);
++// void	multi_ray(t_umlx *u);
++
++//puts
++void	get_addr(t_umlx *u);
++void	safe_pix_put(t_umlx *u, int byte, int color);
++void	put_square(t_umlx *u, float hf, float wf, int color);
++void	put_dot(t_umlx *u, float hf, float wf, int color);
++void	single_ray(t_umlx *u);
++
++#endif
+\ No newline at end of file
+diff --git a/includes/structs.h b/includes/structs.h
+new file mode 100644
+index 0000000..3ebac3b
+--- /dev/null
++++ b/includes/structs.h
+@@ -0,0 +1,109 @@
++typedef struct s_img
++{
++	int					w;
++	int					h;
++	void				*ptr;
++}						t_img;
++
++typedef struct s_data
++{
++	char				**map;
++	int					sky;
++	int					ground;
++	int					map_h;
++	int					map_w;
++	char				*no;
++	char				*so;
++	char				*we;
++	char				*ea;
++	t_img				imgs[4];
++	float				dir;
++	float				px;
++	float				py;
++}						t_data;
++
++typedef struct s_parser
++{
++	int					map_fd;
++	char				*map_file;
++	char				**map_head;
++	char				**exec_map;
++	int					map_h;
++	char				*floor;
++	char				*ceiling;
++	char				*rgb_f[3];
++	char				*rgb_c[3];
++	int					hex_f[3];
++	int					hex_c[3];
++	char				**map;
++	int					ceiling_hex;
++	int					floor_hex;
++	int					exec_map_h;
++	int					exec_map_w;
++	char				*no;
++	char				*so;
++	char				*we;
++	char				*ea;
++}						t_parser;
++
++typedef struct s_camera
++{
++	int					radius;
++	int					top;
++	int					bot;
++	int					left;
++	int					right;
++}						t_cam;
++
++typedef struct s_draw
++{
++	int					map_y;
++	int					map_x;
++	int					px_y;
++	int					px_x;
++	int					screen_x;
++	int					screen_y;
++	unsigned int		color;
++	char				c_map;
++}						t_draw;
++
++typedef struct s_minimap
++{
++	t_draw				wdw;
++	t_cam				cam;
++	int					i;
++}						t_minimap;
++
++typedef struct s_keys
++{
++	int					w;
++	int					a;
++	int					s;
++	int					d;
++	int					left;
++	int					right;
++}						t_keys;
++
++typedef struct s_img_data
++{
++	int					bpp;
++	int					endian;
++	int					line_s;
++	int					*addr;
++}						t_img_data;
++
++typedef struct s_umlx
++{
++	void				*img;
++	void				*mlx;
++	void				*win;
++	t_img_data			img_data;
++}						t_umlx;
++
++typedef struct s_game
++{
++	t_data				*data;
++	t_umlx				umlx;
++	t_minimap			mini;
++	t_keys				keys;
++}						t_env;
+\ No newline at end of file
+diff --git a/includes/wdw_mlx_struct.h b/includes/wdw_mlx_struct.h
+new file mode 100644
+index 0000000..955c29c
+--- /dev/null
++++ b/includes/wdw_mlx_struct.h
+@@ -0,0 +1,4 @@
++#ifndef WDW_MLX_STRUCT_H
++# define WDW_MLX_STRUCT_H
++
++#endif
+\ No newline at end of file
+diff --git a/includes/windows/keys.h b/includes/windows/keys.h
+deleted file mode 100644
+index 6066038..0000000
+--- a/includes/windows/keys.h
++++ /dev/null
+@@ -1,8 +0,0 @@
+-#ifndef KEYS_H
+-# define KEYS_H
+-
+-void	press_key(int keycode, t_game *env);
+-void    release_key(int keycode, t_game *env);
+-void    close_windows(t_game *env);
+-
+-#endif
+\ No newline at end of file
+diff --git a/includes/windows/wdw_mlx_struct.h b/includes/windows/wdw_mlx_struct.h
+deleted file mode 100644
+index fdc99a7..0000000
+--- a/includes/windows/wdw_mlx_struct.h
++++ /dev/null
+@@ -1,21 +0,0 @@
+-#ifndef WDW_MLX_STRUCT_H
+-# define WDW_MLX_STRUCT_H
+-
+-typedef struct s_img_data
+-{
+-	int			bpp;
+-	int			endian;
+-	int			line_s;
+-	int			*addr;
+-}				t_img_data;
+-
+-typedef struct s_umlx
+-{
+-	void		*img;
+-	void		*mlx;
+-	void		*win;
+-	t_data		*d;
+-	t_img_data	img_data;
+-}				t_umlx;
+-
+-#endif
+\ No newline at end of file
+diff --git a/raycast/raycast.c b/raycast/raycast.c
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/srcs/main.c b/srcs/main.c
+index cfc73d2..10285c8 100644
+--- a/srcs/main.c
++++ b/srcs/main.c
+@@ -5,7 +5,6 @@ int	main(int argc, char **argv)
+ 	t_data	*data;
+ 
+ 	data = parsing(argc, argv);
+-
+ 	game(data);
+ 	if (data)
+ 		free_data(data);
+diff --git a/srcs/minimap/draw.c b/srcs/minimap/draw.c
+index 465454a..ac05453 100644
+--- a/srcs/minimap/draw.c
++++ b/srcs/minimap/draw.c
+@@ -1,93 +1,18 @@
+ #include "main.h"
+ 
+-static void draw_borders(t_minimap *map)
+-{
+-    int x;
+-    int y;
+-    int start;
+-    int end;
+-
+-    set_cam_values(map);
+-    start = MINIMAP_TILE_SIZE - 2;
+-    end = MINIMAP_TILE_SIZE + CAM_SIZE * MINIMAP_TILE_SIZE + 2;
+-    y = start;
+-    while (y <= end)
+-    {
+-        x = start;
+-        while (x <= end)
+-        {
+-            my_mlx_pixel_put(&map->ulx.img_data, x, y, 0xFF33CC);
+-            x++;
+-        }
+-        y++;
+-    }
+-} 
++// void draw_minimap(t_minimap *map) // info not committed so restarting
++// { 
++   
++
++
++// }
++
+ 
+-static void draw_tiles(t_minimap *map)
+-{
+-    double y;
+-    double x;
+-    char m;
+ 
+-    set_cam_values(map);
+-    y = map->cam.y;
+-    while (y < map->cam.limit_y)
+-    {
+-        x = map->cam.x;
+-        while (x < map->cam.limit_x)
+-        {
+-            m = map->d->map[(int)y][(int)x];
+-            map->cam.c = get_tile_color(m);
+-            paint_pixel(map, (int)x, (int)y);
+-            x++;
+-        }
+-        y++;
+-    }
+-}
+ 
+-static void paint_player(t_minimap *map, double pp_x, double pp_y)
+-{
+-    int px_y;
+-    int px_x;
+-    int size;
+ 
+-    px_y = 0;
+-    size = 10;
+-    while(px_y < size)
+-    {
+-        px_x = 0;
+-        while(px_x < size)
+-        {
+-            my_mlx_pixel_put(&map->ulx.img_data, pp_x + px_x, pp_y + px_y, map->cam.c);
+-            px_x++;
+-        }
+-        px_y++;
+-    }
+-}
+ 
+-static void draw_player(t_minimap *map)
+-{
+-    double x;
+-    double y;
+-    double player_px_x;
+-    double player_px_y;
+-
+-
+-    x = map->d->px - map->cam.x;
+-    y = map->d->py - map->cam.y;
+-    player_px_x = x * MINIMAP_TILE_SIZE;
+-    player_px_y = y * MINIMAP_TILE_SIZE;
+-    map->cam.c = 0xFF33CC;
+-    paint_player(map, player_px_x, player_px_y);
+-}
+ 
+-void draw_minimap(t_minimap *map)
+-{
+-    draw_borders(map);
+-    draw_tiles(map);
+-    draw_player(map);
+-    //move player?
+-}
+ 
+ 
+ 
+@@ -112,9 +37,84 @@ void draw_minimap(t_minimap *map)
+ 
+ 
+ 
++/* static void define_cam(t_minimap *map)
++{
++    map->cam.top = PLY_Y - RADIUS;
++	if (map->cam.top < 0)
++		map->cam.top = 0;
++    map->cam.bot = PLY_Y + RADIUS;
++	if (map->cam.top > MAP_H)
++		map->cam.top = MAP_H;
++    map->cam.left = PLY_X - RADIUS;
++	if (map->cam.left < 0)
++		map->cam.left = 0;
++    map->cam.right = PLY_X + RADIUS;
++	if (map->cam.left > MAP_W)
++		map->cam.left = MAP_W;
++}
+ 
+ 
+ 
++void draw_minimap(t_minimap *map) // here we should be passing cub struct
++{    
++    define_cam(map);
++    map->wdw.map_y = map->cam.top;
++    while(map->wdw.map_y < map->cam.bot)
++    {
++        map->wdw.map_x  = map->cam.left;
++        while(map->wdw.map_x < map->cam.right)
++        {
++            map->wdw.c_map = map->d->map[map->wdw.map_y][map->wdw.map_x];
++            map->wdw.color = get_tile_color(map->wdw.c_map);
++            map->wdw.px_y = 0;
++            while(map->wdw.px_y < TILE_SIZE)
++            {
++                map->wdw.px_x = 0;
++                while(map->wdw.px_x < TILE_SIZE)
++                {
++                    map->wdw.screen_x = (map->wdw.map_x * TILE_SIZE) + map->wdw.px_x;
++                    map->wdw.screen_y = (map->wdw.map_y * TILE_SIZE) + map->wdw.px_y;
++                    my_mlx_pixel_put(&map->ulx.img_data, map->wdw.screen_x, map->wdw.screen_y, map->wdw.color);
++                    map->wdw.px_x++;
++                }
++                map->wdw.px_y++;
++            }
++            map->wdw.map_x++;
++        }
++        map->wdw.map_y++;
++    }
++}  */
++
++/* int	key_hook(int keycode, t_minimap *map)
++{
++    if (keycode == K_ESC)
++	{
++		// mlx_clear_window(p->u->mlx, p->u->win);
++		mlx_destroy_image(p->u->mlx, p->u->img);
++		mlx_destroy_window(p->u->mlx, p->u->win);
++		mlx_destroy_display(p->u->mlx);
++		free(p->u->mlx);
++		exit_routine(p, 0);
++	}
++	 so basicamente aca:
++    - 65307 -> ESC
++    - Ok so en esta parte voy a estar necesitando varias cosas:
++        - For movement (WASD):
++            - update on where the player is (pos_x, pos_y)
++            - which way to move forward (dir_x, dir_y)
++            - how fast do i move? a var like move_speed
++        - For rotation (left & right):
++            - the exact location of player (dir_x, dir_y) in order to rotate
++            - camera plane (it basically defines how wide my FOV is)
++                - narrow FOV -> zoomed in
++                - wider FOV -> zoomed out
++            - se llama plane_x / plane_y, no fov_x/fov_y
++                - porque no es solo el angulo de vision
++                - es literalmente el plano de la camara en el mundo
++                - y siempre tiene que estar perpendicular a dir
++                - si dir rota, plane rota con el, siempre juntos
++            - how fast do i turn? a var like rot_speed
++*/
+ 
+ 
+ 
+diff --git a/srcs/minimap/utils.c b/srcs/minimap/utils.c
+index 51633e3..837b329 100644
+--- a/srcs/minimap/utils.c
++++ b/srcs/minimap/utils.c
+@@ -1,58 +1,20 @@
+ #include "main.h"
+ 
+-void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color)
+-{
+-	char	*dst; 
++// void	my_mlx_pixel_put(t_img_data *data, int x, int y, int color)
++// {
++// 	char	*dst; 
+     
+-	dst = (((char *)data->addr) + (y * data->line_s + x * (data->bpp / 8)));
+-	*(unsigned int*)dst = color;
+-}
++// 	dst = (((char *)data->addr) + (y * data->line_s + x * (data->bpp / 8)));
++// 	*(unsigned int*)dst = color;
++// }
+ 
+-unsigned int get_tile_color(char c)
+-{
+-    if (c == '1')
+-        return (WALL);
+-    if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
+-        return (FLOOR);
+-    return (0);
+-}
+-
+-void set_cam_values(t_minimap *map)
+-{
+-    map->cam.x = map->d->px - (CAM_SIZE / 2);
+-    if (map->cam.x < 0)
+-        map->cam.x = 0;
+-    if (map->cam.x > map->d->map_w - CAM_SIZE)
+-        map->cam.x = map->d->map_w - CAM_SIZE;
+-    map->cam.y = map->d->py - (CAM_SIZE / 2);
+-    if(map->cam.y < 0)
+-        map->cam.y = 0;
+-    if (map->cam.y > map->d->map_h - CAM_SIZE)
+-        map->cam.y = map->d->map_h - CAM_SIZE;
+-    map->cam.limit_x = map->cam.x + CAM_SIZE;
+-    map->cam.limit_y = map->cam.y + CAM_SIZE;
+-}
+-
+-void paint_pixel(t_minimap *map, int x, int y)
+-{
+-    int px_y;
+-    int px_x;
+-    int screen_x;
+-    int screen_y;
+-    int offset;
+-
+-    offset = MINIMAP_TILE * 4;
+-    px_y = 0;
+-    while(px_y < MINIMAP_TILE_SIZE)
+-    {
+-        px_x = 0;
+-        while(px_x < MINIMAP_TILE_SIZE)
+-        {
+-            screen_x = (x - (int)map->cam.x) * MINIMAP_TILE_SIZE + px_x + offset;
+-            screen_y = (y - (int)map->cam.y) * MINIMAP_TILE_SIZE + px_y + offset;
+-            my_mlx_pixel_put(&map->ulx.img_data, screen_x, screen_y, map->cam.c);
+-            px_x++;
+-        }
+-        px_y++;
+-    }
+-}
+\ No newline at end of file
++// unsigned int get_tile_color(char c)
++// {
++//     if (c == '1')
++//         return (WALL);
++//     if (c == '0')
++//         return (FLOOR);
++//     if (c == 'E')
++//         return (PLAYER);
++//     return (EMPTY);
++// }
+diff --git a/srcs/raycast/puts.c b/srcs/raycast/puts.c
+new file mode 100644
+index 0000000..572e378
+--- /dev/null
++++ b/srcs/raycast/puts.c
+@@ -0,0 +1,92 @@
++#include "main.h"
++
++// // this whole function needs protection
++// void	get_addr(t_umlx *u)
++// {
++// 	t_img_data	*im;
++
++// 	im = &u->img_data;
++// 	im->addr = (int *)mlx_get_data_addr(u->img, &im->bpp, &im->line_s,
++// 			&im->endian);
++// }
++
++// void	safe_pix_put(t_umlx *u, int byte, int color)
++// {
++// 	if (byte >= 0 && byte < WIN_H * WIN_W)
++// 		u->img_data.addr[byte] = color;
++// }
++
++// void	put_square(t_umlx *u, float hf, float wf, int color)
++// {
++// 	int	i;
++// 	int	h;
++// 	int	w;
++// 	int	j;
++
++// 	h = hf * (WIN_H / u->d->map_h);
++// 	w = wf * (WIN_W / u->d->map_w);
++// 	i = -2;
++// 	while (i < 3)
++// 	{
++// 		j = -2;
++// 		while (j < 3)
++// 		{
++// 			if ((h + i) > 0 && (h + i) < (WIN_H + i))
++// 				if ((w + j) > 0 && (w + j) < (WIN_W + j))
++// 					safe_pix_put(u, (int)(WIN_W * (h + i) + w + j), color);
++// 			j++;
++// 		}
++// 		i++;
++// 	}
++// }
++
++// void	put_dot(t_umlx *u, float hf, float wf, int color)
++// {
++// 	int	h;
++// 	int	w;
++
++// 	h = hf * (WIN_H / u->d->map_h);
++// 	w = wf * (WIN_W / u->d->map_w);
++// 	if (h > 0 && h < (WIN_H))
++// 		if (w > 0 && w < (WIN_W))
++// 			safe_pix_put(u, (int)(WIN_W * h + w), color);
++// }
++
++// void	add_pigment(t_umlx *u, float hf, float wf, int color)
++// {
++// 	int	h;
++// 	int	w;
++
++// 	h = hf * (WIN_H / u->d->map_h);
++// 	w = wf * (WIN_W / u->d->map_w);
++// 	if (h > 0 && h < (WIN_H))
++// 		if (w > 0 && w < (WIN_W))
++// 		{
++// 			if ((int)(WIN_W * h + w) >= 0 && (int)(WIN_W * h + w) < WIN_H * WIN_W)
++// 				u->img_data.addr[(int)(WIN_W * h + w)] += color;
++// 		}
++// }
++
++// void	single_ray(t_umlx *u)
++// {
++// 	float	x;
++// 	float	y;
++
++// 	x = cos(u->d->dir) + u->d->px;
++// 	y = sin(u->d->dir) + u->d->py;
++// 	while (1)
++// 	{
++// 		if (x < 0 || x >= WIN_W)
++// 			break ;
++// 		if (y < 0 || y >= WIN_H)
++// 			break ;
++// 		if ((u->img_data.addr[(int)(WIN_W * y + x)] == 0))
++// 		{
++// 			put_square(u, y, x, 0xff0000);
++// 		}
++// 		else
++// 			put_square(u, y, x, 0x0000ff);
++// 		x = x + cos(u->d->dir);
++// 		y = y + sin(u->d->dir);
++// 	}
++// }
+diff --git a/srcs/raycast/raycast.c b/srcs/raycast/raycast.c
+new file mode 100644
+index 0000000..4e13af3
+--- /dev/null
++++ b/srcs/raycast/raycast.c
+@@ -0,0 +1,274 @@
++#include "main.h"
++
++// void	multi_ray(t_umlx *u)
++// {
++// 	int	i;
++
++// 	i = 0;
++//
++// 	while (i < 10)
++// 	{
++// 		u->d->dir += 0.02;
++// 		single_ray(u);
++// 		i++;
++// 	}
++// 	u->d->dir -= 0.2;
++// }
++
++// void	draw_column(t_umlx *u, int x, double distance, float ang_offset)
++// {
++// 	int		ystart;
++// 	int		steps;
++// 	float	brightness;
++
++// 	ystart = WIN_H / 2;
++// 	steps = WIN_H / (distance * cos(ang_offset) * 2);
++// 	if (steps > WIN_H / 2)
++// 		steps = WIN_H;
++// 	brightness = -(int)(256 / (100 / (distance * cos(ang_offset)) / 4
++// 				+ 1)) << 8 & 0xff00;
++// 	// brightness = brightness << 8;
++// 	while (steps >= 0)
++// 	{
++// 		if (((ystart - steps) * WIN_W + x) < WIN_H * WIN_W - 1)
++// 			if (((ystart - steps) * WIN_W + x) >= 0)
++// 				u->img_data.addr[(ystart - steps) * WIN_W + x] = brightness;
++// 		if (((ystart + steps - 1) * WIN_W + x) < WIN_H * WIN_W - 1)
++// 			if (((ystart + steps - 1) * WIN_W + x) >= 0)
++// 				u->img_data.addr[(ystart + steps - 1) * WIN_W + x] = brightness;
++// 		steps--;
++// 	}
++// }
++
++// void	precision_jump(t_umlx *u, float dir, int line, float ang_offset,
++// 		float x, float y)
++// {
++// 	float	hyp;
++// 	float	jump;
++
++// 	jump = 1000;
++// 	while (1)
++// 	{
++// 		if (x < 0 || x >= WIN_W)
++// 			break ;
++// 		if (y < 0 || y >= WIN_H)
++// 			break ;
++// 		if ((int)y < u->d->map_h && (int)x < u->d->map_w)
++// 			if (u->d->map[(int)y][(int)x] == '1')
++// 			{
++// 				hyp = hypot(y - u->d->py, x - u->d->px);
++// 				(void)hyp;
++// 				(void)ang_offset;
++// 				(void)line;
++// 				put_dot(u, y, x, 0xff0000);
++// 				draw_column(u, line, hyp, dir);
++// 				break ;
++// 			}
++// 		// put_square(u, (float)0.5 + WIN_H / u->d->map_h * (int)y / (WIN_H
++// 		// 		/ u->d->map_h), (float)0.5 + WIN_W / u->d->map_w * (int)x
++// 		// 	/ (WIN_W / u->d->map_w), 0x008000);
++// 		// put_dot(u, y, x, 0x0000ff);
++// 		x = x + cos(dir) / jump;
++// 		y = y + sin(dir) / jump;
++// 	}
++// }
++
++// void	find_block(t_umlx *u, float dir, int line, float ang_offset)
++// {
++// 	float	px;
++// 	float	py;
++// 	float	dx;
++// 	float	dy;
++// 	float	t_delta_x;
++// 	float	t_delta_y;
++// 	int		map_x;
++// 	int		map_y;
++// 	int		step_x;
++// 	int		step_y;
++// 	int		side;
++// 	double	distance;
++
++// 	px = u->d->px;
++// 	py = u->d->py;
++// 	dx = cos(dir);
++// 	dy = sin(dir);
++// 	float t_max_x, t_max_y;
++// 	t_delta_x = (dx == 0) ? INFINITY : fabs(1.0 / dx);
++// 	t_delta_y = (dy == 0) ? INFINITY : fabs(1.0 / dy);
++// 	map_x = (int)floor(px);
++// 	map_y = (int)floor(py);
++// 	step_x = (dx > 0) ? 1 : -1;
++// 	step_y = (dy > 0) ? 1 : -1;
++// 	// Track which wall face we hit (0 for East/West, 1 for North/South)
++// 	// This is optional, but useful if you want different wall lighting later.
++// 	if (dx > 0)
++// 		t_max_x = (floor(px + 1.0) - px) * t_delta_x;
++// 	else
++// 		t_max_x = (px - floor(px)) * t_delta_x;
++// 	if (dy > 0)
++// 		t_max_y = (floor(py + 1.0) - py) * t_delta_y;
++// 	else
++// 		t_max_y = (py - floor(py)) * t_delta_y;
++// 	while (1)
++// 	{
++// 		if (map_x < 0 || map_x >= u->d->map_w || map_y < 0
++// 			|| map_y >= u->d->map_h)
++// 			break ;
++// 		if (u->d->map[map_y][map_x] == '1')
++// 		{
++// 			// Calculate exact perpendicular distance to the wall.
++// 			// We subtract t_delta because the loop increments *before* checking the wall.
++// 			if (side == 0)
++// 				distance = t_max_x - t_delta_x;
++// 			else
++// 				distance = t_max_y - t_delta_y;
++// 			// put_square(u, map_y, map_x, 0xff00);
++// 			// --- HERE IS THE CALL ---
++// 			// 'line' is your current screen column (X coordinate)
++// 			draw_column(u, line, distance, ang_offset);
++// 			break ;
++// 		}
++// 		if (t_max_x < t_max_y)
++// 		{
++// 			t_max_x += t_delta_x;
++// 			map_x += step_x;
++// 			side = 0; // Hit a vertical grid line
++// 		}
++// 		else
++// 		{
++// 			t_max_y += t_delta_y;
++// 			map_y += step_y;
++// 			side = 1; // Hit a horizontal grid line
++// 		}
++// 	}
++// }
++
++// void	radar(t_umlx *u, float dir, int line, float ang_offset)
++// {
++// 	float	x;
++// 	float	y;
++// 	float	hyp;
++// 	float	jump_x;
++// 	float	jump_y;
++
++// 	// static int		rnd = 0;
++// 	jump_x = cos(dir);
++// 	jump_y = sin(dir);
++// 	x = jump_x + rand() % u->d->map_w;
++// 	y = jump_y + rand() % u->d->map_h;
++// 	// rnd = rand();
++// 	while (1)
++// 	{
++// 		// rnd = rand();
++// 		if (x < 0 || x >= WIN_W)
++// 			break ;
++// 		if (y < 0 || y >= WIN_H)
++// 			break ;
++// 		if ((int)y < u->d->map_h && (int)x < u->d->map_w)
++// 			if (u->d->map[(int)y][(int)x] == '1')
++// 			{
++// 				hyp = hypot(y - rand() % u->d->map_h, x - rand() % u->d->map_w);
++// 				(void)hyp;
++// 				(void)ang_offset;
++// 				(void)line;
++// 				x = x - jump_x;
++// 				y = y - jump_y;
++// 				put_dot(u, y, x, 0xff00);
++// 				// precision_jump(u, dir, line, ang_offset, x, y);
++// 				break ;
++// 			}
++// 		// put_dot(u, y, x, 0xff00);
++// 		// put_square(u, (float)0.5 + WIN_H / u->d->map_h * (int)y / (WIN_H
++// 		// 		/ u->d->map_h), (float)0.5 + WIN_W / u->d->map_w * (int)x
++// 		// 	/ (WIN_W / u->d->map_w), 0x008000);
++// 		// put_dot(u, y, x, 0x0000ff);
++// 		x = x + jump_x;
++// 		y = y + jump_y;
++// 	}
++// }
++
++// void	apperture(t_umlx *u)
++// {
++// 	float			ang_offset;
++// 	int				line;
++// 	static float	radar_ang = 0;
++
++// 	line = 0;
++// 	ang_offset = -35 * M_PI / 180;
++// 	while (line < WIN_W)
++// 	{
++// 		radar_ang = rand() * M_PI / 180;
++// 		// find_block(u, u->d->dir + ang_offset, line, ang_offset);
++// 		radar(u, radar_ang, line, radar_ang);
++// 		// printf("%f\n", ang_offset);
++// 		ang_offset = ang_offset + (((float)71 / WIN_W) * M_PI / 180);
++// 		line++;
++// 	}
++// }
++
++// void	project(t_umlx *u)
++// {
++// 	float	x;
++// 	float	y;
++// 	int		i;
++
++// 	x = cos(u->d->dir);
++// 	y = sin(u->d->dir);
++// 	i = 1;
++// 	while (i < 5)
++// 	{
++// 		put_square(u, (int)(y * i + u->d->py), (int)(x * i + u->d->px),
++// 			0x007000);
++// 		i++;
++// 	}
++// }
++
++// void	put_background(t_umlx *u)
++// {
++// 	// int	w;
++// 	// int	h;
++
++// 	// // float	x;
++// 	// // float	y;
++// 	// h = 0;
++// 	// while (h <= WIN_H)
++// 	// {
++// 	// 	w = 0;
++// 	// 	while (w <= WIN_W)
++// 	// 	{
++// 	// 		if (h < WIN_H / 2)
++// 	// 			u->img_data.addr[WIN_W * h + w] = u->d->sky;
++// 	// 		else
++// 	// 			u->img_data.addr[WIN_W * h + w] = u->d->ground;
++// 	// 		w++;
++// 	// 	}
++// 	// 	h++;
++// 	// }
++// 	ft_bzero(u->img_data.addr, WIN_H * WIN_W * 4);
++// 	apperture(u);
++// 	// project(u);
++// 	put_square(u, u->d->py, u->d->px, 0xff0000);
++// }
++
++// void	load_textures(t_umlx *u)
++// {
++// 	t_data	*d;
++// 	t_img	*img;
++// 	int		i;
++// 	char	**arr;
++
++// 	d = u->d;
++// 	arr = (char *[]){d->no, d->so, d->ea, d->we};
++// 	i = 0;
++// 	while (i < 4)
++// 	{
++// 		img = &d->imgs[i];
++// 		img->ptr = mlx_xpm_file_to_image(u->mlx, arr[i], &img->w, &img->h);
++// 		if (!img->ptr)
++// 		{
++// 			ft_puterr("Error\nFailed to load textures\n");
++// 			exit_exec(u, 1);
++// 		}
++// 		i++;
++// 	}
++// }
+diff --git a/srcs/utils/exit.c b/srcs/utils/exit.c
+index 846e78f..7484341 100644
+--- a/srcs/utils/exit.c
++++ b/srcs/utils/exit.c
+@@ -2,19 +2,22 @@
+ 
+ // i dont know about this one // if (u->img) mlx_destroy_image(u->mlx, u->img);
+ // should aways have an error message even when mlx funcs fail??
+-void	exit_exec(t_umlx *u, int exit_code)
++void	exit_exec(t_env *env, int exit_code)
+ {
+ 	int		i;
++	t_umlx	*u;
++	t_data	*d;
+ 	t_img	*img;
+ 
+-	i = 0;
++	d = env->data;
++	u = &env->umlx;
+ 	if (u->img)
+ 		mlx_destroy_image(u->mlx, u->img);
+ 	if (u->win)
+ 		i = 0;
+ 	while (i < 4)
+ 	{
+-		img = u->d->imgs + i;
++		img = d->imgs + i;
+ 		if (img->ptr)
+ 			mlx_destroy_image(u->mlx, img->ptr);
+ 		i++;
+@@ -25,8 +28,8 @@ void	exit_exec(t_umlx *u, int exit_code)
+ 		mlx_destroy_display(u->mlx);
+ 		free(u->mlx);
+ 	}
+-	if (u->d)
+-		free_data(u->d);
++	if (env->data)
++		free_data(env->data);
+ 	exit(exit_code);
+ }
+ 
+diff --git a/srcs/utils/utl0.c b/srcs/utils/utl0.c
+index 9dfa415..883506e 100644
+--- a/srcs/utils/utl0.c
++++ b/srcs/utils/utl0.c
+@@ -10,10 +10,9 @@ int	ft_strlen(char *str)
+ 	return (i);
+ }
+ 
+-void    ft_puterr(char *str)
++void	ft_puterr(char *str)
+ {
+-    if (write(STDERR_FILENO, str, ft_strlen(str)) < 0)
+-        return ;
++	write(STDERR_FILENO, str, ft_strlen(str));
+ }
+ 
+ void	safe_init(t_parser *p)
+diff --git a/srcs/windows/game.c b/srcs/windows/game.c
+index 816564b..0f9496f 100644
+--- a/srcs/windows/game.c
++++ b/srcs/windows/game.c
+@@ -1,148 +1,44 @@
+ #include "main.h"
+ 
+-void	get_addr(t_umlx *u)
++// this can be removed on 42's pcs maybe
++static inline t_clean	func(void *f_ptr)
+ {
+-	t_img_data	*im;
+-
+-	im = &u->img_data;
+-	im->addr = (int *)mlx_get_data_addr(u->img, &im->bpp, &im->line_s,
+-			&im->endian);
+-}
+-
+-void	safe_pix_put(t_umlx *u, int byte, int color)
+-{
+-	if (byte >= 0 && byte < WIN_H * WIN_W)
+-		u->img_data.addr[byte] = color;
+-}
+-
+-void	put_square(t_umlx *u, float hf, float wf, int color)
+-{
+-	int	i;
+-	int	h;
+-	int	w;
+-	int	j;
+-
+-	h = hf * (WIN_H / u->d->map_h);
+-	w = wf * (WIN_W / u->d->map_w);
+-	i = -2;
+-	while (i < 3)
+-	{
+-		j = -2;
+-		while (j < 3)
+-		{
+-			if ((h + i) > 0 && (h + i) < (WIN_H + i))
+-				if ((w + j) > 0 && (w + j) < (WIN_W + j))
+-				{
+-					safe_pix_put(u, (int)(WIN_W * (h + i) + w + j), color);
+-				}
+-			j++;
+-		}
+-		i++;
+-	}
+-}
+-
+-void	put_dot(t_umlx *u, float hf, float wf, int color)
+-{
+-	int	h;
+-	int	w;
+-
+-	h = hf * (WIN_H / u->d->map_h);
+-	w = wf * (WIN_W / u->d->map_w);
+-	if (h > 0 && h < (WIN_H))
+-		if (w > 0 && w < (WIN_W))
+-			safe_pix_put(u, (int)(WIN_W * h + w), color);
++	return ((t_clean)f_ptr);
+ }
+ 
+-void	single_ray(t_umlx *u)
+-{
+-	float	x;
+-	float	y;
+-
+-	x = (sin(u->d->dir) + u->d->px);
+-	y = (cos(u->d->dir) + u->d->py);
+-	while (1)
+-	{
+-		if (x < 0 || x >= WIN_W)
+-			break ;
+-		if (y < 0 || y >= WIN_H)
+-			break ;
+-		if (u->img_data.addr[(int)(WIN_W * y + x)] == 0)
+-		{
+-			put_square(u, y, x, 0xff0000);
+-		}
+-		else
+-			put_dot(u, y, x, 0x0000ff);
+-		x = x + 0.01;
+-		y = y + 0.01;
+-	}
+-}
+-
+-// void	multi_ray(t_umlx *u)
++// void	player_set_discreet(t_env *env)
+ // {
+-// 	int	i;
+-
+-// 	i = 0;
+-//
+-// 	while (i < 10)
+-// 	{
+-// 		u->d->dir += 0.02;
+-// 		single_ray(u);
+-// 		i++;
+-// 	}
+-// 	u->d->dir -= 0.2;
++// 	t_data	*d;
++// 	t_umlx	*u;
++
++// 	d = env->u.d;
++// 	u = &env->u;
++// 	d->px = 1;
++// 	d->py = 1;
++// 	(void)u;
+ // }
+ 
+-void	raycast(t_umlx *u)
+-{
+-	int	w;
+-	int	h;
+-	int	wr;
+-	int	hr;
+-
+-	hr = WIN_H / u->d->map_h;
+-	wr = WIN_W / u->d->map_w;
+-	w = 0;
+-	while (w < WIN_W)
+-	{
+-		h = 0;
+-		while (h < WIN_H)
+-		{
+-			if (h % hr == 0 || (w % wr == 0))
+-				u->img_data.addr[WIN_W * h + w] = 0;
+-			else if (u->d->map[(h / hr)][(w / wr)] == '1')
+-				u->img_data.addr[WIN_W * h + w] = u->d->sky - 0x222222;
+-			else
+-				u->img_data.addr[WIN_W * h + w] = u->d->sky;
+-			h++;
+-		}
+-		w++;
+-	}
+-	put_square(u, u->d->py, u->d->px, 0xff0000);
+-	single_ray(u);
+-}
+-
+-static inline t_clean	func(void *func)
+-{
+-	return ((t_clean)func);
+-}
++void					key_release(int keycode, void *param);
+ 
+ void	game(t_data *d)
+ {
+-	t_game	env;
+-
+-	ft_bzero(&env, sizeof(t_game));
+-	env.u.d = d;
+-	env.mn.d = d;
+-	env.u.mlx = mlx_init();
+-	if (!env.u.mlx)
+-		exit_exec(&env.u, 1);
+-	env.u.win = mlx_new_window(env.u.mlx, WIN_W, WIN_H, "Cub3D");
+-	if (!env.u.win)
+-		exit_exec(&env.u, 1);
+-	env.u.img = mlx_new_image(env.u.mlx, WIN_W, WIN_H);
+-	get_addr(&env.u);
+-	env.mn.ulx = env.u;
+-	hooks_keys(&env);
+-	mlx_loop_hook(env.u.mlx, func(loop), &env);
+-	mlx_loop(env.u.mlx);
++	t_env	gm;
++
++	ft_bzero(&gm, sizeof(t_env));
++	gm.data = d;
++	gm.umlx.mlx = mlx_init();
++	if (!gm.umlx.mlx)
++		exit_exec(&gm, 1);
++	gm.umlx.win = mlx_new_window(&gm.umlx, WIN_W, WIN_H, "Cub3D");
++	if (!gm.umlx.win)
++		exit_exec(&gm, 1);
++	gm.umlx.img = mlx_new_image(gm.umlx.mlx, WIN_W, WIN_H);
++	// get_addr(&gm.umlx);
++	// gm.mn.ulx = gm.u;
++	// player_set_discreet(&gm);
++	// mlx_key_hook(gm.umlx.win, hook, &gm);
++	// mlx_hook(gm.umlx.win, 2, 1 << 0, func(key_press), &gm);
++	// mlx_hook(gm.umlx.win, 3, 1 << 1, func(key_release), &gm);
++	// mlx_loop_hook(gm.umlx.mlx, func(loop), &gm);
++	mlx_loop(gm.umlx.mlx);
+ }
+diff --git a/srcs/windows/keys.c b/srcs/windows/keys.c
+deleted file mode 100644
+index 00975ea..0000000
+--- a/srcs/windows/keys.c
++++ /dev/null
+@@ -1,74 +0,0 @@
+-#include "main.h"
+-
+-void	press_key(int keycode, t_game *env) // in case we are not using library X11 then change keys variables
+-{
+-	if (keycode == XK_Escape)
+-		exit_exec(&env->u, 0);
+-	if (keycode == XK_Left)
+-		env->u.d->key.left = 1;
+-	if (keycode == XK_Right)
+-		env->u.d->key.right = 1;
+-	if (keycode == XK_W || keycode == XK_w)
+-		env->u.d->key.w = 1;
+-	if (keycode == XK_A || keycode == XK_a)
+-		env->u.d->key.a = 1;
+-	if (keycode == XK_S || keycode == XK_s)
+-		env->u.d->key.s = 1;
+-	if (keycode == XK_D || keycode == XK_d)
+-		env->u.d->key.d = 1;
+-}
+-
+-void release_key(int keycode, t_game *env)
+-{
+-	if (keycode == XK_Escape)
+-		exit_exec(&env->u, 0);
+-	if (keycode == XK_Left)
+-		env->u.d->key.left = 0;
+-	if (keycode == XK_Right)
+-		env->u.d->key.right = 0;
+-	if (keycode == XK_W || keycode == XK_w)
+-		env->u.d->key.w = 0;
+-	if (keycode == XK_A || keycode == XK_a)
+-		env->u.d->key.a = 0;
+-	if (keycode == XK_S || keycode == XK_s)
+-		env->u.d->key.s = 0;
+-	if (keycode == XK_D || keycode == XK_d)
+-		env->u.d->key.d = 0;
+-}
+-
+-void close_windows(t_game *env) // should i just pass exit_exec?
+-{
+-	exit_exec(&env->u, 0);
+-}
+-
+-void hooks_keys(t_game *env)
+-{
+-	mlx_hook(env->u.win, KeyPress, KeyPressMask, press_key, env);
+-	mlx_hook(env->u.win, KeyRelease, KeyReleaseMask, release_key, env);
+-	mlx_hook(env->u.win, DestroyNotify, NoEventMask, close_windows, env);
+-}
+-
+-
+-/* void	key_press(int keycode, void *param)
+-{
+-	t_game	*env;
+-	t_data	*data;
+-	t_umlx	*umlx;
+-
+-	env = param;
+-	data = env->u.d;
+-	umlx = &env->u;
+-	(void)umlx;
+-	if (keycode == K_W)
+-		data->py -= MOV_INC;
+-	if (keycode == K_S)
+-		data->py += MOV_INC;
+-	if (keycode == K_A)
+-		data->px -= MOV_INC;
+-	if (keycode == K_D)
+-		data->px += MOV_INC;
+-	if (keycode == K_RIGHT)
+-		data->dir -= ANG_INC * M_PI / 180.0;
+-	if (keycode == K_LEFT)
+-		data->dir += ANG_INC * M_PI / 180.0;
+-} */
+diff --git a/srcs/windows/loop.c b/srcs/windows/loop.c
+index 771106d..cbefa29 100644
+--- a/srcs/windows/loop.c
++++ b/srcs/windows/loop.c
+@@ -1,56 +1,118 @@
+ #include "main.h"
+ 
+-void	pick_action(int keycode, t_umlx *u)
+-{
+-	(void)u;
+-	if (keycode == K_LEFT)
+-		printf("keycode: K_LEFT\n");
+-}
++// void	key_press(int keycode, void *param)
++// {
++// 	t_env	*env;
++// 	t_data	*d;
++// 	t_umlx	*umlx;
+ 
+-int	hook(int keycode, void *param)
+-{
+-	t_umlx	*u;
++// 	env = param;
++// 	d = env->u.d;
++// 	umlx = &env->u;
++// 	if (keycode == K_W)
++// 		env->key.w = true;
++// 	if (keycode == K_S)
++// 		env->key.s = true;
++// 	if (keycode == K_A)
++// 		env->key.a = true;
++// 	if (keycode == K_D)
++// 		env->key.d = true;
++// 	if (keycode == K_RIGHT)
++// 		env->key.right = true;
++// 	if (keycode == K_LEFT)
++// 		env->key.left = true;
++// 	if (keycode == K_ESC)
++// 		exit_exec(umlx, 0);
++// }
+ 
+-	u = param;
+-	if (keycode == K_ESC)
+-		exit_exec(u, 0);
+-	return (1);
+-}
++// void	key_release(int keycode, void *param)
++// {
++// 	t_env	*env;
++// 	t_data	*d;
++// 	t_umlx	*umlx;
+ 
+-void	load_textures(t_umlx *u)
+-{
+-	t_data	*d;
+-	t_img	*img;
+-	int		i;
+-	char	**arr;
+-
+-	d = u->d;
+-	arr = (char *[]){d->no, d->so, d->ea, d->we};
+-	i = 0;
+-	while (i < 4)
+-	{
+-		img = &d->imgs[i];
+-		img->ptr = mlx_xpm_file_to_image(u->mlx, arr[i], &img->w, &img->h);
+-		if (!img->ptr)
+-		{
+-			ft_puterr("Error\nFailed to load textures\n");
+-			exit_exec(u, 1);
+-		}
+-		i++;
+-	}
+-}
++// 	env = param;
++// 	d = env->u.d;
++// 	umlx = &env->u;
++// 	if (keycode == K_W)
++// 		env->key.w = false;
++// 	if (keycode == K_S)
++// 		env->key.s = false;
++// 	if (keycode == K_A)
++// 		env->key.a = false;
++// 	if (keycode == K_D)
++// 		env->key.d = false;
++// 	if (keycode == K_RIGHT)
++// 		env->key.right = false;
++// 	if (keycode == K_LEFT)
++// 		env->key.left = false;
++// }
++
++// void	pick_action(int keycode, t_umlx *u)
++// {
++// 	(void)u;
++// 	if (keycode == K_LEFT)
++// 		printf("keycode: K_LEFT\n");
++// }
++
++// int	hook(int keycode, void *param)
++// {
++// 	t_umlx	*u;
++
++// 	u = param;
++// 	if (keycode == K_ESC)
++// 		exit_exec(u, 0);
++// 	return (1);
++// }
++
++// void	movement(t_env *game)
++// {
++// 	t_data	*data;
++// 	float	x;
++// 	float	y;
++
++// 	data = game->u.d;
++// 	x = data->px;
++// 	y = data->py;
++// 	if (game->key.left)
++// 		data->dir -= ANG_INC * M_PI / 180.0;
++// 	if (game->key.right)
++// 		data->dir += ANG_INC * M_PI / 180.0;
++// 	if (game->key.w)
++// 	{
++// 		data->py += sin(data->dir) * MOV_INC;
++// 		data->px += cos(data->dir) * MOV_INC;
++// 	}
++// 	if (game->key.s)
++// 	{
++// 		data->py -= sin(data->dir) * MOV_INC;
++// 		data->px -= cos(data->dir) * MOV_INC;
++// 	}
++// 	if (game->key.a)
++// 	{
++// 		data->py -= sin(data->dir + (90 * M_PI / 180)) * MOV_INC;
++// 		data->px -= cos(data->dir + (90 * M_PI / 180)) * MOV_INC;
++// 	}
++// 	if (game->key.d)
++// 	{
++// 		data->py += sin(data->dir + (90 * M_PI / 180)) * MOV_INC;
++// 		data->px += cos(data->dir + (90 * M_PI / 180)) * MOV_INC;
++// 	}
++// 	if (data->map[(int)data->py][(int)data->px] == '1')
++// 	{
++// 		data->px = data->map_w / 2;
++// 		data->py = data->map_h / 2;
++// 	}
++// }
+ 
+-// draw_minimap(&env->mn);
+ int	loop(void *param)
+ {
+-	t_game	*env;
+-
+-	env = (t_game *)param;
+-	/* rotate & move player should be before outputting anything into the map */
+-	// raycast(&env->u);
+-	// paint_put(&env->u);
+-	draw_minimap(&env->mn);
+-	mlx_put_image_to_window(env->u.mlx, env->u.win, env->u.img, 0, 0);
++	t_env	*env;
++
++	env = (t_env *)param;
++	// movement(env);
++	// put_background(&env->u);
++	mlx_put_image_to_window(env->umlx.mlx, env->umlx.win, env->umlx.img, 0, 0);
+ 	usleep(1000000 / 60);
+ 	return (0);
+ }
