@@ -20,7 +20,7 @@ RAYCAST		= raycast puts
 # remove test /////////////////////////////////////////////////////////////////
 UTILS		= gnl utl0 utl1 exit test
 MINI_FILES 	= draw utils
-W_FILES 	= game loop 
+W_FILES 	= game loop keys
 SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(PARSE)))
 SRCS	+= $(addprefix srcs/raycast/, $(addsuffix .c, $(RAYCAST)))
 SRCS	+= $(addprefix srcs/utils/, $(addsuffix .c, $(UTILS)))
@@ -71,7 +71,7 @@ re: fclean all
 
 total_makeover: clean mlx_clean
 
-TESTMAP = assets/maps/big.cub
+TESTMAP = assets/maps/ideal.cub
 
 go: all
 	./$(NAME) $(TESTMAP)

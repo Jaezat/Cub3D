@@ -1,14 +1,14 @@
 #include "main.h"
 
 // // this whole function needs protection
-// void	get_addr(t_umlx *u)
-// {
-// 	t_img_data	*im;
+void	get_addr(t_umlx *u)
+{
+	t_img_data	*im;
 
-// 	im = &u->img_data;
-// 	im->addr = (int *)mlx_get_data_addr(u->img, &im->bpp, &im->line_s,
-// 			&im->endian);
-// }
+	im = &u->img_data;
+	im->addr = (int *)mlx_get_data_addr(u->img, &im->bpp, &im->line_s,
+			&im->endian);
+}
 
 // void	safe_pix_put(t_umlx *u, int byte, int color)
 // {

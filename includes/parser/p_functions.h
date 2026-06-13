@@ -41,7 +41,7 @@ void	get_floats(t_parser *p, t_data *d);
 // mlx0 ////////////////////////////////////////////////////////////////////////
 void	game(t_data *d);
 void    raycast(t_env *env);
-void    get_addr(t_env *env);
+void	get_addr(t_umlx *u);
 
 // mlx1 ////////////////////////////////////////////////////////////////////////
 void    pick_action(int keycode, t_env *env);
