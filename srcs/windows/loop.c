@@ -10,8 +10,22 @@ void rotation(t_env *env)
 
 void movement(t_env *env)
 {
+	float dir;
+
+	dir = env->data.dir;
 	// W: Para delante
-	 
+	if (env->data->keys.w == 1)
+	{
+		env->data->px += cos(dir) * MOV_INC;
+		env->data->py += sin(dir) * MOV_INC;
+	}
+	else if (env->data->keys.s == 1)
+	{
+		env->data->px -= cos(dir) * MOV_INC;
+		env->data->py -= sin(dir) * MOV_INC;
+	}
+	
+	
 
 }
 
