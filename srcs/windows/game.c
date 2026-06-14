@@ -8,6 +8,7 @@ static inline t_clean	func(void *f_ptr)
 	return ((t_clean)f_ptr);
 }
 
+
 void	game(t_data *d)
 {
 	t_env	gm;
@@ -26,3 +27,11 @@ void	game(t_data *d)
 	mlx_loop_hook(gm.umlx.mlx, func(loop), &gm);
 	mlx_loop(gm.umlx.mlx);
 }
+
+
+/*
+	mlx_key_hook(env.u.win, hook, &env);
+	mlx_hook(env.u.win, 2, 1, func(key_press), &env);
+	mlx_loop_hook(env.u.mlx, func(loop), &env);
+	mlx_loop(env.u.mlx);
+*/

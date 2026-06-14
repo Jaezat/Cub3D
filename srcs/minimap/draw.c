@@ -86,6 +86,7 @@ static void	draw_player(t_env *env)
 
 void draw_minimap(t_env *env)
 {
+	printf("hi\n");
 	draw_borders(env);
 	draw_tiles(env);
 	draw_player(env);
