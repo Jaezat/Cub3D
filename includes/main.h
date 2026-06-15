@@ -30,17 +30,19 @@
 
 # define M_PI 3.14159265358979323846
 # define RAD M_PI / 180.0
+# define ANG 1.57079633
 
 /*minimap*/
-#define MAP_W 19
-#define MAP_H 7 // number of tiles i want in my map
+# define MAP_W 19
+# define MAP_H 7 // number of tiles i want in my map
 
-// new minimap new me
-#define MINIMAP_SIZE 200
-#define MINIMAP_TILE 10
-#define MINIMAP_TILE_SIZE (MINIMAP_SIZE / CAM_SIZE)
-#define CAM_SIZE 5
-#define OFFSET (MINIMAP_TILE * 4)
+
+# define MINIMAP_SIZE 200
+# define MINIMAP_TILE 10
+# define MINIMAP_TILE_SIZE (MINIMAP_SIZE / CAM_SIZE)
+# define CAM_SIZE 5
+# define OFFSET (MINIMAP_TILE * 4)
+# define MARGIN 0.1
 
 # define K_LEFT 65361
 # define K_UP 65362
@@ -53,7 +55,7 @@
 # define K_D 100
 # define K_S 115
 
-#define MOV_INC 0.001
+#define MOV_INC 0.2
 #define ANG_INC 2 // this is number of degrees per frame 
 
 // keep this ? ////////////////////////////////////////////////////////////////

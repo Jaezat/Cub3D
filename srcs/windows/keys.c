@@ -45,8 +45,6 @@ int	close_windows(t_env *env)
 
 }
 
-
-
 void	hooks_keys(t_env *env)
 {
 	// printf("here\n");
