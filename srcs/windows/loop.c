@@ -90,7 +90,7 @@ int	loop(void *param)
 
 	env = (t_env *)param;
 	movement(env);
-	put_background(env);
+	// put_background(env);
 	mlx_put_image_to_window(env->umlx.mlx, env->umlx.win, env->umlx.img, 0, 0);
 	usleep(1000000 / 60);
 	return (0);

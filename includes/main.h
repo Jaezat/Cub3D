@@ -16,6 +16,7 @@
 # include "parser/p_structs.h"
 # include "parser/p_functions.h"
 # include "parser/p_utils.h"
+# include "movement.h"
 # include "raycast/raycast.h"
 # include "minimap.h"
 

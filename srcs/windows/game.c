@@ -18,9 +18,6 @@ static inline t_clean	func(void *f_ptr)
 // 	(void)u;
 // }
 
-void					key_release(int keycode, void *param);
-void					key_press(int keycode, void *param);
-
 void	game(t_data *d)
 {
 	t_env	gm;
