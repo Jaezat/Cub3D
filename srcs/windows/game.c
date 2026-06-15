@@ -19,6 +19,7 @@ static inline t_clean	func(void *f_ptr)
 // }
 
 void					key_release(int keycode, void *param);
+void					key_press(int keycode, void *param);
 
 void	game(t_data *d)
 {
@@ -36,10 +37,10 @@ void	game(t_data *d)
 	get_addr(&gm.umlx);
 	// player_set_discreet(&gm);
 	// mlx_key_hook(gm.umlx.win, hook, &gm);
-	// mlx_hook(gm.umlx.win, 2, 1 << 0, func(key_press), &gm);
-	// mlx_hook(gm.umlx.win, 3, 1 << 1, func(key_release), &gm);
-	// mlx_loop_hook(gm.umlx.mlx, func(loop), &gm);
-	// mlx_loop(gm.umlx.mlx);
+	mlx_hook(gm.umlx.win, 2, 1 << 0, func(key_press), &gm);
+	mlx_hook(gm.umlx.win, 3, 1 << 1, func(key_release), &gm);
+	mlx_loop_hook(gm.umlx.mlx, func(loop), &gm);
+	mlx_loop(gm.umlx.mlx);
 	exit_exec(&gm, 0);
 	exit_exec(&gm, 1);
 }

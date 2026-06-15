@@ -10,47 +10,47 @@ void	get_addr(t_umlx *u)
 			&im->endian);
 }
 
-// void	safe_pix_put(t_umlx *u, int byte, int color)
-// {
-// 	if (byte >= 0 && byte < WIN_H * WIN_W)
-// 		u->img_data.addr[byte] = color;
-// }
+void	safe_pix_put(t_umlx *u, int byte, int color)
+{
+	if (byte >= 0 && byte < WIN_H * WIN_W)
+		u->img_data.addr[byte] = color;
+}
 
-// void	put_square(t_umlx *u, float hf, float wf, int color)
-// {
-// 	int	i;
-// 	int	h;
-// 	int	w;
-// 	int	j;
+void	put_square(t_env *e, float hf, float wf, int color)
+{
+	int	i;
+	int	h;
+	int	w;
+	int	j;
 
-// 	h = hf * (WIN_H / u->d->map_h);
-// 	w = wf * (WIN_W / u->d->map_w);
-// 	i = -2;
-// 	while (i < 3)
-// 	{
-// 		j = -2;
-// 		while (j < 3)
-// 		{
-// 			if ((h + i) > 0 && (h + i) < (WIN_H + i))
-// 				if ((w + j) > 0 && (w + j) < (WIN_W + j))
-// 					safe_pix_put(u, (int)(WIN_W * (h + i) + w + j), color);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
+	h = hf * (WIN_H / e->data->map_h);
+	w = wf * (WIN_W / e->data->map_w);
+	i = -2;
+	while (i < 3)
+	{
+		j = -2;
+		while (j < 3)
+		{
+			if ((h + i) > 0 && (h + i) < (WIN_H + i))
+				if ((w + j) > 0 && (w + j) < (WIN_W + j))
+					safe_pix_put(&e->umlx, (int)(WIN_W * (h + i) + w + j), color);
+			j++;
+		}
+		i++;
+	}
+}
 
-// void	put_dot(t_umlx *u, float hf, float wf, int color)
-// {
-// 	int	h;
-// 	int	w;
+void	put_dot(t_env *e, float hf, float wf, int color)
+{
+	int	h;
+	int	w;
 
-// 	h = hf * (WIN_H / u->d->map_h);
-// 	w = wf * (WIN_W / u->d->map_w);
-// 	if (h > 0 && h < (WIN_H))
-// 		if (w > 0 && w < (WIN_W))
-// 			safe_pix_put(u, (int)(WIN_W * h + w), color);
-// }
+	h = hf * (WIN_H / e->data->map_h);
+	w = wf * (WIN_W / e->data->map_w);
+	if (h > 0 && h < (WIN_H))
+		if (w > 0 && w < (WIN_W))
+			safe_pix_put(&e->umlx, (int)(WIN_W * h + w), color);
+}
 
 // void	add_pigment(t_umlx *u, float hf, float wf, int color)
 // {

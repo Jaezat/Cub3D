@@ -143,68 +143,68 @@
 // 	}
 // }
 
-// void	radar(t_umlx *u, float dir, int line, float ang_offset)
-// {
-// 	float	x;
-// 	float	y;
-// 	float	hyp;
-// 	float	jump_x;
-// 	float	jump_y;
+void	radar(t_env *e, float dir, int line, float ang_offset)
+{
+	float	x;
+	float	y;
+	float	hyp;
+	float	jump_x;
+	float	jump_y;
 
-// 	// static int		rnd = 0;
-// 	jump_x = cos(dir);
-// 	jump_y = sin(dir);
-// 	x = jump_x + rand() % u->d->map_w;
-// 	y = jump_y + rand() % u->d->map_h;
-// 	// rnd = rand();
-// 	while (1)
-// 	{
-// 		// rnd = rand();
-// 		if (x < 0 || x >= WIN_W)
-// 			break ;
-// 		if (y < 0 || y >= WIN_H)
-// 			break ;
-// 		if ((int)y < u->d->map_h && (int)x < u->d->map_w)
-// 			if (u->d->map[(int)y][(int)x] == '1')
-// 			{
-// 				hyp = hypot(y - rand() % u->d->map_h, x - rand() % u->d->map_w);
-// 				(void)hyp;
-// 				(void)ang_offset;
-// 				(void)line;
-// 				x = x - jump_x;
-// 				y = y - jump_y;
-// 				put_dot(u, y, x, 0xff00);
-// 				// precision_jump(u, dir, line, ang_offset, x, y);
-// 				break ;
-// 			}
-// 		// put_dot(u, y, x, 0xff00);
-// 		// put_square(u, (float)0.5 + WIN_H / u->d->map_h * (int)y / (WIN_H
-// 		// 		/ u->d->map_h), (float)0.5 + WIN_W / u->d->map_w * (int)x
-// 		// 	/ (WIN_W / u->d->map_w), 0x008000);
-// 		// put_dot(u, y, x, 0x0000ff);
-// 		x = x + jump_x;
-// 		y = y + jump_y;
-// 	}
-// }
+	// static int		rnd = 0;
+	jump_x = cos(dir);
+	jump_y = sin(dir);
+	x = jump_x + rand() % e->data->map_w;
+	y = jump_y + rand() % e->data->map_h;
+	// rnd = rand();
+	while (1)
+	{
+		// rnd = rand();
+		if (x < 0 || x >= WIN_W)
+			break ;
+		if (y < 0 || y >= WIN_H)
+			break ;
+		if ((int)y < e->data->map_h && (int)x < e->data->map_w)
+			if (e->data->map[(int)y][(int)x] == '1')
+			{
+				hyp = hypot(y - rand() % e->data->map_h, x - rand() % e->data->map_w);
+				(void)hyp;
+				(void)ang_offset;
+				(void)line;
+				x = x - jump_x;
+				y = y - jump_y;
+				put_dot(e, y, x, G);
+				// precision_jump(u, dir, line, ang_offset, x, y);
+				break ;
+			}
+		// put_dot(u, y, x, 0xff00);
+		// put_square(u, (float)0.5 + WIN_H / u->d->map_h * (int)y / (WIN_H
+		// 		/ u->d->map_h), (float)0.5 + WIN_W / u->d->map_w * (int)x
+		// 	/ (WIN_W / u->d->map_w), 0x008000);
+		// put_dot(u, y, x, 0x0000ff);
+		x = x + jump_x;
+		y = y + jump_y;
+	}
+}
 
-// void	apperture(t_umlx *u)
-// {
-// 	float			ang_offset;
-// 	int				line;
-// 	static float	radar_ang = 0;
+void	apperture(t_env *e)
+{
+	float			ang_offset;
+	int				line;
+	static float	radar_ang = 0;
 
-// 	line = 0;
-// 	ang_offset = -35 * M_PI / 180;
-// 	while (line < WIN_W)
-// 	{
-// 		radar_ang = rand() * M_PI / 180;
-// 		// find_block(u, u->d->dir + ang_offset, line, ang_offset);
-// 		radar(u, radar_ang, line, radar_ang);
-// 		// printf("%f\n", ang_offset);
-// 		ang_offset = ang_offset + (((float)71 / WIN_W) * M_PI / 180);
-// 		line++;
-// 	}
-// }
+	line = 0;
+	ang_offset = -35 * M_PI / 180;
+	while (line < WIN_W)
+	{
+		radar_ang = rand() * M_PI / 180;
+		find_block(e->umlx, e->data->dir + ang_offset, line, ang_offset);
+		radar(e, radar_ang, line, radar_ang);
+		// printf("%f\n", ang_offset);
+		ang_offset = ang_offset + (((float)71 / WIN_W) * M_PI / 180);
+		line++;
+	}
+}
 
 // void	project(t_umlx *u)
 // {
@@ -223,32 +223,34 @@
 // 	}
 // }
 
-// void	put_background(t_umlx *u)
-// {
-// 	// int	w;
-// 	// int	h;
+void	put_background(t_env *e)
+{
+    t_umlx *u = &e->umlx;
+    t_data *d = e->data;
+	int	w;
+	int	h;
 
-// 	// // float	x;
-// 	// // float	y;
-// 	// h = 0;
-// 	// while (h <= WIN_H)
-// 	// {
-// 	// 	w = 0;
-// 	// 	while (w <= WIN_W)
-// 	// 	{
-// 	// 		if (h < WIN_H / 2)
-// 	// 			u->img_data.addr[WIN_W * h + w] = u->d->sky;
-// 	// 		else
-// 	// 			u->img_data.addr[WIN_W * h + w] = u->d->ground;
-// 	// 		w++;
-// 	// 	}
-// 	// 	h++;
-// 	// }
-// 	ft_bzero(u->img_data.addr, WIN_H * WIN_W * 4);
-// 	apperture(u);
-// 	// project(u);
-// 	put_square(u, u->d->py, u->d->px, 0xff0000);
-// }
+	// float	x;
+	// float	y;
+	h = 0;
+	while (h <= WIN_H)
+	{
+		w = 0;
+		while (w <= WIN_W)
+		{
+			if (h < WIN_H / 2)
+				u->img_data.addr[WIN_W * h + w] = d->sky;
+			else
+				u->img_data.addr[WIN_W * h + w] = d->ground;
+			w++;
+		}
+		h++;
+	}
+	ft_bzero(u->img_data.addr, WIN_H * WIN_W * 4);
+	apperture(e);
+	// project(u);
+	put_square(e, d->py, d->px, 0xff0000);
+}
 
 // void	load_textures(t_umlx *u)
 // {
