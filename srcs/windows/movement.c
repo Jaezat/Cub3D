@@ -25,13 +25,11 @@ static bool check_margin(t_data *data, float new_y, float new_x)
 static void checking_position(t_data *data, float new_y, float new_x)
 {
 	if (check_margin(data, new_y, new_x + MARGIN)
-		&& check_margin(data, new_y, new_x - MARGIN)
-		&& check_margin(data, new_y + MARGIN, new_x)
-		&& check_margin(data, new_y - MARGIN, new_x))
-	{
+		&& check_margin(data, new_y, new_x - MARGIN))
 		data->px = new_x;
+	if (check_margin(data, new_y + MARGIN, new_x)
+		&& check_margin(data, new_y - MARGIN, new_x))
 		data->py = new_y;
-	}
 }
 
 static void direction(t_env *game)

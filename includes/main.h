@@ -30,7 +30,7 @@
 
 # define M_PI 3.14159265358979323846
 # define RAD M_PI / 180.0
-# define ANG 1.57079633
+# define ANG M_PI / 2
 
 /*minimap*/
 # define MAP_W 19

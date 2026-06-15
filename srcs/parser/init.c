@@ -43,13 +43,13 @@ void	parse_args(int argc, char **argv, t_parser *p)
 void	get_player(t_data *d, int x, int y)
 {
 	if (d->map[y][x] == 'N')
-		d->dir = 0 * RAD;
-	if (d->map[y][x] == 'E')
-		d->dir = 90 * RAD;
-	if (d->map[y][x] == 'S')
-		d->dir = 180 * RAD;
-	if (d->map[y][x] == 'W')
 		d->dir = 270 * RAD;
+	if (d->map[y][x] == 'E')
+		d->dir = 0 * RAD;
+	if (d->map[y][x] == 'S')
+		d->dir = 90 * RAD;
+	if (d->map[y][x] == 'W')
+		d->dir = 180 * RAD;
 	d->px = x + 0.5;
 	d->py = y + 0.5;
 	d->map[y][x] = '0';

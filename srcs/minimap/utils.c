@@ -24,13 +24,6 @@ void set_cam_values(t_env *env)
 
 	map = &env->minimap;
 	d = env->data;
-
-	map->cam.x = (int)(d->px - (CAM_SIZE / 2));
-	if (map->cam.x < 0)
-		map->cam.x = 0;
-	if (map->cam.x > d->map_w - CAM_SIZE)
-		map->cam.x = d->map_w - CAM_SIZE;
-
 	map->cam.y = (int)(d->py - (CAM_SIZE / 2));
 	if (map->cam.y < 0)
 		map->cam.y = 0;
