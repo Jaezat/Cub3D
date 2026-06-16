@@ -43,13 +43,13 @@ static void direction(t_env *game)
 	new_x = data->px;
 	if (game->keys.w)
 	{
-		new_y += sin(data->dir) * MOV_INC;
-		new_x += cos(data->dir) * MOV_INC;
+		new_y += data->dir_y * MOV_INC;
+		new_x += data->dir_x * MOV_INC;
 	}
 	if (game->keys.s)
 	{
-		new_y -= sin(data->dir) * MOV_INC;
-		new_x -= cos(data->dir) * MOV_INC;
+		new_y -= data->dir_y * MOV_INC;
+		new_x -= data->dir_x * MOV_INC;
 	}
 	if (game->keys.a)
 	{
