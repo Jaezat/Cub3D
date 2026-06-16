@@ -35,7 +35,8 @@ typedef struct s_data
 	char		*we;
 	char		*ea;
 	t_img		imgs[4];
-	float		dir;
+	float		dir_x;
+	float		dir_y;
 	float		px;
 	float		py;
 	t_keys		key;

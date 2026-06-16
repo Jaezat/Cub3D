@@ -19,7 +19,7 @@ PARSE 		= init asset trim flood fill copy
 RAYCAST		= raycast puts
 # remove test /////////////////////////////////////////////////////////////////
 UTILS		= gnl utl0 utl1 exit test
-MINI_FILES 	= draw utils
+MINI_FILES 	= draw utils init
 W_FILES 	= game loop keys movement
 SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(PARSE)))
 SRCS	+= $(addprefix srcs/raycast/, $(addsuffix .c, $(RAYCAST)))
@@ -71,7 +71,7 @@ re: fclean all
 
 total_makeover: clean mlx_clean
 
-TESTMAP = assets/maps/min.cub
+TESTMAP = assets/maps/thinny.cub
 
 go: all
 	./$(NAME) $(TESTMAP)

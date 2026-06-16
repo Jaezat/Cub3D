@@ -33,6 +33,11 @@ static void draw_tiles(t_env *env)
 	y = env->minimap.cam.y;
 	while (y < env->minimap.cam.limit_y)
 	{
+		if ((int)y < 0 || (int)y >= env->data->map_h)  // ← bounds check
+        {
+            y++;
+            continue;
+        }
 		x = env->minimap.cam.x;
 		while (x < env->minimap.cam.limit_x)
 		{

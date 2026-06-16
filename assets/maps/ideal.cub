@@ -6,11 +6,11 @@ WE                   ./assets/textures/badge.xpm
 
 EA ./assets/textures/slate_wide.xpm
 F 200,100,0
-C 225,30,0
+C 225,30,30
 1111111
 1000001
 1011101
 1010001
-1011101
+1011111
 100N001
 1111111

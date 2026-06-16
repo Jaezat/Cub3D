@@ -17,23 +17,6 @@ unsigned int get_tile_color(char c)
 	return (0);
 }
 
-void set_cam_values(t_env *env)
-{
-	t_minimap	*map;
-	t_data		*d;
-
-	map = &env->minimap;
-	d = env->data;
-	map->cam.y = (int)(d->py - (CAM_SIZE / 2));
-	if (map->cam.y < 0)
-		map->cam.y = 0;
-	if (map->cam.y > d->map_h - CAM_SIZE)
-		map->cam.y = d->map_h - CAM_SIZE;
-
-	map->cam.limit_x = map->cam.x + CAM_SIZE;
-	map->cam.limit_y = map->cam.y + CAM_SIZE;
-}
-
 void paint_pixel(t_env *env, int x, int y)
 {
 	int	px_y;

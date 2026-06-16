@@ -14,7 +14,6 @@ bool	is_cubed_ext(char *filename, char *extension)
 	return (true);
 }
 
-// unit test
 void	extension_check(char *file, char *ext, t_parser *p)
 {
 	int	ext_len;
@@ -27,7 +26,7 @@ void	extension_check(char *file, char *ext, t_parser *p)
 	if (*(file + ext_len - 5) == '/')
 		err_exit_msg("Name too short -> ", file + ext_len - 5, p);
 	if (is_cubed_ext(file + ext_len - 4, ext) == false)
-		err_exit_msg("Invalid extension -> ", file + ext_len - 4, p);
+		err_exit_msg("Wrong texture path", 0, p);
 	p->map_file = file;
 }
 
@@ -43,13 +42,25 @@ void	parse_args(int argc, char **argv, t_parser *p)
 void	get_player(t_data *d, int x, int y)
 {
 	if (d->map[y][x] == 'N')
-		d->dir = 270 * RAD;
+	{
+		d->dir_x = 0;
+		d->dir_y = -1;
+	}
 	if (d->map[y][x] == 'E')
-		d->dir = 0 * RAD;
+	{
+		d->dir_x = 1;
+		d->dir_y = 0;
+	}	
 	if (d->map[y][x] == 'S')
-		d->dir = 90 * RAD;
+	{
+		d->dir_x = 0;
+		d->dir_y = 1;
+	}
 	if (d->map[y][x] == 'W')
-		d->dir = 180 * RAD;
+	{
+		d->dir_x = -1;
+		d->dir_y = 0;
+	}
 	d->px = x + 0.5;
 	d->py = y + 0.5;
 	d->map[y][x] = '0';
