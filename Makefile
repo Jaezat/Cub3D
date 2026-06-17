@@ -71,7 +71,7 @@ re: fclean all
 
 total_makeover: clean mlx_clean
 
-TESTMAP = assets/maps/thinny.cub
+TESTMAP = assets/maps/ideal.cub
 
 go: all
 	./$(NAME) $(TESTMAP)

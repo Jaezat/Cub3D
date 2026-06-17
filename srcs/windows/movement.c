@@ -2,20 +2,25 @@
 
 static void rotation(t_env *game)
 {
-	float old_x;
-	float old_y;
+    float old_x; 
+    float old_y; 
+    float c;
+    float s;
 
 	old_x = game->data->dir_x;
 	old_y = game->data->dir_y;
+	c = cos(ANG_V);
+	s = sin(ANG_V);
 	if (game->keys.left)
-	{
-		game->data->dir_x = old_x * cos(ANG_V) - old_y * sin(ANG_V);
-		game->data->dir_y = old_x * sin(ANG_V) + old_y * cos(ANG_V)
-	}
-	if (game->keys.right)
-	{
-
-	}
+    {
+        game->data->dir_x = old_x * c + old_y * s;
+        game->data->dir_y = -old_x * s + old_y * c; 
+    }
+    if (game->keys.right)
+    {
+        game->data->dir_x = old_x * c - old_y * s;
+        game->data->dir_y = old_x * s + old_y * c;
+    }
 }
 
 static bool check_margin(t_data *data, float new_y, float new_x)
@@ -63,13 +68,13 @@ static void direction(t_env *game)
 	}
 	if (game->keys.a)
 	{
-		new_y -= data->dir_y * MOV_INC;
-		new_x += data->dir_x * MOV_INC;
+		new_y += data->dir_y * MOV_INC;
+		new_x -= data->dir_x * MOV_INC;
 	}
 	if (game->keys.d)
 	{
-		new_y += data->dir_y * MOV_INC;
-		new_x -= data->dir_x * MOV_INC;
+		new_y -= data->dir_y * MOV_INC;
+		new_x += data->dir_x * MOV_INC;
 	}
 	checking_position(data, new_y, new_x);
 }
