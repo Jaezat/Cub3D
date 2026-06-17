@@ -20,7 +20,7 @@ RAYCAST		= raycast puts
 # remove test /////////////////////////////////////////////////////////////////
 UTILS		= gnl utl0 utl1 exit test
 MINI_FILES 	= draw utils init
-W_FILES 	= game loop keys movement
+W_FILES 	= game loop keys movement utils
 SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(PARSE)))
 SRCS	+= $(addprefix srcs/raycast/, $(addsuffix .c, $(RAYCAST)))
 SRCS	+= $(addprefix srcs/utils/, $(addsuffix .c, $(UTILS)))

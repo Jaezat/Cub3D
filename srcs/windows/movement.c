@@ -23,60 +23,39 @@ static void rotation(t_env *game)
     }
 }
 
-static bool check_margin(t_data *data, float new_y, float new_x)
+static void moving_keys(t_env *game, float new_x, float new_y)
 {
-	char **map;
-
-	map = data->map;
-	if (new_y < 0 || new_y >= MAP_H)
-		return (false);
-	if (new_x < 0 || new_x >= MAP_W)
-		return (false);	
-	if (map[(int)new_y][(int)new_x] == '1')
-		return (false);
-	return (true);
-}
-
-static void checking_position(t_data *data, float new_y, float new_x)
-{
-	if (check_margin(data, new_y, new_x + MARGIN)
-		&& check_margin(data, new_y, new_x - MARGIN))
-		data->px = new_x;
-	if (check_margin(data, new_y + MARGIN, new_x)
-		&& check_margin(data, new_y - MARGIN, new_x))
-		data->py = new_y;
+	if (game->keys.w)
+	{
+		new_y += game->data->dir_y * MOV_INC;
+		new_x += game->data->dir_x * MOV_INC;
+	}
+	if (game->keys.s)
+	{
+		new_y -= game->data->dir_y * MOV_INC;
+		new_x -= game->data->dir_x * MOV_INC;
+	}
+	if (game->keys.a)
+	{
+		new_y += game->data->dir_y * MOV_INC;
+		new_x -= game->data->dir_x * MOV_INC;
+	}
+	if (game->keys.d)
+	{
+		new_y -= game->data->dir_y * MOV_INC;
+		new_x += game->data->dir_x * MOV_INC;
+	}
 }
 
 static void direction(t_env *game)
 {
-	t_data	*data;
 	float new_x;
 	float new_y;
 
-	data = game->data;
-	new_y = data->py;
-	new_x = data->px;
-	if (game->keys.w)
-	{
-		new_y += data->dir_y * MOV_INC;
-		new_x += data->dir_x * MOV_INC;
-	}
-	if (game->keys.s)
-	{
-		new_y -= data->dir_y * MOV_INC;
-		new_x -= data->dir_x * MOV_INC;
-	}
-	if (game->keys.a)
-	{
-		new_y += data->dir_y * MOV_INC;
-		new_x -= data->dir_x * MOV_INC;
-	}
-	if (game->keys.d)
-	{
-		new_y -= data->dir_y * MOV_INC;
-		new_x += data->dir_x * MOV_INC;
-	}
-	checking_position(data, new_y, new_x);
+	new_y = game->data->py;
+	new_x = game->data->px;
+	moving_keys(game, new_x, new_y);
+	checking_position(game->data, new_y, new_x);
 }
 
 void	movement(t_env *game)
