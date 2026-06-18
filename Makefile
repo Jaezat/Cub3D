@@ -15,7 +15,7 @@ OBJ_DIR = build/
 
 SRCS    = $(addprefix $(SRC_DIR), main.c)
 
-PARSE 		= init asset trim flood fill copy utils
+PARSE 		= init asset trim flood fill copy
 RAYCAST		= raycast puts
 # remove test /////////////////////////////////////////////////////////////////
 UTILS		= gnl utl0 utl1 exit test

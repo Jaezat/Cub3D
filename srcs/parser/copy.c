@@ -11,21 +11,6 @@ void	*memdup(void *src, size_t size)
 	return (dest);
 }
 
-// bool	copy_matrix(t_parser *p, t_data *d)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < d->map_h)
-// 	{
-// 		d->map[i] = memdup(p->map[i], d->map_w);
-// 		if (!d->map[i])
-// 			return (free_data(d), false);
-// 		i++;
-// 	}
-// 	return (true);
-// }
-
 bool	copy_matrix(t_parser *p, t_data *d)
 {
 	int	i;
@@ -33,9 +18,7 @@ bool	copy_matrix(t_parser *p, t_data *d)
 	i = 0;
 	while (i < d->map_h)
 	{
-		// Como p->map[i] ya está perfectamente rellenado y mide lo mismo,
-		// un ft_strdup estándar duplicará la fila rectangular de forma segura.
-		d->map[i] = ft_strdup(p->map[i]);
+		d->map[i] = memdup(p->map[i], d->map_w);
 		if (!d->map[i])
 			return (free_data(d), false);
 		i++;
@@ -54,7 +37,7 @@ t_data	*pass_it_on(t_parser *p)
 	d->ground = p->floor_hex;
 	d->sky = p->ceiling_hex;
 	remove_stray_lines(p, d);
-	d->map_w = p->exec_map_w;
+	d->map_w = p->exec_map_w - 1;
 	d->ea = memdup(p->ea, ft_strlen(p->ea) + 1);
 	d->we = memdup(p->we, ft_strlen(p->we) + 1);
 	d->so = memdup(p->so, ft_strlen(p->so) + 1);

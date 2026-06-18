@@ -27,25 +27,21 @@ static void moving_keys(t_env *game, float *new_x, float *new_y)
 {
     if (game->keys.w)
     {
-        printf("W\n");
         *new_x += game->data->dir_x * MOV_INC;
         *new_y += game->data->dir_y * MOV_INC;
     }
     if (game->keys.s)
     {
-        printf("S\n");
         *new_x -= game->data->dir_x * MOV_INC;
         *new_y -= game->data->dir_y * MOV_INC;
     }
     if (game->keys.a) 
     {
-        printf("A\n");
         *new_x += game->data->dir_y * MOV_INC; 
         *new_y -= game->data->dir_x * MOV_INC; 
     }
     if (game->keys.d)
     {
-        printf("D\n");
         *new_x -= game->data->dir_y * MOV_INC; 
         *new_y += game->data->dir_x * MOV_INC; 
     }

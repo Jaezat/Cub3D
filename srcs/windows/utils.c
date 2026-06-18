@@ -6,11 +6,20 @@ bool check_margin(t_data *data, float *new_y, float *new_x)
 
 	map = data->map;
 	if (*new_y < 0 || *new_y >= data->map_h)
+    {
+        printf("map_h: %d\n", data->map_h);
 		return (false);
+    }
 	if (*new_x < 0 || *new_x >= data->map_w)
+    {
+        printf("map_h: %d\n", data->map_h);
 		return (false);	
+    }
 	if (map[(int)*new_y][(int)*new_x] == '1')
+    {
+        printf("c: %c\n", map[(int)*new_y][(int)*new_x]);
 		return (false);
+    }
 	return (true);
 }
 
@@ -27,15 +36,15 @@ void checking_position(t_data *data, float *new_y, float *new_x)
 	y_minus = *new_y - MARGIN;
     if (check_margin(data, new_y, &x_plus) && check_margin(data, new_y, &x_minus))
     {
-        printf("\nPX before: %f\n", data->px);
+        // printf("\nPX before: %f\n", data->px);
         data->px = *new_x;
-        printf("PX after: %f\n", data->px);
+        // printf("PX after: %f\n", data->px);
     }
     if (check_margin(data, &y_plus, new_x) && check_margin(data, &y_minus, new_x))
     {
-        printf("\nPY before: %f\n", data->py);
+        // printf("\nPY before: %f\n", data->py);
         data->py = *new_y;
-        printf("PY after: %f\n", data->py);
+        // printf("PY after: %f\n", data->py);
     }
 }
 
