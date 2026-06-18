@@ -68,29 +68,60 @@ void	free_matrix(void *ref, int h)
 	}
 }
 
+// void	alloc_fill_matrix(t_parser *p, char **map)
+// {
+// 	int	i;
+// 	int	last_char;
+
+// 	last_char = 0;
+// 	i = 0;
+// 	while (i < p->exec_map_h && p->exec_map[i])
+// 	{
+// 		map[i] = malloc(p->exec_map_w);
+// 		if (!map[i])
+// 			err_exit_msg("Failed to allocate memory for line", 0, p);
+// 		ft_bzero(map[i], p->exec_map_w);
+// 		copier(map[i], p->exec_map[i], ft_strlen(p->exec_map[i]) - 1);
+// 		space_to_wall(map[i], p->exec_map_w);
+// 		i++;
+// 	}
+// 	--i;
+// 	if (p->exec_map[i] && *p->exec_map[i])
+// 	{
+// 		last_char = ft_strlen(p->exec_map[i]) - 1;
+// 		map[i][last_char] = p->exec_map[i][last_char];
+// 	}
+// }
+
 void	alloc_fill_matrix(t_parser *p, char **map)
 {
 	int	i;
-	int	last_char;
+	int	j;
+	int	len;
 
-	last_char = 0;
 	i = 0;
 	while (i < p->exec_map_h && p->exec_map[i])
 	{
-		map[i] = malloc(p->exec_map_w);
+		map[i] = malloc(sizeof(char) * (p->exec_map_w + 1));
 		if (!map[i])
-			err_exit_msg("Failed to allocate memory for line", 0, p);
-		ft_bzero(map[i], p->exec_map_w);
-		copier(map[i], p->exec_map[i], ft_strlen(p->exec_map[i]) - 1);
-		space_to_wall(map[i], p->exec_map_w);
+			return (free_matrix(map, i), err_exit_msg("Malloc failed", 0, p));
+		
+		len = ft_strlen(p->exec_map[i]);
+		if (len > 0 && p->exec_map[i][len - 1] == '\n')
+			len--;
+		j = 0;
+		while (j < p->exec_map_w)
+		{
+			if (j < len)
+				map[i][j] = p->exec_map[i][j]; // Copia el mapa original
+			else
+				map[i][j] = ' '; // Rellena el mapa gigante con espacios limpios
+			j++;
+		}
+		map[i][p->exec_map_w] = '\0'; // Cerramos la cadena
 		i++;
 	}
-	--i;
-	if (p->exec_map[i] && *p->exec_map[i])
-	{
-		last_char = ft_strlen(p->exec_map[i]) - 1;
-		map[i][last_char] = p->exec_map[i][last_char];
-	}
+	map[i] = NULL;
 }
 
 void	flood_init(t_parser *p)

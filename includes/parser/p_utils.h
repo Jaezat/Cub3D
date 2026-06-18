@@ -28,6 +28,7 @@ void	ft_bzero(void *mem, size_t size);
 int		ft_strncmp(char *s1, char *s2, size_t len);
 void	tf_memcpy(void *dest, void *src, size_t len);
 void	space_to_wall(void *ref, size_t size);
+char	*ft_strdup(char *s1);
 
 // tester, remove later ///////////////////////////////////////////////////////
 // void	test_rem(void);

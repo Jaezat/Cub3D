@@ -15,7 +15,7 @@ OBJ_DIR = build/
 
 SRCS    = $(addprefix $(SRC_DIR), main.c)
 
-PARSE 		= init asset trim flood fill copy
+PARSE 		= init asset trim flood fill copy utils
 RAYCAST		= raycast puts
 # remove test /////////////////////////////////////////////////////////////////
 UTILS		= gnl utl0 utl1 exit test
@@ -71,7 +71,7 @@ re: fclean all
 
 total_makeover: clean mlx_clean
 
-TESTMAP = assets/maps/valid.cub
+TESTMAP = assets/maps/big.cub
 
 go: all
 	./$(NAME) $(TESTMAP)
