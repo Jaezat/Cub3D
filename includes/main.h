@@ -42,7 +42,7 @@
 # define MINIMAP_TILE_SIZE (MINIMAP_SIZE / CAM_SIZE)
 # define CAM_SIZE 5
 # define OFFSET (MINIMAP_TILE * 4)
-# define MARGIN 0.1
+# define MARGIN 0.01
 
 # define K_LEFT 65361
 # define K_UP 65362

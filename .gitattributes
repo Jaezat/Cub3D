@@ -1,8 +1,8 @@
 *.xpm linguist-vendored
 *.cub linguist-vendored	
 *.pdf linguist-vendored
-# this removes the excessive amount of line contributions when you add external files
 
+# this removes the excessive amount of line contributions when you add external files
 # alternative: this also ignores the files
 # *.xpm binary
 # *.cub binary

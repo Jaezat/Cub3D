@@ -42,14 +42,11 @@ int	close_windows(t_env *env)
 {
 	exit_exec(env, 0);
 	return (0);
-
 }
 
 void	hooks_keys(t_env *env)
 {
-	// printf("here\n");
 	mlx_hook(env->umlx.win, KeyPress, KeyPressMask, press_key, env);
 	mlx_hook(env->umlx.win, KeyRelease, KeyReleaseMask, release_key, env);
 	mlx_hook(env->umlx.win, DestroyNotify, NoEventMask, close_windows, env);
-	// mlx_loop_hook(env->umlx.mlx, func(loop), &env);
 }

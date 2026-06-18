@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 int	loop(void *param)
 {
 	t_env	*env;
