@@ -23,5 +23,7 @@ void	game(t_data *d)
 	hooks_keys(&gm);
 	mlx_loop_hook(gm.umlx.mlx, func(loop), &gm);
 	mlx_loop(gm.umlx.mlx);
+	exit_exec(&gm, 0);
+	exit_exec(&gm, 1);
 }
 
