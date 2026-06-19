@@ -3,15 +3,23 @@
 // this can be improved to have less math
 void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 {
-	int	mid;
-	int	steps;
-	int	col;
+	int		mid;
+	int		steps;
+	int		col;
+	float	max_dist;
+	float	dist;
+	int		intensity;
 
 	mid = WIN_H / 2;
 	steps = WIN_H / (r->cam_dist) / 2;
-	col = ((int)(255 * 255 / (r->cam_dist))) / 255 << 8;
-	if (col > 0xff00)
-		col = 0xff00;
+	max_dist = 30.0f;
+	dist = r->cam_dist;
+	if (dist > max_dist)
+		dist = max_dist;
+	if (dist < 0.0f)
+		dist = 0.0f;
+	intensity = (int)(200.0f * (1.0f - (dist / max_dist)));
+	col = intensity << 8;
 	while (steps >= 0)
 	{
 		if (((mid - steps) * WIN_W + rc->x) < WIN_H * WIN_W - 1)
@@ -109,8 +117,8 @@ void	put_camera(t_env *e)
 		rc.col = 2 * rc.x / (float)WIN_W - 1;
 		rc.ray_x = e->data->dir_x + rc.cam_x * rc.col;
 		rc.ray_y = e->data->dir_y + rc.cam_y * rc.col;
-		put_dot(e, rc.ray_y + e->data->py, rc.ray_x + e->data->px, 0xff0000);
 		shoot(e, rc);
+		// put_dot(e, rc.ray_y + e->data->py, rc.ray_x + e->data->px, 0xff0000);
 		rc.x++;
 	}
 	put_square(e, e->data->py, e->data->px, 0xff0000);
@@ -129,17 +137,8 @@ void	put_background(t_env *e)
 	ft_int_set(img, WIN_W * WIN_H, 0);
 	hr = WIN_H / e->data->map_h;
 	wr = WIN_W / e->data->map_w;
-	// while (i < WIN_H)
-	// {
-	// 	j = 0;
-	// 	while (j < WIN_W)
-	// 	{
-	// 		if (e->data->map[i / hr][j / wr] == '1')
-	// 			img[i * WIN_W + j] = 0xffffff;
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
+	ft_int_set(img, WIN_W * WIN_H / 2, e->data->sky);
+	ft_int_set(img+WIN_W * WIN_H / 2, WIN_W * WIN_H / 2, e->data->ground);
 	put_camera(e);
 }
 
