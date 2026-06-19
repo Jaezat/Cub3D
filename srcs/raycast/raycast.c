@@ -6,19 +6,17 @@ void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 	int		mid;
 	int		steps;
 	int		col;
-	float	max_dist;
-	float	dist;
 	int		intensity;
+	float	steepness;
 
 	mid = WIN_H / 2;
 	steps = WIN_H / (r->cam_dist) / 2;
-	max_dist = 30.0f;
-	dist = r->cam_dist;
-	if (dist > max_dist)
-		dist = max_dist;
-	if (dist < 0.0f)
-		dist = 0.0f;
-	intensity = (int)(200.0f * (1.0f - (dist / max_dist)));
+	steepness = 0.03f;
+	intensity = (int)(200.0f * exp(-steepness * r->cam_dist));
+	if (intensity > 255)
+		intensity = 255;
+	if (intensity < 0)
+		intensity = 0;
 	col = intensity << 8;
 	while (steps >= 0)
 	{
@@ -138,29 +136,31 @@ void	put_background(t_env *e)
 	hr = WIN_H / e->data->map_h;
 	wr = WIN_W / e->data->map_w;
 	ft_int_set(img, WIN_W * WIN_H / 2, e->data->sky);
-	ft_int_set(img+WIN_W * WIN_H / 2, WIN_W * WIN_H / 2, e->data->ground);
+	ft_int_set(img + WIN_W * WIN_H / 2, WIN_W * WIN_H / 2, e->data->ground);
 	put_camera(e);
 }
 
-// void	load_textures(t_umlx *u)
-// {
-// 	t_data	*d;
-// 	t_img	*img;
-// 	int		i;
-// 	char	**arr;
+void	load_textures(t_env *e)
+{
+	t_data	*d;
+	t_img	*img;
+	t_umlx	*u;
+	int		i;
+	char	**arr;
 
-// 	d = u->d;
-// 	arr = (char *[]){d->no, d->so, d->ea, d->we};
-// 	i = 0;
-// 	while (i < 4)
-// 	{
-// 		img = &d->imgs[i];
-// 		img->ptr = mlx_xpm_file_to_image(u->mlx, arr[i], &img->w, &img->h);
-// 		if (!img->ptr)
-// 		{
-// 			ft_puterr("Error\nFailed to load textures\n");
-// 			exit_exec(u, 1);
-// 		}
-// 		i++;
-// 	}
-// }
+	u = &e->umlx;
+	d = e->data;
+	arr = (char *[]){d->no, d->so, d->ea, d->we};
+	i = 0;
+	while (i < 4)
+	{
+		img = &d->imgs[i];
+		img->ptr = mlx_xpm_file_to_image(u->mlx, arr[i], &img->w, &img->h);
+		if (!img->ptr)
+		{
+			ft_puterr("Error\nFailed to load textures\n");
+			exit_exec(e, 1);
+		}
+		i++;
+	}
+}

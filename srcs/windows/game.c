@@ -21,6 +21,7 @@ void	game(t_data *d)
 	gm.umlx.img = mlx_new_image(gm.umlx.mlx, WIN_W, WIN_H);
 	get_addr(&gm.umlx);
 	hooks_keys(&gm);
+	load_textures(&gm);
 	mlx_loop_hook(gm.umlx.mlx, func(loop), &gm);
 	mlx_loop(gm.umlx.mlx);
 	exit_exec(&gm, 0);
