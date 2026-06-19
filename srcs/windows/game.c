@@ -26,4 +26,3 @@ void	game(t_data *d)
 	exit_exec(&gm, 0);
 	exit_exec(&gm, 1);
 }
-

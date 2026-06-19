@@ -22,6 +22,7 @@
 # include "minimap/mn_structs.h"
 # include "windows/keys.h"
 # include "minimap/mn_functions.h"
+# include "raycast/raycast.h"
 
 # define WIN_W 800
 // # define TO_RATIO / 16 * 9

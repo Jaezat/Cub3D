@@ -7,17 +7,17 @@ bool check_margin(t_data *data, float *new_y, float *new_x)
 	map = data->map;
 	if (*new_y < 0 || *new_y >= data->map_h)
     {
-        printf("map_h: %d\n", data->map_h);
+        // printf("map_h: %d\n", data->map_h);
 		return (false);
     }
 	if (*new_x < 0 || *new_x >= data->map_w)
     {
-        printf("map_h: %d\n", data->map_h);
+        // printf("map_h: %d\n", data->map_h);
 		return (false);	
     }
 	if (map[(int)*new_y][(int)*new_x] == '1')
     {
-        printf("c: %c\n", map[(int)*new_y][(int)*new_x]);
+        // printf("c: %c\n", map[(int)*new_y][(int)*new_x]);
 		return (false);
     }
 	return (true);

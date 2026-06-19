@@ -67,3 +67,17 @@ void	tf_memcpy(void *dest, void *src, size_t len)
 		}
 	}
 }
+
+void	ft_int_set(void *ref, size_t size, int value)
+{
+	size_t	i;
+	int		*mem;
+
+	i = 0;
+	mem = ref;
+	while (i < size)
+	{
+		mem[i] = value;
+		i++;
+	}
+}
