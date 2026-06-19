@@ -1,22 +1,27 @@
 #include "main.h"
 
+// this can be improved to have less math
 void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 {
-	int	ystart;
+	int	mid;
 	int	steps;
+	int	col;
 
-	ystart = WIN_H / 2;
+	mid = WIN_H / 2;
 	steps = WIN_H / (r->cam_dist) / 2;
+	col = ((int)(255 * 255 / (r->cam_dist))) / 255 << 8;
+	if (col > 0xff00)
+		col = 0xff00;
 	while (steps >= 0)
 	{
-		if (((ystart - steps) * WIN_W + rc->x) < WIN_H * WIN_W - 1)
-			if (((ystart - steps) * WIN_W + rc->x) >= 0)
-				e->umlx.img_data.addr[(int)((ystart - steps) * WIN_W
-						+ rc->x)] = 0xff00;
-		if (((ystart + steps - 1) * WIN_W + rc->x) < WIN_H * WIN_W - 1)
-			if (((ystart + steps - 1) * WIN_W + rc->x) >= 0)
-				e->umlx.img_data.addr[(int)((ystart + steps - 1) * WIN_W
-						+ rc->x)] = 0xff00;
+		if (((mid - steps) * WIN_W + rc->x) < WIN_H * WIN_W - 1)
+			if (((mid - steps) * WIN_W + rc->x) >= 0)
+				e->umlx.img_data.addr[(int)((mid - steps) * WIN_W
+						+ rc->x)] = col;
+		if (((mid + steps - 1) * WIN_W + rc->x) < WIN_H * WIN_W - 1)
+			if (((mid + steps - 1) * WIN_W + rc->x) >= 0)
+				e->umlx.img_data.addr[(int)((mid + steps - 1) * WIN_W
+						+ rc->x)] = col;
 		steps--;
 	}
 }
@@ -25,24 +30,24 @@ void	find_hit(t_env *e, t_raycam *rc, t_ray *r)
 {
 	while (r->hit == 0)
 	{
-		if (r->first_x < r->first_y)
+		if (r->curr_x < r->curr_y)
 		{
-			r->first_x += r->x_jump;
+			r->curr_x += r->x_jump;
 			r->map_x += r->x_vec_dir;
 			r->side = 0;
 		}
 		else
 		{
-			r->first_y += r->y_jump;
+			r->curr_y += r->y_jump;
 			r->map_y += r->y_vec_dir;
 			r->side = 1;
 		}
 		if (e->data->map[r->map_y][r->map_x] == '1')
 		{
 			if (r->side == 0)
-				r->cam_dist = (r->first_x - r->x_jump);
+				r->cam_dist = (r->curr_x - r->x_jump);
 			else
-				r->cam_dist = (r->first_y - r->y_jump);
+				r->cam_dist = (r->curr_y - r->y_jump);
 			draw_col(e, rc, r);
 			r->hit = 1;
 		}
@@ -54,22 +59,22 @@ void	set_jumps(t_env *e, t_raycam *rc, t_ray *r)
 	if (rc->ray_x < 0)
 	{
 		r->x_vec_dir = -1;
-		r->first_x = (e->data->px - r->map_x) * r->x_jump;
+		r->curr_x = (e->data->px - r->map_x) * r->x_jump;
 	}
 	else
 	{
 		r->x_vec_dir = 1;
-		r->first_x = (r->map_x + 1.0 - e->data->px) * r->x_jump;
+		r->curr_x = (r->map_x + 1.0 - e->data->px) * r->x_jump;
 	}
 	if (rc->ray_y < 0)
 	{
 		r->y_vec_dir = -1;
-		r->first_y = (e->data->py - r->map_y) * r->y_jump;
+		r->curr_y = (e->data->py - r->map_y) * r->y_jump;
 	}
 	else
 	{
 		r->y_vec_dir = 1;
-		r->first_y = (r->map_y + 1.0 - e->data->py) * r->y_jump;
+		r->curr_y = (r->map_y + 1.0 - e->data->py) * r->y_jump;
 	}
 }
 

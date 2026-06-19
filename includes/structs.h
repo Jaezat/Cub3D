@@ -113,8 +113,8 @@ typedef struct s_ray
 {
 	int		map_x;
 	int		map_y;
-	float	first_x;
-	float	first_y;
+	float	curr_x;
+	float	curr_y;
 	float	x_jump;
 	float	y_jump;
 	float	cam_dist;
