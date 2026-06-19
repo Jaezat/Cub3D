@@ -3,32 +3,23 @@
 // this can be improved to have less math
 void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 {
-	int		mid;
-	int		steps;
-	int		col;
-	int		intensity;
-	float	steepness;
+	int	steps;
+	int	start;
+	int	end;
+	int	i;
 
-	mid = WIN_H / 2;
-	steps = WIN_H / (r->cam_dist) / 2;
-	steepness = 0.03f;
-	intensity = (int)(200.0f * exp(-steepness * r->cam_dist));
-	if (intensity > 255)
-		intensity = 255;
-	if (intensity < 0)
-		intensity = 0;
-	col = intensity << 8;
-	while (steps >= 0)
+	steps = (int)(WIN_H / r->cam_dist);
+	start = -steps / 2 + WIN_H / 2;
+	if (start < 0)
+		start = 0;
+	end = steps / 2 + WIN_H / 2;
+	if (end >= WIN_H)
+		end = WIN_H - 1;
+	i = start;
+	while (i < end)
 	{
-		if (((mid - steps) * WIN_W + rc->x) < WIN_H * WIN_W - 1)
-			if (((mid - steps) * WIN_W + rc->x) >= 0)
-				e->umlx.img_data.addr[(int)((mid - steps) * WIN_W
-						+ rc->x)] = col;
-		if (((mid + steps - 1) * WIN_W + rc->x) < WIN_H * WIN_W - 1)
-			if (((mid + steps - 1) * WIN_W + rc->x) >= 0)
-				e->umlx.img_data.addr[(int)((mid + steps - 1) * WIN_W
-						+ rc->x)] = col;
-		steps--;
+		e->umlx.img_data.addr[(int)(i * WIN_W + rc->x)] = 0xff00;
+		i++;
 	}
 }
 
@@ -116,7 +107,6 @@ void	put_camera(t_env *e)
 		rc.ray_x = e->data->dir_x + rc.cam_x * rc.col;
 		rc.ray_y = e->data->dir_y + rc.cam_y * rc.col;
 		shoot(e, rc);
-		// put_dot(e, rc.ray_y + e->data->py, rc.ray_x + e->data->px, 0xff0000);
 		rc.x++;
 	}
 	put_square(e, e->data->py, e->data->px, 0xff0000);
