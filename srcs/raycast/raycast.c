@@ -6,15 +6,17 @@ void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 	int	steps;
 
 	ystart = WIN_H / 2;
-	steps = WIN_H / (r->cam_dist);
+	steps = WIN_H / (r->cam_dist) / 2;
 	while (steps >= 0)
 	{
 		if (((ystart - steps) * WIN_W + rc->x) < WIN_H * WIN_W - 1)
 			if (((ystart - steps) * WIN_W + rc->x) >= 0)
-				e->umlx.img_data.addr[(int)((ystart - steps) * WIN_W + rc->x)] = 0xff00;
+				e->umlx.img_data.addr[(int)((ystart - steps) * WIN_W
+						+ rc->x)] = 0xff00;
 		if (((ystart + steps - 1) * WIN_W + rc->x) < WIN_H * WIN_W - 1)
 			if (((ystart + steps - 1) * WIN_W + rc->x) >= 0)
-				e->umlx.img_data.addr[(int)((ystart + steps - 1) * WIN_W + rc->x)] = 0xff00;
+				e->umlx.img_data.addr[(int)((ystart + steps - 1) * WIN_W
+						+ rc->x)] = 0xff00;
 		steps--;
 	}
 }
@@ -23,7 +25,7 @@ void	find_hit(t_env *e, t_raycam *rc, t_ray *r)
 {
 	while (r->hit == 0)
 	{
-		if (r->x_jump < r->y_jump)
+		if (r->first_x < r->first_y)
 		{
 			r->first_x += r->x_jump;
 			r->map_x += r->x_vec_dir;
@@ -35,7 +37,7 @@ void	find_hit(t_env *e, t_raycam *rc, t_ray *r)
 			r->map_y += r->y_vec_dir;
 			r->side = 1;
 		}
-		if (e->data->map[r->map_x][r->map_y] > 0)
+		if (e->data->map[r->map_y][r->map_x] == '1')
 		{
 			if (r->side == 0)
 				r->cam_dist = (r->first_x - r->x_jump);
