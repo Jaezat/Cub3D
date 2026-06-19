@@ -7,7 +7,7 @@ void	exit_exec(t_env *env, int exit_code)
 	int		i;
 	t_umlx	*u;
 	t_data	*d;
-	t_img	*img;
+	t_img_data	*img;
 
 	i = 0;
 	d = env->data;
@@ -19,8 +19,8 @@ void	exit_exec(t_env *env, int exit_code)
 	while (i < 4)
 	{
 		img = d->imgs + i;
-		if (img->ptr)
-			mlx_destroy_image(u->mlx, img->ptr);
+		if (img->img)
+			mlx_destroy_image(u->mlx, img->img);
 		i++;
 	}
 	mlx_destroy_window(u->mlx, u->win);

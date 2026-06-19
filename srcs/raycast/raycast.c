@@ -2,23 +2,45 @@
 
 void	pick_tex_col(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 {
-	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = 0xff00;
+	int		texX;
+	float	step;
+	float	texPos;
+	int		texY;
+	int		color;
+
+	// 1. Calculate where the wall was hit (X coordinate on the texture)
 	if (r->side == 0)
 		col->wall_col = r->map_y + r->cam_dist * rc->ray_y;
 	else
 		col->wall_col = r->map_x + r->cam_dist * rc->ray_x;
 	col->wall_col -= floor((col->wall_col));
-	col->tex_col = (int)col->wall_col * col->tex_res;
+	// 2. Get the texture X coordinate
+	texX = (int)(col->wall_col * col->tex_res);
 	if (r->side == 0 && rc->ray_x > 0)
-		col->tex_col = col->tex_res - col->tex_col - 1;
+		texX = col->tex_res - texX - 1;
 	if (r->side == 1 && rc->ray_y < 0)
-		col->tex_col = col->tex_res - col->tex_col - 1;
+		// Fixed: tutorial usually checks ray_y for side 1
+		texX = col->tex_res - texX - 1;
+	// 3. Calculate texture Y coordinate based on current screen Y (col->i)
+	step = 1.0 * col->tex_res / col->steps;
+	// Calculate the texture position relative to the current pixel row (col->i)
+	texPos = (col->i - WIN_H / 2 + col->steps / 2) * step;
+	texY = (int)texPos & (col->tex_res - 1);
+	// 4. Fetch the color from your actual MLX texture image
+	// Assumes your texture data pointer is structured like a flat 1D array of ints
+	// color = *(int *)(e->data->imgs[0].ptr + (col->tex_res * texY + texX));
+	color = 0;
+	// 5. Apply shadows for Y-axis walls
+	if (r->side == 1)
+		color = (color >> 1) & 8355711; // Darken the color
+	// 6. Write DIRECTLY to your MLX image address instead of 'buffer'
+	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = color;
 }
 
 // this can be improved to have less math
 void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 {
-	t_col_draw col;
+	t_col_draw	col;
 
 	col.tex_res = 512;
 	col.steps = (int)(WIN_H / r->cam_dist);
@@ -135,35 +157,41 @@ void	put_background(t_env *e)
 
 	i = 0;
 	img = e->umlx.img_data.addr;
-	ft_int_set(img, WIN_W * WIN_H, 0);
 	hr = WIN_H / e->data->map_h;
 	wr = WIN_W / e->data->map_w;
 	ft_int_set(img, WIN_W * WIN_H / 2, e->data->sky);
 	ft_int_set(img + WIN_W * WIN_H / 2, WIN_W * WIN_H / 2, e->data->ground);
-	put_camera(e);
+	mlx_put_image_to_window(e->umlx.mlx, e->umlx.win, e->data->imgs[1].img, 0,
+		0);
+	// put_camera(e);
 }
+
+void	*get_addr_tex(t_img_data *img);
 
 void	load_textures(t_env *e)
 {
-	t_data	*d;
-	t_img	*img;
-	t_umlx	*u;
-	int		i;
-	char	**arr;
+	t_data		*d;
+	t_img_data	*img;
+	int			i;
+	char		**arr;
 
-	u = &e->umlx;
 	d = e->data;
 	arr = (char *[]){d->no, d->so, d->ea, d->we};
 	i = 0;
 	while (i < 4)
 	{
 		img = &d->imgs[i];
-		img->ptr = mlx_xpm_file_to_image(u->mlx, arr[i], &img->w, &img->h);
-		if (!img->ptr)
+		img->img = mlx_xpm_file_to_image(e->umlx.mlx, arr[i], &img->w, &img->h);
+		if (!img->img)
 		{
 			ft_puterr("Error\nFailed to load textures\n");
 			exit_exec(e, 1);
 		}
+		if (!get_addr_tex(img))
+		{
+			ft_puterr("Error\nFailed to failed to get texture addresses\n");
+			exit_exec(e, 1);
+		};
 		i++;
 	}
 }

@@ -23,6 +23,17 @@ typedef struct s_keys
 	int				right;
 }					t_keys;
 
+typedef struct s_img_data
+{
+	int				bpp;
+	int				endian;
+	int				line_s;
+	int				*addr;
+	void			*img;
+	int				h;
+	int				w;
+}					t_img_data;
+
 typedef struct s_data
 {
 	char			**map;
@@ -34,7 +45,7 @@ typedef struct s_data
 	char			*so;
 	char			*we;
 	char			*ea;
-	t_img			imgs[4];
+	t_img_data		imgs[4];
 	float			dir_x;
 	float			dir_y;
 	float			px;
@@ -92,14 +103,6 @@ typedef struct s_minimap
 	t_cam			cam;
 	int				i;
 }					t_minimap;
-
-typedef struct s_img_data
-{
-	int				bpp;
-	int				endian;
-	int				line_s;
-	int				*addr;
-}					t_img_data;
 
 typedef struct s_umlx
 {
