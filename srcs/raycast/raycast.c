@@ -1,25 +1,91 @@
 #include "main.h"
 
+void	find_hit(t_env *e, t_raycam *rc, t_ray *r)
+{
+	while (r->hit == 0)
+	{
+		if (r->x_jump < r->y_jump)
+		{
+			r->first_x += r->x_jump;
+			r->map_x += r->x_vec_dir;
+			r->side = 0;
+		}
+		else
+		{
+			r->first_y += r->y_jump;
+			r->map_y += r->y_vec_dir;
+			r->side = 1;
+		}
+		if (e->data->map[r->map_x][r->map_y] > 0)
+		{
+			if (r->side == 0)
+				r->cam_dist = (r->first_x - r->x_jump);
+			else
+				r->cam_dist = (r->first_y - r->y_jump);
+			
+			r->hit = 1;
+		}
+	}
+}
+
+void	set_jumps(t_env *e, t_raycam *rc, t_ray *r)
+{
+	if (rc->ray_x < 0)
+	{
+		r->x_vec_dir = -1;
+		r->first_x = (e->data->px - r->map_x) * r->x_jump;
+	}
+	else
+	{
+		r->x_vec_dir = 1;
+		r->first_x = (r->map_x + 1.0 - e->data->px) * r->x_jump;
+	}
+	if (rc->ray_y < 0)
+	{
+		r->y_vec_dir = -1;
+		r->first_y = (e->data->py - r->map_y) * r->y_jump;
+	}
+	else
+	{
+		r->y_vec_dir = 1;
+		r->first_y = (r->map_y + 1.0 - e->data->py) * r->y_jump;
+	}
+}
+
+void	shoot(t_env *e, t_raycam rc)
+{
+	t_ray	r;
+
+	r.map_x = (int)e->data->px;
+	r.map_y = (int)e->data->py;
+	r.hit = 0;
+	if (rc.ray_x == 0)
+		r.x_jump = INFINITY;
+	else
+		r.x_jump = fabs(1 / rc.ray_x);
+	if (rc.ray_y == 0)
+		r.y_jump = INFINITY;
+	else
+		r.y_jump = fabs(1 / rc.ray_y);
+	set_jumps(e, &rc, &r);
+	find_hit(e, &rc, &r);
+}
+
 void	put_camera(t_env *e)
 {
-	int		x;
-	float	camera;
-	float	ray_x;
-	float	ray_y;
-	float	planeX;
-	float	planeY;
+	t_raycam	rc;
 
-	planeX = -e->data->dir_y * 0.66;
-	planeY = e->data->dir_x * 0.66;
-	x = 0;
-	while (x < WIN_W)
+	rc.cam_x = -e->data->dir_y * 0.66;
+	rc.cam_y = e->data->dir_x * 0.66;
+	rc.x = 0;
+	while (rc.x < WIN_W)
 	{
-		camera = 2 * x / (float)WIN_W - 1;
-		ray_x = e->data->dir_x + planeX * camera;
-		ray_y = e->data->dir_y + planeY * camera;
-		put_dot(e, planeY * camera + e->data->py, planeX * camera + e->data->px, 0xff00);
-		put_dot(e, ray_y + e->data->py, ray_x + e->data->px, 0xff0000);
-		x++;
+		rc.col = 2 * rc.x / (float)WIN_W - 1;
+		rc.ray_x = e->data->dir_x + rc.cam_x * rc.col;
+		rc.ray_y = e->data->dir_y + rc.cam_y * rc.col;
+		put_dot(e, rc.ray_y + e->data->py, rc.ray_x + e->data->px, 0xff0000);
+		shoot(e, rc);
+		rc.x++;
 	}
 	put_square(e, e->data->py, e->data->px, 0xff0000);
 }

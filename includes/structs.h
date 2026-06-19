@@ -109,14 +109,30 @@ typedef struct s_umlx
 	t_img_data		img_data;
 }					t_umlx;
 
-typedef struct s_angle
+typedef struct s_ray
 {
-	float			dir_x;
-	float			dir_y;
-	float			plane_x;
-	float			plane_y;
+	int		map_x;
+	int		map_y;
+	float	first_x;
+	float	first_y;
+	float	x_jump;
+	float	y_jump;
+	float	cam_dist;
+	int		x_vec_dir;
+	int		y_vec_dir;
+	int		hit;
+	int		side;
+}			t_ray;
 
-}					t_angle;
+typedef struct s_raycam
+{
+	int		x;
+	float	col;
+	float	ray_x;
+	float	ray_y;
+	float	cam_x;
+	float	cam_y;
+}			t_raycam;
 
 typedef struct s_env
 {
@@ -124,7 +140,7 @@ typedef struct s_env
 	t_umlx			umlx;
 	t_minimap		minimap;
 	t_keys			keys;
-	t_angle			angle;
+	// t_angle			angle;
 }					t_env;
 
 #endif
