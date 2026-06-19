@@ -1,10 +1,10 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-# define RT_ERROR   1
+# define RT_ERROR 1
 # define RT_SUCCESS 0
-# define SAME       0
-# define BUF_SIZE   4095
+# define SAME 0
+# define BUF_SIZE 4095
 
 typedef struct s_img
 {
@@ -15,32 +15,32 @@ typedef struct s_img
 
 typedef struct s_keys
 {
-	int					w;
-	int					a;
-	int					s;
-	int					d;
-	int					left;
-	int					right;
-}						t_keys;
+	int				w;
+	int				a;
+	int				s;
+	int				d;
+	int				left;
+	int				right;
+}					t_keys;
 
 typedef struct s_data
 {
-	char		**map;
-	int			sky;
-	int			ground;
-	int			map_h;
-	int			map_w;
-	char		*no;
-	char		*so;
-	char		*we;
-	char		*ea;
-	t_img		imgs[4];
-	float		dir_x;
-	float		dir_y;
-	float		px;
-	float		py;
-	t_keys		key;
-}				t_data;
+	char			**map;
+	int				sky;
+	int				ground;
+	int				map_h;
+	int				map_w;
+	char			*no;
+	char			*so;
+	char			*we;
+	char			*ea;
+	t_img			imgs[4];
+	float			dir_x;
+	float			dir_y;
+	float			px;
+	float			py;
+	t_keys			key;
+}					t_data;
 
 typedef struct s_parser
 {
@@ -68,12 +68,12 @@ typedef struct s_parser
 
 typedef struct s_camera
 {
-    double x; // coordenada x de donde empieza la camara en el mapa
-    double y; // coordenada y de donde empieza la camara
-    double limit_x;
-    double limit_y;
-    unsigned int c;
-}   t_cam;
+	double x; // coordenada x de donde empieza la camara en el mapa
+	double y; // coordenada y de donde empieza la camara
+	double			limit_x;
+	double			limit_y;
+	unsigned int	c;
+}					t_cam;
 
 typedef struct s_draw
 {
@@ -89,9 +89,9 @@ typedef struct s_draw
 
 typedef struct s_minimap
 {
-    t_cam       cam;
-    int i;
-}   t_minimap; 
+	t_cam			cam;
+	int				i;
+}					t_minimap;
 
 typedef struct s_img_data
 {
@@ -109,30 +109,41 @@ typedef struct s_umlx
 	t_img_data		img_data;
 }					t_umlx;
 
+typedef struct s_col_draw
+{
+	int				steps;
+	int				start;
+	int				end;
+	int				i;
+	float			wall_col;
+	int				tex_col;
+	int				tex_res;
+}					t_col_draw;
+
 typedef struct s_ray
 {
-	int		map_x;
-	int		map_y;
-	float	curr_x;
-	float	curr_y;
-	float	x_jump;
-	float	y_jump;
-	float	cam_dist;
-	int		x_vec_dir;
-	int		y_vec_dir;
-	int		hit;
-	int		side;
-}			t_ray;
+	int				map_x;
+	int				map_y;
+	float			curr_x;
+	float			curr_y;
+	float			x_jump;
+	float			y_jump;
+	float			cam_dist;
+	int				x_vec_dir;
+	int				y_vec_dir;
+	int				hit;
+	int				side;
+}					t_ray;
 
 typedef struct s_raycam
 {
-	int		x;
-	float	col;
-	float	ray_x;
-	float	ray_y;
-	float	cam_x;
-	float	cam_y;
-}			t_raycam;
+	int				x;
+	float			col;
+	float			ray_x;
+	float			ray_y;
+	float			cam_x;
+	float			cam_y;
+}					t_raycam;
 
 typedef struct s_env
 {

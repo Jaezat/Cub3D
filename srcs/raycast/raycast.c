@@ -1,25 +1,38 @@
 #include "main.h"
 
+void	pick_tex_col(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
+{
+	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = 0xff00;
+	if (r->side == 0)
+		col->wall_col = r->map_y + r->cam_dist * rc->ray_y;
+	else
+		col->wall_col = r->map_x + r->cam_dist * rc->ray_x;
+	col->wall_col -= floor((col->wall_col));
+	col->tex_col = (int)col->wall_col * col->tex_res;
+	if (r->side == 0 && rc->ray_x > 0)
+		col->tex_col = col->tex_res - col->tex_col - 1;
+	if (r->side == 1 && rc->ray_y < 0)
+		col->tex_col = col->tex_res - col->tex_col - 1;
+}
+
 // this can be improved to have less math
 void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 {
-	int	steps;
-	int	start;
-	int	end;
-	int	i;
+	t_col_draw col;
 
-	steps = (int)(WIN_H / r->cam_dist);
-	start = -steps / 2 + WIN_H / 2;
-	if (start < 0)
-		start = 0;
-	end = steps / 2 + WIN_H / 2;
-	if (end >= WIN_H)
-		end = WIN_H - 1;
-	i = start;
-	while (i < end)
+	col.tex_res = 512;
+	col.steps = (int)(WIN_H / r->cam_dist);
+	col.start = -col.steps / 2 + WIN_H / 2;
+	if (col.start < 0)
+		col.start = 0;
+	col.end = col.steps / 2 + WIN_H / 2;
+	if (col.end >= WIN_H)
+		col.end = WIN_H - 1;
+	col.i = col.start;
+	while (col.i < col.end)
 	{
-		e->umlx.img_data.addr[(int)(i * WIN_W + rc->x)] = 0xff00;
-		i++;
+		pick_tex_col(e, &col, rc, r);
+		col.i++;
 	}
 }
 
