@@ -66,20 +66,20 @@ void	free_map(void *ref)
 // changed this so need to make sure that it doesnt break
 void	free_data(t_data *d)
 {
-	if (d->ea)
-		free(d->ea);
-	if (d->we)
-		free(d->we);
-	if (d->so)
-		free(d->so);
-	if (d->no)
-		free(d->no);
-	if (d->map)
-	{
-		free_matrix(d->map, d->map_h);
-		d->map = NULL;
-	}
-	free(d);
+	// if (d->ea)
+	// 	free(d->ea);
+	// if (d->we)
+	// 	free(d->we);
+	// if (d->so)
+	// 	free(d->so);
+	// if (d->no)
+	// 	free(d->no);
+	// if (d->map)
+	// {
+	// 	free_matrix(d->map, d->map_h);
+	// 	d->map = NULL;
+	// }
+	// free(d);
 }
 
 void	err_exit_msg(char *msg, char *arg, t_parser *p)

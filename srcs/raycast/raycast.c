@@ -1,5 +1,29 @@
 #include "main.h"
 
+void	put_camera(t_env *e)
+{
+	int		x;
+	float	camera;
+	float	ray_x;
+	float	ray_y;
+	float	planeX;
+	float	planeY;
+
+	planeX = -e->data->dir_y * 0.66;
+	planeY = e->data->dir_x * 0.66;
+	x = 0;
+	while (x < WIN_W)
+	{
+		camera = 2 * x / (float)WIN_W - 1;
+		ray_x = e->data->dir_x + planeX * camera;
+		ray_y = e->data->dir_y + planeY * camera;
+		put_dot(e, planeY * camera + e->data->py, planeX * camera + e->data->px, 0xff00);
+		put_dot(e, ray_y + e->data->py, ray_x + e->data->px, 0xff0000);
+		x++;
+	}
+	put_square(e, e->data->py, e->data->px, 0xff0000);
+}
+
 void	put_background(t_env *e)
 {
 	int	*img;
@@ -8,9 +32,9 @@ void	put_background(t_env *e)
 	int	wr;
 	int	j;
 
+	i = 0;
 	img = e->umlx.img_data.addr;
 	ft_int_set(img, WIN_W * WIN_H, 0x808080);
-	i = 0;
 	hr = WIN_H / e->data->map_h;
 	wr = WIN_W / e->data->map_w;
 	while (i < WIN_H)
@@ -24,7 +48,7 @@ void	put_background(t_env *e)
 		}
 		i++;
 	}
-	put_square(e, e->data->py, e->data->px, 0xff0000);
+	put_camera(e);
 }
 
 // void	load_textures(t_umlx *u)
