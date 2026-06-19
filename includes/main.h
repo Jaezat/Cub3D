@@ -24,9 +24,9 @@
 # include "minimap/mn_functions.h"
 # include "raycast/raycast.h"
 
-# define WIN_W 800
-// # define TO_RATIO / 16 * 9
-# define TO_RATIO / 1
+# define WIN_W 1600
+# define TO_RATIO / 16 * 9
+// # define TO_RATIO / 1
 # define WIN_H WIN_W TO_RATIO
 
 # define M_PI 3.14159265358979323846

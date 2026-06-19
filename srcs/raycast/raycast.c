@@ -34,7 +34,7 @@ void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 {
 	t_col_draw	col;
 
-	col.tex_res = 512;
+	col.tex_res = 32;
 	col.steps = (int)(WIN_H / r->cam_dist);
 	col.start = -col.steps / 2 + WIN_H / 2;
 	if (col.start < 0)
