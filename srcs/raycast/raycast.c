@@ -9,11 +9,11 @@ void	pick_tex_col(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 	int		color;
 
 	if (r->side == 0)
-		col->wall_col = r->map_y + r->cam_dist * rc->ray_y;
-	else
-		col->wall_col = r->map_x + r->cam_dist * rc->ray_x;
-	col->wall_col -= floor((col->wall_col));
-	texX = (int)(col->wall_col * col->tex_res);
+        col->wall_col = e->data->py + r->cam_dist * rc->ray_y;
+    else
+        col->wall_col = e->data->px + r->cam_dist * rc->ray_x;
+    col->wall_col -= floor((col->wall_col));
+    texX = (int)(col->wall_col * col->tex_res);
 	if (r->side == 0 && rc->ray_x > 0)
 		texX = col->tex_res - texX - 1;
 	if (r->side == 1 && rc->ray_y < 0)
@@ -22,9 +22,8 @@ void	pick_tex_col(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 	texPos = (col->i - WIN_H / 2 + col->steps / 2) * step;
 	texY = (int)texPos & (col->tex_res - 1);
 	color = *(int *)(e->data->imgs[1].addr + (col->tex_res * texY + texX));
-	// optionallllllllllllll
 	if (r->side == 1)
-	// this is basically filterting reminiscent bits frmom the bit shift
+	// optionaol this is basically filterting reminiscent bits from bitshift
 	// so they dont bleed to other color channels
 		color = (color >> 1) & 8355711;
 	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = color;
