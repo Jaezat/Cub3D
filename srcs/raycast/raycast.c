@@ -1,5 +1,24 @@
 #include "main.h"
 
+void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
+{
+	int	ystart;
+	int	steps;
+
+	ystart = WIN_H / 2;
+	steps = WIN_H / (r->cam_dist);
+	while (steps >= 0)
+	{
+		if (((ystart - steps) * WIN_W + rc->x) < WIN_H * WIN_W - 1)
+			if (((ystart - steps) * WIN_W + rc->x) >= 0)
+				e->umlx.img_data.addr[(int)((ystart - steps) * WIN_W + rc->x)] = 0xff00;
+		if (((ystart + steps - 1) * WIN_W + rc->x) < WIN_H * WIN_W - 1)
+			if (((ystart + steps - 1) * WIN_W + rc->x) >= 0)
+				e->umlx.img_data.addr[(int)((ystart + steps - 1) * WIN_W + rc->x)] = 0xff00;
+		steps--;
+	}
+}
+
 void	find_hit(t_env *e, t_raycam *rc, t_ray *r)
 {
 	while (r->hit == 0)
@@ -22,7 +41,7 @@ void	find_hit(t_env *e, t_raycam *rc, t_ray *r)
 				r->cam_dist = (r->first_x - r->x_jump);
 			else
 				r->cam_dist = (r->first_y - r->y_jump);
-			
+			draw_col(e, rc, r);
 			r->hit = 1;
 		}
 	}
@@ -60,11 +79,11 @@ void	shoot(t_env *e, t_raycam rc)
 	r.map_y = (int)e->data->py;
 	r.hit = 0;
 	if (rc.ray_x == 0)
-		r.x_jump = INFINITY;
+		r.x_jump = 1e30;
 	else
 		r.x_jump = fabs(1 / rc.ray_x);
 	if (rc.ray_y == 0)
-		r.y_jump = INFINITY;
+		r.y_jump = 1e30;
 	else
 		r.y_jump = fabs(1 / rc.ray_y);
 	set_jumps(e, &rc, &r);
@@ -100,20 +119,20 @@ void	put_background(t_env *e)
 
 	i = 0;
 	img = e->umlx.img_data.addr;
-	ft_int_set(img, WIN_W * WIN_H, 0x808080);
+	ft_int_set(img, WIN_W * WIN_H, 0);
 	hr = WIN_H / e->data->map_h;
 	wr = WIN_W / e->data->map_w;
-	while (i < WIN_H)
-	{
-		j = 0;
-		while (j < WIN_W)
-		{
-			if (e->data->map[i / hr][j / wr] == '1')
-				img[i * WIN_W + j] = 0xffffff;
-			j++;
-		}
-		i++;
-	}
+	// while (i < WIN_H)
+	// {
+	// 	j = 0;
+	// 	while (j < WIN_W)
+	// 	{
+	// 		if (e->data->map[i / hr][j / wr] == '1')
+	// 			img[i * WIN_W + j] = 0xffffff;
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
 	put_camera(e);
 }
 
