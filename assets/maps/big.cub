@@ -1,7 +1,7 @@
-SO ./assets/textures/not_impressed.xpm
-WE ./assets/textures/not_impressed.xpm
-EA ./assets/textures/not_impressed.xpm
-NO ./assets/textures/not_impressed.xpm
+SO ./assets/textures/lavender.xpm
+WE ./assets/textures/lavender.xpm
+EA ./assets/textures/lavender.xpm
+NO ./assets/textures/lavender.xpm
 F 63, 130, 63
 C 80, 100, 255
 
