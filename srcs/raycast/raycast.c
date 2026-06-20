@@ -4,12 +4,12 @@ int	wall_no(t_env *e, t_ray *r, t_raycam *rc)
 {
 	if (r->side == 1)
 	{
-		if (r->y_vec_dir - e->data->dir_y > 0)
+		if (r->y_vec_dir - rc->cam_y > 0)
 			return (WE);
 		else
 			return (EA);
 	}
-	if (r->x_vec_dir - e->data->dir_x < 0)
+	if (r->x_vec_dir - rc->cam_x < 0)
 		return (NO);
 	else
 		return (SO);
