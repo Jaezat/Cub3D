@@ -1,18 +1,22 @@
 #include "main.h"
 
-int	wall_no(t_env *e, t_ray *r, t_raycam *rc)
+// in case of no return which is impossible i think???
+int	wall_no(t_ray *r)
 {
-	if (r->side == 1)
+	if (r->side == 0)
 	{
-		if (r->y_vec_dir - rc->cam_y > 0)
-			return (WE);
-		else
+		if (r->x_vec_dir > 0)
 			return (EA);
+		else
+			return (WE);
 	}
-	if (r->x_vec_dir - rc->cam_x < 0)
-		return (NO);
 	else
-		return (SO);
+	{
+		if (r->y_vec_dir > 0)
+			return (SO);
+		else
+			return (NO);
+	}
 }
 
 void	pick_tex_col(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
@@ -29,15 +33,15 @@ void	pick_tex_col(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 		col->wall_col = e->data->px + r->cam_dist * rc->ray_x;
 	col->wall_col -= floor((col->wall_col));
 	texX = (int)(col->wall_col * col->tex_res);
-	if (r->side == 0 && rc->ray_x > 0)
+	if (r->side == 0 && rc->ray_x < 0)
 		texX = col->tex_res - texX - 1;
-	if (r->side == 1 && rc->ray_y < 0)
+	if (r->side == 1 && rc->ray_y > 0)
 		texX = col->tex_res - texX - 1;
 	step = 1.0 * col->tex_res / col->steps;
 	texPos = (col->i - WIN_H / 2 + col->steps / 2) * step;
 	texY = (int)texPos & (col->tex_res - 1);
-	color = *(int *)(e->data->imgs[wall_no(e, r, rc) - 1].addr + (col->tex_res
-				* texY + texX));
+	color = *(int *)(e->data->imgs[wall_no(r) - 1].addr + (col->tex_res * texY
+				+ texX));
 	if (r->side == 1)
 		color = (color >> 1) & 0x7f7f7f;
 	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = color;
@@ -48,7 +52,7 @@ void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 {
 	t_col_draw	col;
 
-	col.tex_res = 512;
+	col.tex_res = 16;
 	col.steps = (int)(WIN_H / r->cam_dist);
 	col.start = -col.steps / 2 + WIN_H / 2;
 	if (col.start < 0)
@@ -59,7 +63,6 @@ void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 	col.i = col.start;
 	while (col.i < col.end)
 	{
-		// e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = 0xff00;
 		pick_tex_col(e, &col, rc, r);
 		col.i++;
 	}
