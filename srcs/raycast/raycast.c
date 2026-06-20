@@ -4,12 +4,12 @@ int	wall_no(t_env *e, t_ray *r, t_raycam *rc)
 {
 	if (r->side == 1)
 	{
-		if (r->x_vec_dir < 0)
+		if (r->y_vec_dir - e->data->dir_y > 0)
 			return (WE);
 		else
 			return (EA);
 	}
-	if (r->y_vec_dir < 0)
+	if (r->x_vec_dir - e->data->dir_x < 0)
 		return (NO);
 	else
 		return (SO);
@@ -36,7 +36,7 @@ void	pick_tex_col(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 	step = 1.0 * col->tex_res / col->steps;
 	texPos = (col->i - WIN_H / 2 + col->steps / 2) * step;
 	texY = (int)texPos & (col->tex_res - 1);
-	color = *(int *)(e->data->imgs[1].addr + (col->tex_res
+	color = *(int *)(e->data->imgs[wall_no(e, r, rc) - 1].addr + (col->tex_res
 				* texY + texX));
 	if (r->side == 1)
 		color = (color >> 1) & 0x7f7f7f;
