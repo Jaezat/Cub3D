@@ -157,4 +157,12 @@ typedef struct s_env
 	// t_angle			angle;
 }					t_env;
 
+typedef enum e_wall
+{
+	NO = 1,
+	SO = 2,
+	EA = 3,
+	WE = 4,
+}					t_wall;
+
 #endif

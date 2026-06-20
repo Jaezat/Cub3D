@@ -56,8 +56,8 @@
 # define K_D 100
 # define K_S 115
 
-# define MOV_INC 0.2
-# define ANG_INC 7 // this is number of degrees per frame 
+# define MOV_INC 0.1
+# define ANG_INC 2 // this is number of degrees per frame 
 # define ANG_V ANG_INC * RAD
 
 // keep this ? ////////////////////////////////////////////////////////////////

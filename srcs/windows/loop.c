@@ -8,7 +8,7 @@ int	loop(void *param)
 	
 	movement(env);
 	put_background(env);
-	// draw_minimap(env);
+	draw_minimap(env);
 	mlx_put_image_to_window(env->umlx.mlx, env->umlx.win, env->umlx.img, 0, 0);
 	usleep(1000000 / 60);
 	return (0);

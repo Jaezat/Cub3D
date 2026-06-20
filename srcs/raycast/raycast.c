@@ -1,5 +1,20 @@
 #include "main.h"
 
+int	wall_no(t_env *e, t_ray *r, t_raycam *rc)
+{
+	if (r->side == 1)
+	{
+		if (r->x_vec_dir < 0)
+			return (WE);
+		else
+			return (EA);
+	}
+	if (r->y_vec_dir < 0)
+		return (NO);
+	else
+		return (SO);
+}
+
 void	pick_tex_col(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 {
 	int		texX;
@@ -9,11 +24,11 @@ void	pick_tex_col(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 	int		color;
 
 	if (r->side == 0)
-        col->wall_col = e->data->py + r->cam_dist * rc->ray_y;
-    else
-        col->wall_col = e->data->px + r->cam_dist * rc->ray_x;
-    col->wall_col -= floor((col->wall_col));
-    texX = (int)(col->wall_col * col->tex_res);
+		col->wall_col = e->data->py + r->cam_dist * rc->ray_y;
+	else
+		col->wall_col = e->data->px + r->cam_dist * rc->ray_x;
+	col->wall_col -= floor((col->wall_col));
+	texX = (int)(col->wall_col * col->tex_res);
 	if (r->side == 0 && rc->ray_x > 0)
 		texX = col->tex_res - texX - 1;
 	if (r->side == 1 && rc->ray_y < 0)
@@ -21,11 +36,10 @@ void	pick_tex_col(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 	step = 1.0 * col->tex_res / col->steps;
 	texPos = (col->i - WIN_H / 2 + col->steps / 2) * step;
 	texY = (int)texPos & (col->tex_res - 1);
-	color = *(int *)(e->data->imgs[1].addr + (col->tex_res * texY + texX));
+	color = *(int *)(e->data->imgs[1].addr + (col->tex_res
+				* texY + texX));
 	if (r->side == 1)
-	// optionaol this is basically filterting reminiscent bits from bitshift
-	// so they dont bleed to other color channels
-		color = (color >> 1) & 8355711;
+		color = (color >> 1) & 0x7f7f7f;
 	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = color;
 }
 
@@ -45,6 +59,7 @@ void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 	col.i = col.start;
 	while (col.i < col.end)
 	{
+		// e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = 0xff00;
 		pick_tex_col(e, &col, rc, r);
 		col.i++;
 	}
@@ -133,6 +148,9 @@ void	put_camera(t_env *e)
 		rc.col = 2 * rc.x / (float)WIN_W - 1;
 		rc.ray_x = e->data->dir_x + rc.cam_x * rc.col;
 		rc.ray_y = e->data->dir_y + rc.cam_y * rc.col;
+		// put_dot(e, rc.ray_y + e->data->py, rc.ray_x + e->data->px, 0xff00);
+		// put_dot(e, rc.cam_y * rc.col + e->data->py, rc.cam_x * rc.col
+		// + e->data->px, 0xff00);
 		shoot(e, rc);
 		rc.x++;
 	}
