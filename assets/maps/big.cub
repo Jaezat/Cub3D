@@ -1,7 +1,7 @@
-SO ./assets/textures/gradient/s.xpm
-WE ./assets/textures/gradient/w.xpm
-EA ./assets/textures/gradient/e.xpm
-NO ./assets/textures/gradient/n.xpm
+SO ./assets/textures/graphical_design/s.xpm
+WE ./assets/textures/graphical_design/w.xpm
+EA ./assets/textures/graphical_design/e.xpm
+NO ./assets/textures/graphical_design/n.xpm
 F 30, 30, 30
 C 40, 40, 40
 

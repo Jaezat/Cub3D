@@ -25,9 +25,9 @@ void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r,
 	int	texY;
 	int	color;
 
-	texY = (int)*texPos & (col->tex_res - 1);
+	texY = (int)*texPos & (e->data->imgs[r->wall_id].h - 1);
 	*texPos += step;
-	color = *(int *)(e->data->imgs[r->wall_id].addr + (col->tex_res * texY
+	color = *(int *)(e->data->imgs[r->wall_id].addr + (e->data->imgs[r->wall_id].h * texY
 				+ texX));
 	// if (r->side == 1)
 	// 	color = (color >> 1) & 0x7f7f7f;
@@ -42,7 +42,7 @@ void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 	float		texPos;
 
 	r->wall_id = wall_no(r);
-	col.tex_res = 512;
+	col.tex_res = e->data->imgs[r->wall_id].w;
 	col.steps = (int)(WIN_H / r->cam_dist);
 	col.start = -col.steps / 2 + WIN_H / 2;
 	if (col.start < 0)
@@ -131,11 +131,11 @@ void	shoot(t_env *e, t_raycam rc)
 	r.map_y = (int)e->data->py;
 	r.hit = 0;
 	if (rc.ray_x == 0)
-		r.x_jump = 1e30;
+		r.x_jump = INFINITY;
 	else
 		r.x_jump = fabs(1 / rc.ray_x);
 	if (rc.ray_y == 0)
-		r.y_jump = 1e30;
+		r.y_jump = INFINITY;
 	else
 		r.y_jump = fabs(1 / rc.ray_y);
 	set_jumps(e, &rc, &r);
