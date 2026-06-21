@@ -19,40 +19,30 @@ int	wall_no(t_ray *r)
 	}
 }
 
-void	pick_tex_col(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
+void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r,
+		int texX, float *texPos, float step)
 {
-	int		texX;
-	float	step;
-	float	texPos;
-	int		texY;
-	int		color;
+	int	texY;
+	int	color;
 
-	if (r->side == 0)
-		col->wall_col = e->data->py + r->cam_dist * rc->ray_y;
-	else
-		col->wall_col = e->data->px + r->cam_dist * rc->ray_x;
-	col->wall_col -= floor((col->wall_col));
-	texX = (int)(col->wall_col * col->tex_res);
-	if (r->side == 0 && rc->ray_x < 0)
-		texX = col->tex_res - texX - 1;
-	if (r->side == 1 && rc->ray_y > 0)
-		texX = col->tex_res - texX - 1;
-	step = 1.0 * col->tex_res / col->steps;
-	texPos = (col->i - WIN_H / 2 + col->steps / 2) * step;
-	texY = (int)texPos & (col->tex_res - 1);
-	color = *(int *)(e->data->imgs[wall_no(r) - 1].addr + (col->tex_res * texY
+	texY = (int)*texPos & (col->tex_res - 1);
+	*texPos += step;
+	color = *(int *)(e->data->imgs[r->wall_id].addr + (col->tex_res * texY
 				+ texX));
-	if (r->side == 1)
-		color = (color >> 1) & 0x7f7f7f;
+	// if (r->side == 1)
+	// 	color = (color >> 1) & 0x7f7f7f;
 	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = color;
 }
 
-// this can be improved to have less math
 void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 {
 	t_col_draw	col;
+	int			texX;
+	float		step;
+	float		texPos;
 
-	col.tex_res = 16;
+	r->wall_id = wall_no(r);
+	col.tex_res = 512;
 	col.steps = (int)(WIN_H / r->cam_dist);
 	col.start = -col.steps / 2 + WIN_H / 2;
 	if (col.start < 0)
@@ -60,10 +50,23 @@ void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 	col.end = col.steps / 2 + WIN_H / 2;
 	if (col.end >= WIN_H)
 		col.end = WIN_H - 1;
-	col.i = col.start;
+	if (r->side == 0)
+		col.wall_col = e->data->py + r->cam_dist * rc->ray_y;
+	else
+		col.wall_col = e->data->px + r->cam_dist * rc->ray_x;
+	col.wall_col -= floor(col.wall_col);
+	texX = (int)(col.wall_col * col.tex_res);
+	if ((r->side == 0 && rc->ray_x < 0) || (r->side == 1 && rc->ray_y > 0))
+		texX = col.tex_res - texX - 1;
+	step = 1.0f * col.tex_res / col.steps;
+	if (col.start > 0)
+		col.i = col.start;
+	else
+		col.i = 0;
+	texPos = (col.i - WIN_H / 2 + col.steps / 2) * step;
 	while (col.i < col.end)
 	{
-		pick_tex_col(e, &col, rc, r);
+		pixel_put_tex(e, &col, rc, r, texX, &texPos, step);
 		col.i++;
 	}
 }
@@ -151,7 +154,7 @@ void	put_camera(t_env *e)
 		rc.col = 2 * rc.x / (float)WIN_W - 1;
 		rc.ray_x = e->data->dir_x + rc.cam_x * rc.col;
 		rc.ray_y = e->data->dir_y + rc.cam_y * rc.col;
-		// put_dot(e, rc.ray_y + e->data->py, rc.ray_x + e->data->px, 0xff00);
+		put_dot(e, rc.ray_y + e->data->py, rc.ray_x + e->data->px, 0xff00);
 		// put_dot(e, rc.cam_y * rc.col + e->data->py, rc.cam_x * rc.col
 		// + e->data->px, 0xff00);
 		shoot(e, rc);

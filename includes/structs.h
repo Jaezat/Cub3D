@@ -136,6 +136,7 @@ typedef struct s_ray
 	int				y_vec_dir;
 	int				hit;
 	int				side;
+	int				wall_id;
 }					t_ray;
 
 typedef struct s_raycam
@@ -159,10 +160,10 @@ typedef struct s_env
 
 typedef enum e_wall
 {
-	NO = 1,
-	SO = 2,
-	EA = 3,
-	WE = 4,
+	NO,
+	SO,
+	EA,
+	WE,
 }					t_wall;
 
 #endif
