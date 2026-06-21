@@ -6,16 +6,16 @@ int	wall_no(t_ray *r)
 	if (r->side == 0)
 	{
 		if (r->x_vec_dir > 0)
-			return (EA);
-		else
 			return (WE);
+		else
+			return (EA);
 	}
 	else
 	{
 		if (r->y_vec_dir > 0)
-			return (SO);
-		else
 			return (NO);
+		else
+			return (SO);
 	}
 }
 
@@ -27,8 +27,8 @@ void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r,
 
 	texY = (int)*texPos & (e->data->imgs[r->wall_id].h - 1);
 	*texPos += step;
-	color = *(int *)(e->data->imgs[r->wall_id].addr + (e->data->imgs[r->wall_id].h * texY
-				+ texX));
+	color = *(int *)(e->data->imgs[r->wall_id].addr
+			+ (e->data->imgs[r->wall_id].h * texY + texX));
 	// if (r->side == 1)
 	// 	color = (color >> 1) & 0x7f7f7f;
 	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = color;
@@ -196,6 +196,11 @@ void	load_textures(t_env *e)
 	{
 		img = &d->imgs[i];
 		img->img = mlx_xpm_file_to_image(e->umlx.mlx, arr[i], &img->w, &img->h);
+		if (img->w != img->h || img->w < 1)
+		{
+			ft_puterr("Error\nTextures need to be perfectly squared\n");
+			exit_exec(e, 1);
+		}
 		if (!img->img)
 		{
 			ft_puterr("Error\nFailed to load textures\n");
