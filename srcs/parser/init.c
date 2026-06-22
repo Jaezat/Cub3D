@@ -43,7 +43,6 @@ void	get_player(t_data *d, int x, int y)
 {
 	if (d->map[y][x] == 'N')
 	{
-		// printf("Init x and y:")
 		d->dir_x = 0;
 		d->dir_y = -1;
 	}
@@ -51,7 +50,7 @@ void	get_player(t_data *d, int x, int y)
 	{
 		d->dir_x = 1;
 		d->dir_y = 0;
-	}	
+	}
 	if (d->map[y][x] == 'S')
 	{
 		d->dir_x = 0;

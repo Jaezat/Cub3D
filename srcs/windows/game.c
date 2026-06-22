@@ -5,7 +5,6 @@ static inline t_clean	func(void *f_ptr)
 	return ((t_clean)f_ptr);
 }
 
-
 void	game(t_data *d)
 {
 	t_env	gm;

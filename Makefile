@@ -16,7 +16,7 @@ OBJ_DIR = build/
 SRCS    = $(addprefix $(SRC_DIR), main.c)
 
 PARSE 		= init asset trim flood fill copy
-RAYCAST		= raycast puts
+RAYCAST		= raycast puts dda
 # remove test /////////////////////////////////////////////////////////////////
 UTILS		= gnl utl0 utl1 exit test
 MINI_FILES 	= draw utils init
@@ -80,7 +80,10 @@ do_over: clean all
 	./$(NAME) $(TESTMAP)
 
 norme:
-	norminette srcs/parser/ | grep -vE "header"
+	norminette srcs/parser | grep -vE "header"
+	norminette srcs/raycast | grep -vE "header"
+	norminette srcs/windows | grep -vE "header"
+	norminette srcs/main | grep -vE "header"
 
 CFLAGS += -g
 CFLAGS += -O3

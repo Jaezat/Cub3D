@@ -4,9 +4,9 @@
 // should aways have an error message even when mlx funcs fail??
 void	exit_exec(t_env *env, int exit_code)
 {
-	int		i;
-	t_umlx	*u;
-	t_data	*d;
+	int			i;
+	t_umlx		*u;
+	t_data		*d;
 	t_img_data	*img;
 
 	i = 0;
@@ -63,7 +63,6 @@ void	free_map(void *ref)
 	free(map);
 }
 
-// changed this so need to make sure that it doesnt break
 void	free_data(t_data *d)
 {
 	if (d->ea)

@@ -24,7 +24,7 @@ void	safe_pix_put(t_umlx *u, int byte, int color)
 		u->img_data.addr[byte] = color;
 }
 
-void	put_square(t_env *e, float hf, float wf, int color)
+void	put_square(t_env *e, float hf, float wf, int c)
 {
 	int	i;
 	int	h;
@@ -41,7 +41,7 @@ void	put_square(t_env *e, float hf, float wf, int color)
 		{
 			if ((h + i) > 0 && (h + i) < (WIN_H + i))
 				if ((w + j) > 0 && (w + j) < (WIN_W + j))
-					safe_pix_put(&e->umlx, (int)(WIN_W * (h + i) + w + j), color);
+					safe_pix_put(&e->umlx, (int)(WIN_W * (h + i) + w + j), c);
 			j++;
 		}
 		i++;

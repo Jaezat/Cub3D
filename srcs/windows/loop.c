@@ -5,7 +5,6 @@ int	loop(void *param)
 	t_env	*env;
 
 	env = (t_env *)param;
-	
 	movement(env);
 	put_background(env);
 	draw_minimap(env);
