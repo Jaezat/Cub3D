@@ -31,7 +31,7 @@ void	free_matrix(void *ref, int h);
 
 // fill ///////////////////////////////////////////////////////////////////////
 void	start_flooding(t_parser *p);
-void	splash(t_parser *p, int r, int c, char tag);
+// void	splash(t_parser *p, int r, int c, char tag);
 
 // copy ///////////////////////////////////////////////////////////////////////
 t_data	*pass_it_on(t_parser *parser);

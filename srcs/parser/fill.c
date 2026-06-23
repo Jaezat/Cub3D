@@ -24,8 +24,8 @@
 
 void	start_flooding(t_parser *p)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < p->exec_map_h && p->exec_map[i])
@@ -35,7 +35,8 @@ void	start_flooding(t_parser *p)
 		{
 			if (i > 0 && p->map[i - 1][j] == 'X')
 				err_exit_msg("There is a void on the map", 0, p);
-			if (i < p->exec_map_h - 1 && p->map[i + 1][j] == 'X')
+			if (i < p->exec_map_h - 1 && p->exec_map[i + 1] && p->map[i
+				+ 1][j] == 'X')
 				err_exit_msg("There is a void on the map", 0, p);
 			if (j > 0 && p->map[i][j - 1] == 'X')
 				err_exit_msg("There is a void on the map", 0, p);

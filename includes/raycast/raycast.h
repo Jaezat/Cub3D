@@ -3,8 +3,7 @@
 
 // raycast.c
 int		wall_no(t_ray *r);
-void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r,
-			int tex_x, float *tex_pos, float step);
+void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r);
 void	draw_col(t_env *e, t_raycam *rc, t_ray *r);
 void	find_hit(t_env *e, t_raycam *rc, t_ray *r);
 void	set_jumps(t_env *e, t_raycam *rc, t_ray *r);

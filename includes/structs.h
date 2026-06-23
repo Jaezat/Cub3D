@@ -121,6 +121,9 @@ typedef struct s_col_draw
 	float			wall_col;
 	int				tex_col;
 	int				tex_res;
+	int				tex_x;
+	float			step;
+	float			tex_pos;
 }					t_col_draw;
 
 typedef struct s_ray

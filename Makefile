@@ -71,7 +71,7 @@ re: fclean all
 
 total_makeover: clean mlx_clean
 
-TESTMAP = assets/maps/big.cub
+TESTMAP = assets/maps/huge.cub
 
 go: all
 	./$(NAME) $(TESTMAP)
@@ -80,10 +80,7 @@ do_over: clean all
 	./$(NAME) $(TESTMAP)
 
 norme:
-	norminette srcs/parser | grep -vE "header"
-	norminette srcs/raycast | grep -vE "header"
-	norminette srcs/windows | grep -vE "header"
-	norminette srcs/main | grep -vE "header"
+	norminette srcs | grep -vE "header"
 
 CFLAGS += -g
 CFLAGS += -O3

@@ -56,8 +56,6 @@ void	put_background(t_env *e)
 	put_camera(e);
 }
 
-void	*get_addr_tex(t_img_data *img);
-
 void	exit_msg_exec(t_env *e, char *err_msg)
 {
 	ft_puterr(err_msg);

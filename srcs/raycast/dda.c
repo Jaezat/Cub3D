@@ -18,16 +18,15 @@ int	wall_no(t_ray *r)
 	}
 }
 
-void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r,
-		int tex_x, float *tex_pos, float step)
+void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 {
 	int	tex_y;
 	int	color;
 
-	tex_y = (int)*tex_pos & (e->data->imgs[r->wall_id].h - 1);
-	*tex_pos += step;
+	tex_y = (int)col->tex_pos & (e->data->imgs[r->wall_id].h - 1);
+	col->tex_pos += col->step;
 	color = *(int *)(e->data->imgs[r->wall_id].addr
-			+ (e->data->imgs[r->wall_id].h * tex_y + tex_x));
+			+ (e->data->imgs[r->wall_id].h * tex_y + col->tex_x));
 	if (r->side == 1)
 		color = (color >> 1) & 0x7f7f7f;
 	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = color;
@@ -36,9 +35,6 @@ void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r,
 void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 {
 	t_col_draw	col;
-	int			tex_x;
-	float		step;
-	float		tex_pos;
 
 	r->wall_id = wall_no(r);
 	col.tex_res = e->data->imgs[r->wall_id].w;
@@ -54,18 +50,18 @@ void	draw_col(t_env *e, t_raycam *rc, t_ray *r)
 	else
 		col.wall_col = e->data->px + r->cam_dist * rc->ray_x;
 	col.wall_col -= floor(col.wall_col);
-	tex_x = (int)(col.wall_col * col.tex_res);
+	col.tex_x = (int)(col.wall_col * col.tex_res);
 	if ((r->side == 0 && rc->ray_x < 0) || (r->side == 1 && rc->ray_y > 0))
-		tex_x = col.tex_res - tex_x - 1;
-	step = 1.0f * col.tex_res / col.steps;
+		col.tex_x = col.tex_res - col.tex_x - 1;
+	col.step = 1.0f * col.tex_res / col.steps;
 	if (col.start > 0)
 		col.i = col.start;
 	else
 		col.i = 0;
-	tex_pos = (col.i - WIN_H / 2 + col.steps / 2) * step;
+	col.tex_pos = (col.i - WIN_H / 2 + col.steps / 2) * col.step;
 	while (col.i < col.end)
 	{
-		pixel_put_tex(e, &col, rc, r, tex_x, &tex_pos, step);
+		pixel_put_tex(e, &col, rc, r);
 		col.i++;
 	}
 }
