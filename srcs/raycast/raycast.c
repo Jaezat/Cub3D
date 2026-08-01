@@ -78,6 +78,8 @@ void	load_textures(t_env *e)
 		img->img = mlx_xpm_file_to_image(e->umlx.mlx, arr[i], &img->w, &img->h);
 		if (img->w != img->h || img->w < 1)
 			exit_msg_exec(e, "Error\nTextures need to be perfectly squared\n");
+		if (!it_power_two(img->w))
+			exit_msg_exec(e, "Error\nTextures need to be a power of two\n");
 		if (!img->img)
 			exit_msg_exec(e, "Error\nFailed to load textures\n");
 		if (!get_addr_tex(img))

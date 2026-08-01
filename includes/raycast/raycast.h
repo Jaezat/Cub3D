@@ -15,6 +15,9 @@ void	safe_pix_put(t_umlx *u, int byte, int color);
 void	put_square(t_env *e, float hf, float wf, int c);
 void	put_dot(t_env *e, float hf, float wf, int color);
 
+// power.c
+bool	it_power_two(int num);
+
 // dda.c
 void	shoot(t_env *e, t_raycam rc);
 void	put_camera(t_env *e);
