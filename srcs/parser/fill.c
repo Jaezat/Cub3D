@@ -22,6 +22,30 @@
 // 	splash(p, r, c + 1, tag);
 // }
 
+void	check_borders(t_parser *p)
+{
+	int	i;
+
+	i = 0;
+	while (i < p->exec_map_h)
+	{
+		if (p->exec_map[i][0] != '1')
+			err_exit_msg("There is a void on the map", 0, p);
+		if (p->exec_map[i][p->exec_map_w - 2] != '1')
+			err_exit_msg("There is a void on the map", 0, p);
+		i++;
+	}
+	i = 0;
+	while (i < p->exec_map_w - 1)
+	{
+		if (p->exec_map[0][i] != '1')
+			err_exit_msg("There is a void on the map", 0, p);
+		if (p->exec_map[p->exec_map_h - 1][i] != '1')
+			err_exit_msg("There is a void on the map", 0, p);
+		i++;
+	}
+}
+
 void	start_flooding(t_parser *p)
 {
 	int	i;
@@ -46,4 +70,5 @@ void	start_flooding(t_parser *p)
 		}
 		i++;
 	}
+	check_borders(p);
 }

@@ -31,6 +31,7 @@ void	free_matrix(void *ref, int h);
 
 // fill ///////////////////////////////////////////////////////////////////////
 void	start_flooding(t_parser *p);
+void	check_borders(t_parser *p);
 // void	splash(t_parser *p, int r, int c, char tag);
 
 // copy ///////////////////////////////////////////////////////////////////////
@@ -44,10 +45,11 @@ void	put_background(t_env *e);
 void	get_addr(t_umlx *u);
 
 // mlx1 ////////////////////////////////////////////////////////////////////////
-void    pick_action(int keycode, t_env *env);
+void	pick_action(int keycode, t_env *env);
 int		hook(int keycode, void *param);
-void    load_textures(t_env *e);
+void	load_textures(t_env *e);
 int		loop(void *param);
 
 #endif
+
 ///////////////////////////////////////////////////////////////////////////////
