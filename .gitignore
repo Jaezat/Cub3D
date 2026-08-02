@@ -3,4 +3,4 @@ cub3D
 mlx_linux/
 vgcore.*
 .venv
-.kilo
+.vscode
