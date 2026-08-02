@@ -16,7 +16,7 @@ OBJ_DIR = build/
 SRCS    = $(addprefix $(SRC_DIR), main.c)
 
 PARSE 		= init asset trim flood fill copy
-RAYCAST		= raycast puts dda power
+RAYCAST		= raycast puts dda power col_draw
 UTILS		= gnl utl0 utl1 exit exit_helper
 W_FILES 	= game loop keys movement utils
 SRCS	+= $(addprefix srcs/parser/, $(addsuffix .c, $(PARSE)))

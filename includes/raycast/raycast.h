@@ -4,7 +4,6 @@
 // raycast.c
 int		wall_no(t_ray *r);
 void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r);
-void	draw_col(t_env *e, t_raycam *rc, t_ray *r);
 void	find_hit(t_env *e, t_raycam *rc, t_ray *r);
 void	set_jumps(t_env *e, t_raycam *rc, t_ray *r);
 
@@ -24,5 +23,10 @@ void	put_camera(t_env *e);
 void	put_background(t_env *e);
 void	exit_msg_exec(t_env *e, char *err_msg);
 void	load_textures(t_env *e);
+
+// col_draw.c
+void	draw_col_conditions(t_env *e, t_raycam *rc, t_ray *r, t_col_draw *col);
+void	draw_col(t_env *e, t_raycam *rc, t_ray *r);
+
 
 #endif
