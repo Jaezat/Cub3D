@@ -5,10 +5,9 @@ CFLAGS	= -Wall -Wextra -Iincludes
 # CFLAGS	+= -Werror
 CFLAGS	+= -I$(INC_DIR) -I$(MLX_DIR)
 RM          = rm -rf
-# MAKE_NP	= make --no-print-directory # not in use
 
 # verify in detail what all of these do ///////////////////////////////////////
-MLXFLGS	= -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
+MLXFLGS	= -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lX11 -lXext -lm -lz
 
 SRC_DIR = srcs/
 OBJ_DIR = build/
@@ -38,14 +37,6 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
-# Does this rule impact the way we are compiling in Makefile? /////////////////
-
-# You must use the miniLibX. Either the version that is available on the
-# operating system, or from its sources. If you choose to work with the 
-# sources, you will need to apply the same rules for your libft as those 
-# written above in Common Instructions part.
-
-# check for best practices when downloading ///////////////////////////////////
 $(MLX_DIR):
 	@echo "Cloning minilibx-linux from GitHub..."
 	@git clone https://github.com/42paris/minilibx-linux.git $(MLX_DIR)
