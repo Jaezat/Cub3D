@@ -9,6 +9,9 @@ void	copier(char *dest, char *src, int len);
 char	*joiner(char *line, char *buf);
 char	*gnl(int fd);
 
+// exit helper
+void	destroy_textures(t_env *env, t_umlx *u);
+
 // exit
 void	exit_parse(t_parser *p, int exit_co);
 void    exit_exec(t_env *env, int exit_code);
@@ -30,10 +33,5 @@ void	tf_memcpy(void *dest, void *src, size_t len);
 void	space_to_wall(void *ref, size_t size);
 void	ft_int_set(void *ref, size_t size, int value);
 
-// void	test_rem(void);
-// void	display_map(t_parser *p);
-// void	print_t_parser(t_parser *p);
-// void	print_t_data(t_data *d);
-// void	disp_map_arr(t_parser *p);
 #endif
 ///////////////////////////////////////////////////////////////////////////////

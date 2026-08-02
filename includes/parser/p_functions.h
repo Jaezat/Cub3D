@@ -45,8 +45,6 @@ void	put_background(t_env *e);
 void	get_addr(t_umlx *u);
 
 // mlx1 ////////////////////////////////////////////////////////////////////////
-void	pick_action(int keycode, t_env *env);
-int		hook(int keycode, void *param);
 void	load_textures(t_env *e);
 int		loop(void *param);
 

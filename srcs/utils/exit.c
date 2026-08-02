@@ -1,28 +1,14 @@
 #include "main.h"
 
-// i dont know about this one // if (u->img) mlx_destroy_image(u->mlx, u->img);
-// should aways have an error message even when mlx funcs fail??
 void	exit_exec(t_env *env, int exit_code)
 {
-	int			i;
-	t_umlx		*u;
-	t_data		*d;
-	t_img_data	*img;
+	t_umlx	*u;
 
-	i = 0;
-	d = env->data;
 	u = &env->umlx;
 	if (u->img)
 		mlx_destroy_image(u->mlx, u->img);
 	if (u->win)
-		i = 0;
-	while (i < 4)
-	{
-		img = d->imgs + i;
-		if (img->img)
-			mlx_destroy_image(u->mlx, img->img);
-		i++;
-	}
+		destroy_textures(env, u);
 	mlx_destroy_window(u->mlx, u->win);
 	if (u->mlx)
 	{

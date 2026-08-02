@@ -13,10 +13,8 @@
 
 # include "../mlx_linux/mlx.h"
 
-// internal library headers ///////////////////////////////////////////////////
-# include "structs.h"                 // ← add this, must be first
+# include "structs.h"
 // # include "parser/p_structs.h"
-# include "windows/wdw_mlx_struct.h"
 # include "parser/p_functions.h"
 # include "parser/p_utils.h"
 # include "windows/keys.h"
@@ -30,11 +28,6 @@
 # define M_PI 3.14159265358979323846
 # define RAD M_PI / 180.0
 # define ANG M_PI / 2
-
-/*minimap*/
-# define MAP_W 19
-# define MAP_H 7 // number of tiles i want in my map
-
 
 # define MINIMAP_SIZE 200
 # define MINIMAP_TILE 10
@@ -55,7 +48,7 @@
 # define K_S 115
 
 # define MOV_INC 0.1
-# define ANG_INC 2 // this is number of degrees per frame 
+# define ANG_INC 2
 # define ANG_V ANG_INC * RAD
 
 // keep this ? ////////////////////////////////////////////////////////////////
