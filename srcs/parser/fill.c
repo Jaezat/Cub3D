@@ -22,6 +22,8 @@
 // 	splash(p, r, c + 1, tag);
 // }
 
+
+// segfault at the last line deref when NULL
 void	check_borders(t_parser *p)
 {
 	int	i;
