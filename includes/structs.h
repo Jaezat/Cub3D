@@ -77,15 +77,6 @@ typedef struct s_parser
 	char			*ea;
 }					t_parser;
 
-typedef struct s_camera
-{
-	double x; // coordenada x de donde empieza la camara en el mapa
-	double y; // coordenada y de donde empieza la camara
-	double			limit_x;
-	double			limit_y;
-	unsigned int	c;
-}					t_cam;
-
 typedef struct s_draw
 {
 	int				map_y;
@@ -97,12 +88,6 @@ typedef struct s_draw
 	unsigned int	color;
 	char			c_map;
 }					t_draw;
-
-typedef struct s_minimap
-{
-	t_cam			cam;
-	int				i;
-}					t_minimap;
 
 typedef struct s_umlx
 {
@@ -156,7 +141,6 @@ typedef struct s_env
 {
 	t_data			*data;
 	t_umlx			umlx;
-	t_minimap		minimap;
 	t_keys			keys;
 	// t_angle			angle;
 }					t_env;

@@ -19,9 +19,7 @@
 # include "windows/wdw_mlx_struct.h"
 # include "parser/p_functions.h"
 # include "parser/p_utils.h"
-# include "minimap/mn_structs.h"
 # include "windows/keys.h"
-# include "minimap/mn_functions.h"
 # include "raycast/raycast.h"
 
 # define WIN_W 1600
