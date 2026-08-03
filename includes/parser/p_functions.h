@@ -29,10 +29,18 @@ void	check_valid_chars(t_parser *p);
 void	get_check_width(t_parser *p);
 void	free_matrix(void *ref, int h);
 
+// fill_h
+void	pop(t_stack **old_top);
+void	free_stack(t_stack *top);
+t_stack	*push(t_parser *p, t_stack *old_top, int x, int y);
+bool	is_space_at_limit(t_parser *p, t_stack ff, char **map);
+bool	is_beyond_map_limit(t_parser *p, t_stack ff);
+
 // fill ///////////////////////////////////////////////////////////////////////
+void	flood_sched(t_parser *p, t_stack **top, t_stack ff);
+void	flood_var_init(t_parser *p, t_flood_helper *h, int x, int y);
+bool	flood_fill(t_parser *p, int x, int y, int pix);
 void	start_flooding(t_parser *p);
-void	check_borders(t_parser *p);
-// void	splash(t_parser *p, int r, int c, char tag);
 
 // copy ///////////////////////////////////////////////////////////////////////
 t_data	*pass_it_on(t_parser *parser);

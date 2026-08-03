@@ -153,4 +153,20 @@ typedef enum e_wall
 	WE,
 }					t_wall;
 
+typedef struct s_stack
+{
+	int				x;
+	int				y;
+	struct s_stack	*next;
+}					t_stack;
+
+typedef struct s_flood_helper
+{
+	t_stack			*top;
+	t_stack			cur;
+	int				start;
+	char			**map;
+}					t_flood_helper;
+
+
 #endif

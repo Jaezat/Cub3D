@@ -14,7 +14,7 @@ OBJ_DIR = build/
 
 SRCS    = $(addprefix $(SRC_DIR), main.c)
 
-PARSE 		= init asset trim flood fill copy
+PARSE 		= init asset trim flood fill fill_h copy
 RAYCAST		= raycast puts dda power col_draw
 UTILS		= gnl utl0 utl1 exit exit_helper
 W_FILES 	= game loop keys movement utils
@@ -55,7 +55,7 @@ mlx_clean:
 
 re: fclean all
 
-# remoeve custom rules ////////////////////////////////////////////////////////
+# remove custom rules /////////////////////////////////////////////////////////
 
 total_makeover: clean mlx_clean
 
