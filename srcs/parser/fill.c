@@ -55,7 +55,7 @@ void	start_flooding(t_parser *p)
 	while (i < p->exec_map_h && p->map[i])
 	{
 		j = 0;
-		while (j < p->exec_map_w - 2)
+		while (j < p->exec_map_w - 1)
 		{
 			if (p->map[i][j] == 'N' || p->map[i][j] == 'E'
 				|| p->map[i][j] == 'W' || p->map[i][j] == 'S')
