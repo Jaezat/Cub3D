@@ -18,35 +18,6 @@ void	flood_var_init(t_parser *p, t_flood_helper *h, int x, int y)
 		err_exit_msg("Failed to allocate memory\n", 0, p);
 }
 
-void	disp_map(t_parser *p)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	if (p->map)
-		while (i < p->exec_map_h && p->map[i])
-		{
-			j = 0;
-			while (j < p->exec_map_w)
-			{
-				/* if (p->map[i][j] == '\0')
-					printf(" |");
-				else */
-				if (p->map[i][j] == '\n')
-					printf("N|");
-				else /* if (p->map[i][j] == '1')
-					printf("█|");
-				else */
-					printf("%c|", p->map[i][j]);
-				j++;
-			}
-			printf("\n");
-			i++;
-		}
-	printf("_______________\n");
-}
-
 bool	flood_fill(t_parser *p, int x, int y, int pix)
 {
 	t_flood_helper	h;
@@ -58,17 +29,14 @@ bool	flood_fill(t_parser *p, int x, int y, int pix)
 			break ;
 		h.cur.x = h.top->x;
 		h.cur.y = h.top->y;
-		printf("%d %d\n", h.top->x, h.top->y);
-		disp_map(p);
-		usleep(500);
 		pop(&h.top);
 		if (is_beyond_map_limit(p, h.cur))
 			continue ;
 		if (is_space_at_limit(p, h.cur, h.map))
 			return (free_stack(h.top), false);
 		if (h.map[h.cur.y] && (h.map[h.cur.y][h.cur.x] == '1'
-				|| h.map[h.cur.y][h.cur.x] == pix
-				|| h.map[h.cur.y][h.cur.x] == 'X'))
+			|| h.map[h.cur.y][h.cur.x] == pix
+			|| h.map[h.cur.y][h.cur.x] == 'X'))
 			continue ;
 		if (h.map[h.cur.y][h.cur.x] == h.start)
 			h.map[h.cur.y][h.cur.x] = pix;

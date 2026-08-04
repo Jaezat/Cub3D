@@ -55,6 +55,6 @@ bool	is_space_at_limit(t_parser *p, t_stack ff, char **map)
 
 bool	is_beyond_map_limit(t_parser *p, t_stack ff)
 {
-	return (ff.y < 0 || ff.x < 0 || ff.y > p->exec_map_h - 1 || ff.x > p->exec_map_w
-		- 2);
+	return (ff.y < 0 || ff.x < 0 || ff.y > p->exec_map_h - 1
+		|| ff.x > p->exec_map_w - 2);
 }
