@@ -80,7 +80,7 @@ void	check_map_elements(t_parser *p)
 	p->exec_map = p->map_head + i;
 	p->exec_map_h = p->map_h - i;
 	if (!p->ea || !p->no || !p->so || !p->we)
-		err_exit_msg("Missing XPM identifier", 0, p);
+		err_exit_msg("Unexpected identifier", 0, p);
 	if (!p->floor || !p->ceiling)
 		err_exit_msg("Missing floor or ceiling identifier", 0, p);
 	trim_convert(p);

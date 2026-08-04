@@ -49,7 +49,7 @@ void	check_color_amount(char *str, char **rgb, t_parser *p)
 			in_space = true;
 	}
 	if (n_colors != 3 || commas != 2)
-		err_exit_msg("Needs three colors between commas", 0, p);
+		err_exit_msg("Three colors required between commas", 0, p);
 }
 
 void	convert_colors(int floor, char **rgb, t_parser *p)
@@ -65,14 +65,14 @@ void	convert_colors(int floor, char **rgb, t_parser *p)
 	while (color < 3)
 	{
 		i = 0;
-		while (rgb[color][i] && ft_isdigit(rgb[color][i]) && i < 4)
+		while (rgb[color][i] && ft_isdigit(rgb[color][i]))
 		{
 			hex[color] *= 10;
 			hex[color] += rgb[color][i] - '0';
 			i++;
+			if (hex[color] > 255)
+				err_exit_msg("Color range must be 0 - 255", 0, p);
 		}
-		if (hex[color] > 255)
-			err_exit_msg("Color range must be 0 - 255", 0, p);
 		color++;
 	}
 }
