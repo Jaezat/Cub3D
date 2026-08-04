@@ -47,14 +47,14 @@ bool	is_space_at_limit(t_parser *p, t_stack ff, char **map)
 	bool	ret;
 
 	ret = (ff.y == 0 && map[ff.y][ff.x] == '0') || (ff.x == 0
-			&& map[ff.y][ff.x] == '0') || (ff.y == p->exec_map_h
+			&& map[ff.y][ff.x] == '0') || (ff.y == p->exec_map_h - 1
 			&& map[ff.y][ff.x] == '0') || (ff.x == p->exec_map_w - 2
-			&& map[ff.y][ff.x] == '0');
+			&& map[ff.y][ff.x] == '0' || map[ff.y][ff.x] == 'X');
 	return (ret);
 }
 
 bool	is_beyond_map_limit(t_parser *p, t_stack ff)
 {
-	return (ff.y < 0 || ff.x < 0 || ff.y > p->exec_map_h || ff.x > p->exec_map_w
+	return (ff.y < 0 || ff.x < 0 || ff.y > p->exec_map_h - 1 || ff.x > p->exec_map_w
 		- 2);
 }
