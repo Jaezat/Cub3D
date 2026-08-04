@@ -32,7 +32,8 @@ void	disp_map(t_parser *p)
 			{
 				/* if (p->map[i][j] == '\0')
 					printf(" |");
-				else */ if (p->map[i][j] == '\n')
+				else */
+				if (p->map[i][j] == '\n')
 					printf("N|");
 				else /* if (p->map[i][j] == '1')
 					printf("█|");
@@ -65,8 +66,9 @@ bool	flood_fill(t_parser *p, int x, int y, int pix)
 			continue ;
 		if (is_space_at_limit(p, h.cur, h.map))
 			return (free_stack(h.top), false);
-		if (h.map[h.cur.y] && h.map[h.cur.y][h.cur.x] == '1'
-			|| h.map[h.cur.y][h.cur.x] == pix || h.map[h.cur.y][h.cur.x] == 'X' || h.map[h.cur.y][h.cur.x] == ' ')
+		if (h.map[h.cur.y] && (h.map[h.cur.y][h.cur.x] == '1'
+				|| h.map[h.cur.y][h.cur.x] == pix
+				|| h.map[h.cur.y][h.cur.x] == 'X'))
 			continue ;
 		if (h.map[h.cur.y][h.cur.x] == h.start)
 			h.map[h.cur.y][h.cur.x] = pix;

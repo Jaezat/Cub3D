@@ -7,9 +7,9 @@ void	exit_exec(t_env *env, int exit_code)
 	u = &env->umlx;
 	if (u->img)
 		mlx_destroy_image(u->mlx, u->img);
+	destroy_textures(env, u);
 	if (u->win)
-		destroy_textures(env, u);
-	mlx_destroy_window(u->mlx, u->win);
+		mlx_destroy_window(u->mlx, u->win);
 	if (u->mlx)
 	{
 		mlx_destroy_display(u->mlx);
