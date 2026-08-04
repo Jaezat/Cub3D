@@ -59,7 +59,7 @@ bool	flood_fill(t_parser *p, int x, int y, int pix)
 		h.cur.y = h.top->y;
 		printf("%d %d\n", h.top->x, h.top->y);
 		disp_map(p);
-		usleep(1000);
+		usleep(500);
 		pop(&h.top);
 		if (is_beyond_map_limit(p, h.cur))
 			continue ;

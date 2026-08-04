@@ -26,7 +26,7 @@ void	extension_check(char *file, char *ext, t_parser *p)
 	if (*(file + ext_len - 5) == '/')
 		err_exit_msg("Name too short -> ", file + ext_len - 5, p);
 	if (is_cubed_ext(file + ext_len - 4, ext) == false)
-		err_exit_msg("Wrong texture path", 0, p);
+		err_exit_msg("Wrong file extension", 0, p);
 	p->map_file = file;
 }
 
