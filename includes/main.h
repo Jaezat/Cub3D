@@ -22,18 +22,12 @@
 
 # define WIN_W 1600
 # define TO_RATIO / 16 * 9
-// # define TO_RATIO / 1
 # define WIN_H WIN_W TO_RATIO
 
 # define M_PI 3.14159265358979323846
 # define RAD M_PI / 180.0
 # define ANG M_PI / 2
 
-# define MINIMAP_SIZE 200
-# define MINIMAP_TILE 10
-# define MINIMAP_TILE_SIZE (MINIMAP_SIZE / CAM_SIZE)
-# define CAM_SIZE 5
-# define OFFSET (MINIMAP_TILE * 4)
 # define MARGIN 0.1
 
 # define K_LEFT 65361

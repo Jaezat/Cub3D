@@ -6,57 +6,34 @@ bool	check_margin(t_data *data, float *new_y, float *new_x)
 
 	map = data->map;
 	if (*new_y < 0 || *new_y >= data->map_h)
-	{
 		return (false);
-	}
 	if (*new_x < 0 || *new_x >= data->map_w)
-	{
 		return (false);
-	}
 	if (map[(int)*new_y][(int)*new_x] == '1')
-	{
 		return (false);
-	}
 	return (true);
+}
+
+bool	position_is_clear(t_data *data, float y, float x)
+{
+	float	left;
+	float	right;
+	float	top;
+	float	bottom;
+
+	left = x - MARGIN;
+	right = x + MARGIN;
+	top = y - MARGIN;
+	bottom = y + MARGIN;
+	return (check_margin(data, &top, &left) && check_margin(data, &top, &right)
+		&& check_margin(data, &bottom, &left) && check_margin(data, &bottom,
+			&right));
 }
 
 void	checking_position(t_data *data, float *new_y, float *new_x)
 {
-	float	x_plus;
-	float	x_minus;
-	float	y_plus;
-	float	y_minus;
-
-	x_plus = *new_x + MARGIN;
-	x_minus = *new_x - MARGIN;
-	y_plus = *new_y + MARGIN;
-	y_minus = *new_y - MARGIN;
-	if (check_margin(data, new_y, &x_plus) && check_margin(data, new_y,
-			&x_minus))
-	{
+	if (position_is_clear(data, data->py, *new_x))
 		data->px = *new_x;
-	}
-	if (check_margin(data, &y_plus, new_x) && check_margin(data, &y_minus,
-			new_x))
-	{
+	if (position_is_clear(data, *new_y, data->px))
 		data->py = *new_y;
-	}
 }
-
-// void checking_position(t_data *data, float *new_y, float *new_x)
-// {
-//     float x_plus = *new_x + MARGIN;
-//     float x_minus = *new_x - MARGIN;
-//     float y_plus = *new_y + MARGIN;
-//     float y_minus = *new_y - MARGIN;
-//     if (check_margin(data, &data->py, &x_plus)
-//         && check_margin(data, &data->py, &x_minus))
-//     {
-//         data->px = *new_x;
-//     }
-//     if (check_margin(data, &y_plus, &data->px)
-//         && check_margin(data, &y_minus, &data->px))
-//     {
-//         data->py = *new_y;
-//     }
-// }
