@@ -19,7 +19,7 @@ bool	it_power_two(int num);
 
 // dda.c
 void	shoot(t_env *e, t_raycam rc);
-void	put_camera(t_env *e);
+void	camera(t_env *e);
 void	put_background(t_env *e);
 void	exit_msg_exec(t_env *e, char *err_msg);
 void	load_textures(t_env *e);

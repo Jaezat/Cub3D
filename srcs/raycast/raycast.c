@@ -19,7 +19,7 @@ void	shoot(t_env *e, t_raycam rc)
 	find_hit(e, &rc, &r);
 }
 
-void	put_camera(t_env *e)
+void	camera(t_env *e)
 {
 	t_raycam	rc;
 
@@ -39,14 +39,11 @@ void	put_camera(t_env *e)
 void	put_background(t_env *e)
 {
 	int	*img;
-	int	i;
 
-	i = 0;
 	img = e->umlx.img_data.addr;
-	ft_int_set(img, WIN_W * WIN_H, 0);
 	ft_int_set(img, WIN_W * WIN_H / 2, e->data->sky);
 	ft_int_set(img + WIN_W * WIN_H / 2, WIN_W * WIN_H / 2, e->data->ground);
-	put_camera(e);
+	camera(e);
 }
 
 void	exit_msg_exec(t_env *e, char *err_msg)
@@ -69,12 +66,12 @@ void	load_textures(t_env *e)
 	{
 		img = &d->imgs[i];
 		img->img = mlx_xpm_file_to_image(e->umlx.mlx, arr[i], &img->w, &img->h);
+		if (!img->img)
+			exit_msg_exec(e, "Error\nFailed to load textures\n");
 		if (img->w != img->h || img->w < 1)
 			exit_msg_exec(e, "Error\nTextures need to be perfectly squared\n");
 		if (!it_power_two(img->w))
 			exit_msg_exec(e, "Error\nTextures need to be a power of two\n");
-		if (!img->img)
-			exit_msg_exec(e, "Error\nFailed to load textures\n");
 		if (!get_addr_tex(img))
 			exit_msg_exec(e, "Error\nFailed to get texture addresses\n");
 		i++;

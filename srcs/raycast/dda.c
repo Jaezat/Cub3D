@@ -2,6 +2,7 @@
 
 int	wall_no(t_ray *r)
 {
+	// this looks wrong 
 	if (r->side == 0)
 	{
 		if (r->x_vec_dir > 0)
@@ -25,6 +26,7 @@ void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 
 	tex_y = (int)col->tex_pos & (e->data->imgs[r->wall_id].h - 1);
 	col->tex_pos += col->step;
+	// check why tex_y is called this instead of width
 	color = *(int *)(e->data->imgs[r->wall_id].addr
 			+ (e->data->imgs[r->wall_id].h * tex_y + col->tex_x));
 	if (r->side == 1)
@@ -65,6 +67,7 @@ void	set_jumps(t_env *e, t_raycam *rc, t_ray *r)
 	if (rc->ray_x < 0)
 	{
 		r->x_vec_dir = -1;
+		// revise why its multiplying by xjump already in this step
 		r->curr_x = (e->data->px - r->map_x) * r->x_jump;
 	}
 	else

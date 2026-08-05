@@ -1,6 +1,5 @@
 #include "main.h"
 
-// this is better because it has protection
 void	*get_addr_tex(t_img_data *img)
 {
 	img->addr = (int *)mlx_get_data_addr(img->img, &img->bpp, &img->line_s,
