@@ -19,9 +19,6 @@ void	shoot(t_env *e, t_raycam rc)
 	find_hit(e, &rc, &r);
 }
 
-// debugging
-// put_dot(e, rc.ray_y + e->data->py, rc.ray_x + e->data->px, 0xff00);
-// put_square(e, e->data->py, e->data->px, 0xff0000);
 void	put_camera(t_env *e)
 {
 	t_raycam	rc;
@@ -43,14 +40,10 @@ void	put_background(t_env *e)
 {
 	int	*img;
 	int	i;
-	int	hr;
-	int	wr;
-	int	j;
 
 	i = 0;
 	img = e->umlx.img_data.addr;
-	hr = WIN_H / e->data->map_h;
-	wr = WIN_W / e->data->map_w;
+	ft_int_set(img, WIN_W * WIN_H, 0);
 	ft_int_set(img, WIN_W * WIN_H / 2, e->data->sky);
 	ft_int_set(img + WIN_W * WIN_H / 2, WIN_W * WIN_H / 2, e->data->ground);
 	put_camera(e);
