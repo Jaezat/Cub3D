@@ -32,12 +32,11 @@
 # include "raycast/raycast.h"
 
 # define WIN_W 1600
-# define TO_RATIO / 16 * 9
-# define WIN_H WIN_W TO_RATIO
+# define WIN_H 900
 
 # define M_PI 3.14159265358979323846
-# define RAD M_PI / 180.0
-# define ANG M_PI / 2
+# define RAD 0.017453293
+# define ANG 1.570796327
 
 # define MARGIN 0.1
 
@@ -54,7 +53,7 @@
 
 # define MOV_INC 0.1
 # define ANG_INC 2
-# define ANG_V ANG_INC * RAD
+# define ANG_V 0.034906586
 
 typedef int				(*t_clean)();
 

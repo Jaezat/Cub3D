@@ -179,5 +179,4 @@ typedef struct s_flood_helper
 	char			**map;
 }					t_flood_helper;
 
-
 #endif

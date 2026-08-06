@@ -64,6 +64,7 @@ VFLAGS += -s
 VFLAGS += --track-fds=yes
 VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all
 
-err: valgrind $(VFLAGS) ./$(NAME) ./$(TESTMAP)
+err:
+	valgrind $(VFLAGS) ./$(NAME) ./$(TESTMAP)
 
 .PHONY: all clean fclean re

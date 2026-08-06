@@ -40,5 +40,4 @@ void	load_textures(t_env *e);
 void	draw_col_conditions(t_env *e, t_raycam *rc, t_ray *r, t_col_draw *col);
 void	draw_col(t_env *e, t_raycam *rc, t_ray *r);
 
-
 #endif
