@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 19:41:07 by leschunc          #+#    #+#             */
-/*   Updated: 2026/08/06 19:41:12 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/08/06 22:30:35 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,6 @@ char	*joiner(char *line, char *buf)
 	return (newline);
 }
 
-// added + 1 in buf size and didnt test yet
-// what is gnl fails from bad read, how can i tell outside
-// does it matter? will have partial map and will be invalidated
-// or lucky and gets validated
 char	*gnl(int fd)
 {
 	static char	buf[BUF_SIZE + 1];

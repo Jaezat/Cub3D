@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 19:41:24 by leschunc          #+#    #+#             */
-/*   Updated: 2026/08/06 19:41:25 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/08/06 22:24:53 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	space_to_wall(void *ref, size_t size)
 	mem = ref;
 	while (i < size)
 	{
-		if (mem[i] == ' ')
+		if (mem[i] == ' ' || mem[i] == '\0')
 			mem[i] = 'X';
 		i++;
 	}

@@ -58,9 +58,9 @@ TESTMAP = assets/maps/big.cub
 go: all
 	./$(NAME) $(TESTMAP)
 
-CFLAGS += -g
-CFLAGS += -O3
-VFLAGS += -s
+# CFLAGS += -g
+# CFLAGS += -O3
+# VFLAGS += -s
 VFLAGS += --track-fds=yes
 VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all
 

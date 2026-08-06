@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 19:35:35 by leschunc          #+#    #+#             */
-/*   Updated: 2026/08/06 19:35:40 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/08/06 21:46:06 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ void	check_map(t_parser *p)
 	if (p->map_h < 3)
 		err_exit_msg("Map doesn't meet minimum size", 0, p);
 	p->map_head = malloc(sizeof(char *) * (p->map_h + 1));
-	ft_bzero(p->map_head, sizeof(char *) * (p->map_h + 1));
 	if (!p->map_head)
 		err_exit_msg("Failed to allocate memory for map", 0, p);
+	ft_bzero(p->map_head, sizeof(char *) * (p->map_h + 1));
 	load_map_file(p);
 	check_map_elements(p);
 	flood_init(p);

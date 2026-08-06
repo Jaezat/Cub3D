@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 19:36:28 by leschunc          #+#    #+#             */
-/*   Updated: 2026/08/06 19:36:29 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/08/06 23:56:25 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ bool	flood_fill(t_parser *p, int x, int y, int pix)
 			continue ;
 		if (is_space_at_limit(p, h.cur, h.map))
 			return (free_stack(h.top), false);
+		if (h.map[h.cur.y] && (h.map[h.cur.y][h.cur.x] == 'X'
+				|| h.map[h.cur.y][h.cur.x] == '\n'))
+			return (free_stack(h.top), false);
 		if (h.map[h.cur.y] && (h.map[h.cur.y][h.cur.x] == '1'
-			|| h.map[h.cur.y][h.cur.x] == pix))
+				|| h.map[h.cur.y][h.cur.x] == pix))
 			continue ;
 		if (h.map[h.cur.y][h.cur.x] == h.start)
 			h.map[h.cur.y][h.cur.x] = pix;
@@ -73,9 +76,12 @@ void	start_flooding(t_parser *p)
 			{
 				dir = p->map[i][j];
 				p->map[i][j] = '0';
+				disp_map(p);
 				if (!flood_fill(p, j, i, '*'))
 					err_exit_msg("There is a hole on the map!\n", 0, p);
+				disp_map(p);
 				flood_fill(p, j, i, '0');
+				disp_map(p);
 				p->map[i][j] = dir;
 			}
 			j++;

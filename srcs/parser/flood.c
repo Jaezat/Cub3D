@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 19:36:59 by leschunc          #+#    #+#             */
-/*   Updated: 2026/08/06 19:37:16 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/08/06 22:31:16 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	check_valid_chars(t_parser *p)
 			c = p->exec_map[i][j];
 			if (c != 'N' && c != 'S' && c != 'W' && c != 'E' && c != '0'
 				&& c != '1' && c != '\n' && c != ' ')
-				err_exit_msg("Forbidden char within map", 0, p);
+				err_exit_msg("Forbidden char", 0, p);
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 				if (++player > 1)
 					err_exit_msg("More than one player detected", 0, p);
@@ -92,7 +92,7 @@ void	alloc_fill_matrix(t_parser *p, char **map)
 		if (!map[i])
 			err_exit_msg("Failed to allocate memory for line", 0, p);
 		ft_bzero(map[i], p->exec_map_w);
-		copier(map[i], p->exec_map[i], ft_strlen(p->exec_map[i]) - 1);
+		copier(map[i], p->exec_map[i], p->exec_map_w);
 		space_to_wall(map[i], p->exec_map_w);
 		i++;
 	}
@@ -111,9 +111,9 @@ void	flood_init(t_parser *p)
 	check_valid_chars(p);
 	get_check_width(p);
 	map = malloc((p->exec_map_h + 1) * sizeof(char *));
-	ft_bzero(map, (p->exec_map_h + 1) * sizeof(char *));
 	if (!map)
 		err_exit_msg("Failed to allocate memory for map array", 0, p);
+	ft_bzero(map, (p->exec_map_h + 1) * sizeof(char *));
 	p->map = map;
 	alloc_fill_matrix(p, map);
 	start_flooding(p);
