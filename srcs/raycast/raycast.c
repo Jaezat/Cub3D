@@ -7,14 +7,14 @@ void	shoot(t_env *e, t_raycam rc)
 	r.map_x = (int)e->data->px;
 	r.map_y = (int)e->data->py;
 	r.hit = 0;
-	if (rc.ray_x == 0)
+	if (rc.r_dir_x == 0)
 		r.x_jump = INFINITY;
 	else
-		r.x_jump = fabs(1 / rc.ray_x);
-	if (rc.ray_y == 0)
+		r.x_jump = fabs(1 / rc.r_dir_x);
+	if (rc.r_dir_y == 0)
 		r.y_jump = INFINITY;
 	else
-		r.y_jump = fabs(1 / rc.ray_y);
+		r.y_jump = fabs(1 / rc.r_dir_y);
 	set_jumps(e, &rc, &r);
 	find_hit(e, &rc, &r);
 }
@@ -29,8 +29,8 @@ void	camera(t_env *e)
 	while (rc.x < WIN_W)
 	{
 		rc.col = 2 * rc.x / (float)WIN_W - 1;
-		rc.ray_x = e->data->dir_x + rc.cam_x * rc.col;
-		rc.ray_y = e->data->dir_y + rc.cam_y * rc.col;
+		rc.r_dir_x = e->data->dir_x + rc.cam_x * rc.col;
+		rc.r_dir_y = e->data->dir_y + rc.cam_y * rc.col;
 		shoot(e, rc);
 		rc.x++;
 	}

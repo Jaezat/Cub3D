@@ -26,12 +26,11 @@ void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 
 	tex_y = (int)col->tex_pos & (e->data->imgs[r->wall_id].h - 1);
 	col->tex_pos += col->step;
-	// check why tex_y is called this instead of width
 	color = *(int *)(e->data->imgs[r->wall_id].addr
 			+ (e->data->imgs[r->wall_id].h * tex_y + col->tex_x));
 	if (r->side == 1)
 		color = (color >> 1) & 0x7f7f7f;
-	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = color;
+	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = color;	
 }
 
 void	find_hit(t_env *e, t_raycam *rc, t_ray *r)
@@ -64,7 +63,7 @@ void	find_hit(t_env *e, t_raycam *rc, t_ray *r)
 
 void	set_jumps(t_env *e, t_raycam *rc, t_ray *r)
 {
-	if (rc->ray_x < 0)
+	if (rc->r_dir_x < 0)
 	{
 		r->x_vec_dir = -1;
 		r->curr_x = (e->data->px - r->map_x) * r->x_jump;
@@ -74,7 +73,7 @@ void	set_jumps(t_env *e, t_raycam *rc, t_ray *r)
 		r->x_vec_dir = 1;
 		r->curr_x = (r->map_x + 1.0 - e->data->px) * r->x_jump;
 	}
-	if (rc->ray_y < 0)
+	if (rc->r_dir_y < 0)
 	{
 		r->y_vec_dir = -1;
 		r->curr_y = (e->data->py - r->map_y) * r->y_jump;

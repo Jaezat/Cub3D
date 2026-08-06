@@ -131,8 +131,8 @@ typedef struct s_raycam
 {
 	int				x;
 	float			col;
-	float			ray_x;
-	float			ray_y;
+	float			r_dir_x;
+	float			r_dir_y;
 	float			cam_x;
 	float			cam_y;
 }					t_raycam;
@@ -142,7 +142,6 @@ typedef struct s_env
 	t_data			*data;
 	t_umlx			umlx;
 	t_keys			keys;
-	// t_angle			angle;
 }					t_env;
 
 typedef enum e_wall
