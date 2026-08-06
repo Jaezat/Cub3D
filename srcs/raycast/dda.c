@@ -2,8 +2,7 @@
 
 int	wall_no(t_ray *r)
 {
-	// this looks wrong 
-	if (r->side == 0)
+	if (r->side == 1)
 	{
 		if (r->x_vec_dir > 0)
 			return (WE);
@@ -28,7 +27,7 @@ void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 	col->tex_pos += col->step;
 	color = *(int *)(e->data->imgs[r->wall_id].addr
 			+ (e->data->imgs[r->wall_id].h * tex_y + col->tex_x));
-	if (r->side == 1)
+	if (r->side == 0)
 		color = (color >> 1) & 0x7f7f7f;
 	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = color;
 }
@@ -41,17 +40,17 @@ void	find_hit(t_env *e, t_raycam *rc, t_ray *r)
 		{
 			r->curr_x += r->x_jump;
 			r->map_x += r->x_vec_dir;
-			r->side = 0;
+			r->side = 1;
 		}
 		else
 		{
 			r->curr_y += r->y_jump;
 			r->map_y += r->y_vec_dir;
-			r->side = 1;
+			r->side = 0;
 		}
 		if (e->data->map[r->map_y][r->map_x] == '1')
 		{
-			if (r->side == 0)
+			if (r->side == 1)
 				r->cam_dist = (r->curr_x - r->x_jump);
 			else
 				r->cam_dist = (r->curr_y - r->y_jump);

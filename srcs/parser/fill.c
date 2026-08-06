@@ -26,7 +26,7 @@ bool	flood_fill(t_parser *p, int x, int y, int pix)
 	while (1)
 	{
 		if (h.top == NULL)
-		break ;
+			break ;
 		h.cur.x = h.top->x;
 		h.cur.y = h.top->y;
 		pop(&h.top);

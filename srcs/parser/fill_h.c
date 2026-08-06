@@ -14,8 +14,6 @@ void	pop(t_stack **old_top)
 
 void	free_stack(t_stack *top)
 {
-	t_stack	*tmp;
-
 	while (top)
 	{
 		pop(&top);
@@ -48,8 +46,8 @@ bool	is_space_at_limit(t_parser *p, t_stack ff, char **map)
 
 	ret = (ff.y == 0 && map[ff.y][ff.x] == '0') || (ff.x == 0
 			&& map[ff.y][ff.x] == '0') || (ff.y == p->exec_map_h - 1
-			&& (!map[ff.y] || map[ff.y][ff.x] == '0')) || (ff.x == p->exec_map_w - 2
-			&& map[ff.y][ff.x] == '0' || map[ff.y][ff.x] == 'X');
+			&& (!map[ff.y] || map[ff.y][ff.x] == '0')) || (ff.x == p->exec_map_w
+			- 2 && (map[ff.y][ff.x] == '0' || map[ff.y][ff.x] == 'X'));
 	return (ret);
 }
 

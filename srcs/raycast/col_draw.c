@@ -7,13 +7,13 @@ void	draw_col_conditions(t_env *e, t_raycam *rc, t_ray *r, t_col_draw *col)
 	col->end = col->steps / 2 + WIN_H / 2;
 	if (col->end >= WIN_H)
 		col->end = WIN_H - 1;
-	if (r->side == 0)
+	if (r->side == 1)
 		col->wall_col = e->data->py + r->cam_dist * rc->r_dir_y;
 	else
 		col->wall_col = e->data->px + r->cam_dist * rc->r_dir_x;
 	col->wall_col -= floor(col->wall_col);
 	col->tex_x = (int)(col->wall_col * col->tex_res);
-	if ((r->side == 0 && rc->r_dir_x < 0) || (r->side == 1 && rc->r_dir_y > 0))
+	if ((r->side == 1 && rc->r_dir_x < 0) || (r->side == 0 && rc->r_dir_y > 0))
 		col->tex_x = col->tex_res - col->tex_x - 1;
 	col->step = 1.0f * col->tex_res / col->steps;
 	if (col->start > 0)

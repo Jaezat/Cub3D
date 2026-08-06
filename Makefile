@@ -2,7 +2,7 @@ NAME	= cub3D
 CC		= cc
 MLX_DIR	= mlx_linux
 CFLAGS	= -Wall -Wextra -Iincludes
-# CFLAGS	+= -Werror
+CFLAGS	+= -Werror
 CFLAGS	+= -I$(INC_DIR) -I$(MLX_DIR)
 RM          = rm -rf
 
