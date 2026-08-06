@@ -26,7 +26,7 @@ bool	flood_fill(t_parser *p, int x, int y, int pix)
 	while (1)
 	{
 		if (h.top == NULL)
-			break ;
+		break ;
 		h.cur.x = h.top->x;
 		h.cur.y = h.top->y;
 		pop(&h.top);
@@ -35,8 +35,7 @@ bool	flood_fill(t_parser *p, int x, int y, int pix)
 		if (is_space_at_limit(p, h.cur, h.map))
 			return (free_stack(h.top), false);
 		if (h.map[h.cur.y] && (h.map[h.cur.y][h.cur.x] == '1'
-			|| h.map[h.cur.y][h.cur.x] == pix
-			|| h.map[h.cur.y][h.cur.x] == 'X'))
+			|| h.map[h.cur.y][h.cur.x] == pix))
 			continue ;
 		if (h.map[h.cur.y][h.cur.x] == h.start)
 			h.map[h.cur.y][h.cur.x] = pix;

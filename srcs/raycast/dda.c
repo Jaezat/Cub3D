@@ -30,7 +30,7 @@ void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 			+ (e->data->imgs[r->wall_id].h * tex_y + col->tex_x));
 	if (r->side == 1)
 		color = (color >> 1) & 0x7f7f7f;
-	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = color;	
+	e->umlx.img_data.addr[(int)(col->i * WIN_W + rc->x)] = color;
 }
 
 void	find_hit(t_env *e, t_raycam *rc, t_ray *r)
