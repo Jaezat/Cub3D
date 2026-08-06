@@ -12,8 +12,6 @@
 # define DIFF 1
 # define SAME 0
 
-// to fit a page size
-
 # define R 0xff0000
 # define G 0x00ff00
 # define B 0x0000ff

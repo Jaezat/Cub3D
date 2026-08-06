@@ -67,7 +67,6 @@ void	set_jumps(t_env *e, t_raycam *rc, t_ray *r)
 	if (rc->ray_x < 0)
 	{
 		r->x_vec_dir = -1;
-		// revise why its multiplying by xjump already in this step
 		r->curr_x = (e->data->px - r->map_x) * r->x_jump;
 	}
 	else
