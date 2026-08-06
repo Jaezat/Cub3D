@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   flood.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/06 19:36:59 by leschunc          #+#    #+#             */
+/*   Updated: 2026/08/06 19:37:16 by leschunc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "main.h"
 
-// this considers the newline at the end, which will be removed
 void	get_check_width(t_parser *p)
 {
 	int	curr_w;

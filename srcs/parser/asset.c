@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   asset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/06 19:35:35 by leschunc          #+#    #+#             */
+/*   Updated: 2026/08/06 19:35:40 by leschunc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "main.h"
 
-// uni test
 size_t	file_ln_count(t_parser *p)
 {
 	char	buf[BUF_SIZE + 1];
@@ -65,7 +76,6 @@ bool	is_element_count(t_parser *p, char *str)
 	return (true);
 }
 
-// unit test
 void	check_map_elements(t_parser *p)
 {
 	int	i;

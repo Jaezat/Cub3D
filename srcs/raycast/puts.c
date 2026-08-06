@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   puts.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/06 19:40:25 by leschunc          #+#    #+#             */
+/*   Updated: 2026/08/06 19:40:41 by leschunc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "main.h"
 
 void	*get_addr_tex(t_img_data *img)
@@ -7,7 +19,6 @@ void	*get_addr_tex(t_img_data *img)
 	return (img->addr);
 }
 
-// // this whole function needs protection
 void	get_addr(t_umlx *u)
 {
 	t_img_data	*im;

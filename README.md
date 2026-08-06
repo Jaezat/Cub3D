@@ -4,14 +4,7 @@
 
 **A raycasting engine built from scratch in C, inspired by Wolfenstein 3D.**
 
-![C](https://img.shields.io/badge/language-C-blue.svg)
-![MiniLibX](https://img.shields.io/badge/graphics-MiniLibX-orange.svg)
-![42](https://img.shields.io/badge/school-42-black.svg)
-![Status](https://img.shields.io/badge/status-completed-brightgreen.svg)
-
-
-
-## About
+## Description
 
 cub3D is a graphics project inspired by Wolfenstein 3D, one of the earliest first-person shooters and a pioneer of the raycasting technique for simulating 3D worlds without fully rendering 3D geometry.
 
@@ -21,8 +14,6 @@ Written in C, this project uses the MiniLibX library to render a first-person 3D
 * Pixel-level image manipulation
 * Window and event management via MiniLibX
 * A full map/config file parser
-
-## How It Works
 
 ### 3D Perspective via Raycasting
 
@@ -48,7 +39,7 @@ Once we know the distance to the wall, we determine which texture to use (`NORTH
 
 Since textures have a fixed size (ex: 64px tall) but on-screen wall height changes with distance, the texture must be stretched or compressed to fit the wall slice being drawn.
 
-## Getting Started
+## Instructions
 
 ### Build and Run
 
@@ -61,19 +52,17 @@ make
 
 | Command | What it does |
 |---|---|
-| `make go` | Builds the project, then immediately runs it with a preset test map |
-| `make do_over` | Full rebuild (clean + rebuild) then runs it with the test map |
-| `make norme` | Runs the 42 `norminette` style checker, filtering out header-related noise |
+| `make go` | Builds the project, then immediately runs it with a preset test map. |
 
 ### Cleanup and Rebuild
 
 | Command | What it does |
 |---|---|
-| `make clean` | Removes build artifacts (object files, etc.) and keeps source code and the compiled binary |
-| `make fclean` | `clean` plus removes the compiled binary too, back to just source code |
-| `make re` | Full clean, then rebuilds everything from scratch |
+| `make clean` | Removes build artifacts (object files, etc.) and keeps source code and the compiled binary. |
+| `make fclean` | `clean` removes the compiled binary too, back to just source code. |
+| `make re` | Full clean, then rebuilds everything from scratch. |
 
-## Resources and References
+## Resources
 
 * [Make your own Raycaster: 3DSage](https://youtu.be/gYRrGTC7GtA?si=KOLlLrP2S78ExnCX)
 * [Raycasting Fully Explained (Playlist): WeirdDevers](https://www.youtube.com/watch?v=g8p7nAbDz6Y)
@@ -85,12 +74,9 @@ make
 * [Raycasting: Lode's Computer Graphics Tutorial](https://lodev.org/cgtutor/raycasting.html)
 * [Why Radians?: Ask a Mathematician](https://www.askamathematician.com/2014/10/q-why-radians/)
 
-## Use of AI
+### Use of AI
 
 AI tools were used to support the project in the following ways:
 
 * Researching and understanding mathematical and technical concepts.
 * Debugging assistance.
-* Helping visualize components of the project that weren't yet implemented by the other partner.
-
-
