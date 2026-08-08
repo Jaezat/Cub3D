@@ -4,3 +4,5 @@ mlx_linux/
 vgcore.*
 .venv
 .vscode
+tests/
+behemoth.cub

@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 19:36:28 by leschunc          #+#    #+#             */
-/*   Updated: 2026/08/06 23:56:25 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/08/08 01:52:33 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ void	start_flooding(t_parser *p)
 			{
 				dir = p->map[i][j];
 				p->map[i][j] = '0';
-				disp_map(p);
+				// disp_map(p);
 				if (!flood_fill(p, j, i, '*'))
 					err_exit_msg("There is a hole on the map!\n", 0, p);
-				disp_map(p);
+				// disp_map(p);
 				flood_fill(p, j, i, '0');
-				disp_map(p);
+				// disp_map(p);
 				p->map[i][j] = dir;
 			}
 			j++;

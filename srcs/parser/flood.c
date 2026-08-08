@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 19:36:59 by leschunc          #+#    #+#             */
-/*   Updated: 2026/08/06 22:31:16 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/08/08 01:55:34 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	alloc_fill_matrix(t_parser *p, char **map)
 		if (!map[i])
 			err_exit_msg("Failed to allocate memory for line", 0, p);
 		ft_bzero(map[i], p->exec_map_w);
-		copier(map[i], p->exec_map[i], p->exec_map_w);
+		copier(map[i], p->exec_map[i], p->exec_map_w - 1);
 		space_to_wall(map[i], p->exec_map_w);
 		i++;
 	}
