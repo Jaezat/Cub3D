@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 19:40:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/08/06 19:40:16 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/08/08 03:05:03 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	pixel_put_tex(t_env *e, t_col_draw *col, t_raycam *rc, t_ray *r)
 
 void	find_hit(t_env *e, t_raycam *rc, t_ray *r)
 {
-	while (r->hit == 0)
+	while (r->hit == 0 && (r->curr_x < 1024 || r->curr_y < 1024))
 	{
 		if (r->curr_x < r->curr_y)
 		{

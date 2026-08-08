@@ -53,7 +53,7 @@ mlx_clean:
 re: fclean all
 
 # testing /////////////////////////////////////////////////////////////////////
-TESTMAP = assets/maps/big.cub
+TESTMAP = assets/maps/tall.cub
 
 go: all
 	./$(NAME) $(TESTMAP)
