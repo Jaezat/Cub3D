@@ -96,6 +96,8 @@ char	*gnl(int fd)
 			buf[r_size] = 0;
 		}
 		line = joiner(line, buf);
+		if (!line)
+			return (NULL);
 		copier(buf, buf + line_len(buf), ft_strlen(buf));
 		if (has_line(line))
 			return (line);

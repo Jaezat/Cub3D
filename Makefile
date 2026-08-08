@@ -53,7 +53,7 @@ mlx_clean:
 re: fclean all
 
 # testing /////////////////////////////////////////////////////////////////////
-TESTMAP = assets/maps/tall.cub
+TESTMAP = assets/maps/big.cub
 
 go: all
 	./$(NAME) $(TESTMAP)
@@ -64,7 +64,7 @@ go: all
 VFLAGS += --track-fds=yes
 VFLAGS += --track-origins=yes --leak-check=full --show-leak-kinds=all
 
-err:
+err: re
 	valgrind $(VFLAGS) ./$(NAME) ./$(TESTMAP)
 
 .PHONY: all clean fclean re

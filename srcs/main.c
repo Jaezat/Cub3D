@@ -22,26 +22,3 @@ int	main(int argc, char **argv)
 		free_data(data);
 	return (0);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	t_data	*data;
-// 	bool	parse_only;
-
-// 	parse_only = (argc == 3 && ft_strncmp(argv[1], "--parse-only", 13) == 0);
-// 	if (parse_only)
-// 	{
-// 		argc--;
-// 		argv++;
-// 	}
-// 	data = parsing(argc, argv);
-// 	if (parse_only)
-// 	{
-// 		free_data(data);
-// 		return (0);
-// 	}
-// 	game(data);
-// 	if (data)
-// 		free_data(data);
-// 	return (0);
-// }
