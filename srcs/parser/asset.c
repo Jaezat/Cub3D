@@ -50,10 +50,10 @@ void	load_map_file(t_parser *p)
 	while (i < p->map_h)
 	{
 		p->map_head[i] = gnl(p->map_fd);
+		if (!p->map_head[i])
+			err_exit_msg("Failed to allocate memory for map", 0, p);
 		i++;
 	}
-	if (i < p->map_h)
-		err_exit_msg("Map was not loaded completely", 0, p);
 	ft_safe_close(&p->map_fd);
 }
 

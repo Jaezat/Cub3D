@@ -70,7 +70,7 @@ char	*joiner(char *line, char *buf)
 	buf_size = line_len(buf);
 	newline = malloc(line_size + buf_size + 1);
 	if (!newline)
-		return (NULL);
+		return (free(line), NULL);
 	copier(newline, line, line_size);
 	free(line);
 	copier(newline + line_size, buf, buf_size);
