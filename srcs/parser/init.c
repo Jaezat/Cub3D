@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mariacos <mariacos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/06 19:37:28 by leschunc          #+#    #+#             */
-/*   Updated: 2026/08/06 23:20:36 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/08/10 11:24:18 by mariacos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ t_data	*parsing(int argc, char **argv)
 	check_map(&parser);
 	data = NULL;
 	data = pass_it_on(&parser);
-	get_floats(&parser, data);
 	if (!data)
 		exit_parse(&parser, RT_ERROR);
+	get_floats(&parser, data);
 	exit_parse(&parser, RT_SUCCESS);
 	return (data);
 }
